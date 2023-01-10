@@ -1,0 +1,102 @@
+.add-book-container {
+  width: 60vw;
+  margin: auto;
+}
+
+h2.title-add-book {
+    font-weight: bold;
+    text-align: left;
+    margin-top: 100px;
+    margin-bottom: 40px;
+}
+
+.form-add-book {
+    margin: auto;
+    width: 60vw;
+    margin-bottom: 50px;
+}
+
+.form-add-book .form-group {
+    margin-bottom: 35px !important;
+}
+
+.form-add-book .form-input {
+  background-color: #D2D2D2;
+  color: black;
+}
+
+.form-dropdown{
+    position: relative;
+}
+
+.form-add-book .dropdown {
+    width: 15px !important;
+    height: 10px !important;
+    position: absolute;
+    top: 47px !important;
+    right: 13px !important;
+}
+.btn-add-book-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end !important;
+}
+.btn-add-book {
+    display: flex;
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #393939;
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+.img-add-book {
+  margin-left: 15px;
+}
+
+/* Input Upload Image */
+.img-upload {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+  }
+  
+  .img-upload label {
+    width: 30%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+  }
+  
+  .img-upload input {
+    display: none;
+  }
+  
+  .img-upload p {
+    padding: 5px;
+    padding-left: 10px;
+    text-align: left;
+    color: #393939 !important;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  
+  .img-upload p:hover {
+    cursor: pointer;
+  }
+  
+  .img-upload label img {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .img-upload label img:hover {
+    cursor: pointer;
+  }
+  /* End input upload image */

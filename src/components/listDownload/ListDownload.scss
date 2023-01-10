@@ -1,0 +1,40 @@
+.download-title {
+    margin-left: 200px !important;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+}
+
+.container-download {
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 50px !important;
+}
+
+.img-list-download {
+    width: 100%;
+}
+
+.list-download {
+    width: 23%;
+    margin-bottom: 25px;
+}
+
+.list-artist {
+    margin-bottom: 20px;
+}
+
+.list-title {
+    font-style: 18px;
+    color: black;
+}
+
+.btn-download {
+    background-color: #393939;
+    border: 1px solid #393939;
+}
+

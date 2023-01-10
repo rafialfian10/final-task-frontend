@@ -1,0 +1,67 @@
+.container-card {
+    height: 350px;
+    display: flex;
+    flex-direction: row;
+    margin-top: -150px;
+}
+
+.book-container {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    margin-right: 30px;
+    background-color: transparent;
+    border: none !important;
+}
+
+.card-image {
+    width: 65%;
+}
+
+.book-desc {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    background-color: white;
+}
+
+.book-title {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.artist {
+    color: #929292;;
+    font-size: 10px;
+    margin-bottom: 5px;
+}
+
+.desc {
+    text-align: justify;
+    color: black;
+    font-size: 12px;
+    margin-bottom: 15px !important;
+}
+
+.price-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.price {
+    font-size: 18px;
+    color: #44B200;
+    font-weight: bold;
+    margin-bottom: 10px !important;
+}
+
+.btn-book {
+    background-color: #393939;
+    color: white;
+    font-weight: bold;
+    text-align: center !important;
+    border-color: #393939;
+}

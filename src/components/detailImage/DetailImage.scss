@@ -1,0 +1,85 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.detail-img-container {
+    width: 65vw;
+    padding-top: 80px;
+    margin: auto;
+    margin-bottom: 60px;
+}
+
+.thumbnail {
+    display: flex;
+    flex-direction: row;
+}
+
+.img-thumbnail {
+    height: 550px;
+}
+
+.detail-book-info{
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-title {
+    font-size: 35px;
+    font-weight: bold;
+    color: black;
+}
+
+.detail-artist {
+    font-size: 18px;
+    font-style: italic;
+    color: #929292;
+    margin-bottom: 45px;
+}
+
+.detail-publication-date {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.detail-date {
+    font-size: 16px;
+    color: #929292;
+    margin-bottom: 45px;
+}
+
+.detail-pages {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.pages {
+    font-size: 16px;
+    color: #929292;
+    margin-bottom: 45px;
+}
+
+.detail-isbn {
+    font-size: 20px;
+    font-weight: bold;
+    color: #D60000;
+}
+
+.isbn {
+    font-size: 16px;
+    color: #929292;
+    margin-bottom: 45px;
+}
+
+.detail-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+
+
