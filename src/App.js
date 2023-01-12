@@ -1,5 +1,5 @@
 // components
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from "./context/userContext";
@@ -16,6 +16,7 @@ import AddBook from "./containers/admin_pages/add_book/AddBook";
 import ListTransaction from "./containers/admin_pages/list_transaction/ListTransaction";
 import DetailBook from "./containers/user_pages/detail_book/DetailBook";
 import Cart from "./containers/user_pages/cart/Cart";
+import { PageNotFound, PrivateRouteAdmin, PrivateRouteUser } from "./components/private_route/PrivateRoute";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -28,18 +29,12 @@ function App() {
   // panggil user context(menyimpan data sebagai global state)
   const [state, dispatch] = useContext(UserContext);
   console.clear();
-  console.log(state);
+  console.log("State :", state);
 
 
   useEffect(() => {
-    if(state.isLogin === false) {
-      navigate('/')
-    } else {
-      if(state.user.role === 'admin') {
-        navigate('/list_transaction')
-      } else if(state.user.role === 'user') {
-        navigate('/')
-      }
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
     }
   }, [state])
   
@@ -68,26 +63,42 @@ function App() {
 
   useEffect(() => {
       checkUser();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // if(state.isLogin === false) {
+  //   navigate('/')
+  // } else {
+  //   if(state.user.role === 'admin') {
+  //     navigate('/list_transaction')
+  //   } else if(state.user.role === 'user') {
+  //     navigate('/')
+  //   }
+  // }
 
   return (
     <>
       <Navbars/>
       <Routes>
           {/* public */}
-          <Route exact path="/" element={<Home/>}/>
+          <Route exact path="/" element={<Home state={state}/>}/>
           <Route exact path="/increment_detail_book" element={<IncrementDetailBook/>}/>
           
           {/* admin */}
-          <Route exact path="/add_book" element={<AddBook/>}/>
-          <Route exact path="/detail_book" element={<DetailBook/>}/>
-          <Route exact path="/list_transaction" element={<ListTransaction/>}/>
+          <Route element={<PrivateRouteAdmin state={state}/>}>
+            <Route exact path="/list_transaction" element={<ListTransaction/>}/>
+            <Route exact path="/add_book" element={<AddBook/>}/>
+          </Route>
           
 
           {/* user */}
-          <Route exact path="/profile/:id" element={<Profile/>}/>
-          <Route exact path="/cart" element={<Cart/>}/> 
+          <Route element={<PrivateRouteUser state={state}/>}>
+            <Route exact path="/profile/:id" element={<Profile/>}/>
+            <Route exact path="/detail_book" element={<DetailBook/>}/>
+            <Route exact path="/cart" element={<Cart/>}/> 
+          </Route>
+
+          <Route exact path="/:pageName" element={<PageNotFound/>} />
       </Routes>  
     </>
   );

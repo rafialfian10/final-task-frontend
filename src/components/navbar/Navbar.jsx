@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 
 // components
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState,  useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import { UserContext } from "../../context/userContext";
 
@@ -72,8 +72,8 @@ const Navbars = () => {
         setFormReg({ ...formReg, [event.target.name]: event.target.value });
     };
 
-    // function register submit
-    const HandleRegisterSubmit = useMutation(async (e) => {
+  // function register submit
+  const HandleRegisterSubmit = useMutation(async (e) => {
         try {
         e.preventDefault();
         // konfigurasi Content-type
@@ -169,7 +169,6 @@ const Navbars = () => {
         icon: 'success',
         confirmButtonText: 'Ok'
       })
-      window.location.reload()
       navigate("/")
 
     } catch(err) {
@@ -218,8 +217,6 @@ const Navbars = () => {
     return response.data.data;
   });
 
-  console.log(users)
-
     return (
         <>
             <Navbar expand="lg" className="background-navbar">
@@ -242,7 +239,7 @@ const Navbars = () => {
                                     <Dropdown.Item onClick={() => navigate(`/add_book`)}>
                                         <Image src={addbook} alt="" />
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => navigate(`/compalin`)}>
+                                    <Dropdown.Item onClick={() => navigate(`/complain`)}>
                                         <Image src={complain} alt="" className="d-inline" />
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={HandleLogout}>
@@ -259,14 +256,14 @@ const Navbars = () => {
                                 return (
                                   <>
                                     <Image src={bracket} alt="" className="bracket"/>
-                                    {user.image !== "" ?  (<Image src={user.image} className="photo-profile" alt="" />) : (<Image src={defaultphoto} className="photo-profile" alt="" /> )}
+                                    {user.image !== "" ?  (<Image src={user.image} className="photo-profile" alt="" />) : (<Image src={defaultphoto} className="photo-profile" alt=""/>)}
                                     <Dropdown as={ButtonGroup} className="dropdown" key={i}>
                                         <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                                           <Dropdown.Menu className="menu-dropdown">
                                             <Dropdown.Item onClick={() => navigate(`/profile/${user.id}`)}>
                                               <Image src={profile} alt="" />
                                             </Dropdown.Item>
-                                            <Dropdown.Item onClick={() => navigate(`/payment/`)}>
+                                            <Dropdown.Item onClick={() => navigate(`/complain/`)}>
                                               <Image src={complain} alt="" />
                                             </Dropdown.Item>
                                             <Dropdown.Item onClick={HandleLogout}>
