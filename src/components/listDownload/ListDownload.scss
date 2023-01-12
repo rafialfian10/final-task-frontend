@@ -10,9 +10,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin: auto;
-    margin-top: 50px !important;
+    border: 1px solid black;
+    margin-top: 50px;
 }
 
 .img-list-download {
@@ -20,20 +21,27 @@
 }
 
 .list-download {
-    width: 23%;
+    width: 22%;
     margin-bottom: 25px;
+    margin-right: 28px;
 }
 
 .list-artist {
-    margin-bottom: 20px;
+    font-style: italic;
+    margin-bottom: 10px;
 }
 
 .list-title {
     font-style: 18px;
     color: black;
 }
+.container-btn-download {
+    height: 100%;
+}
 
-.btn-download {
+.btn-download-book {
+    width: 100%;
+    font-weight: bold;
     background-color: #393939;
     border: 1px solid #393939;
 }

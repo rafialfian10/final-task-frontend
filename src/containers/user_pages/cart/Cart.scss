@@ -1,0 +1,164 @@
+.cart-title {
+    width: 70vw;
+    margin: auto;
+    margin-top: 50px !important;
+    margin-bottom: 40px !important;
+    font-weight: bold !important;
+    color: black;
+}
+
+.payment-container {
+    width: 70vw;
+    margin: auto;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.content-satu {
+    border-bottom: 1px solid black;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 30px;
+}
+
+.img-card {
+    width: 50%;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-right: 10px;
+    box-shadow: 1.5px 1.5px 1.5px 1.5px rgb(128,128,128,0.5)
+}
+
+.review-book-desc {
+    width: 40%;
+}
+
+.review {
+    font-size: 18px;
+    color: black;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+    margin-bottom: 30px;
+}
+
+.container-cart {
+    border: 1px solid red;
+    width: 100%;
+    display: 100%;
+    flex-direction: row;
+    border: none;
+    margin-bottom: 25px;
+}
+
+.review-book-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.review-artist {
+    font-style: italic;
+    font-size: 14px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.review-price {
+    font-size: 16px;
+    color: #44B200;
+    font-weight: bold;
+    margin-bottom: 10px !important;
+}
+
+.btn-trash {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    height: 30px;
+}
+
+.btn-trash:hover {
+    background-color: transparent !important;
+}
+
+.img-trash {
+    top: -10px;
+    right: 0;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    margin-top: 20px;
+}
+
+.content-dua {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.content-subtotal {
+    margin-top: 11px;
+    border-top: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.subtotal1, .subtotal2 {
+    margin-top: 10px;
+    padding-top: 10px;
+    font-size: 16px;
+    color: black;
+}
+
+.content-qty {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+}
+
+.qty1, .qty2 {
+    margin-top: 10px;
+    padding-top: 10px;
+    font-size: 16px;
+    color: black;
+}
+
+.content-total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.total1, .total2 {
+    margin-top: 10px;
+    padding-top: 10px;
+    font-size: 16px;
+    color: #44B200;
+}
+
+.transaction {
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.img-transaction {
+    width: 60%;
+    margin-bottom: 20px;
+}
+
+.btn-transaction {
+    background-color: #393939;
+    width: 60%;
+}
+
+

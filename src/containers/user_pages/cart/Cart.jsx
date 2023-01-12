@@ -1,9 +1,16 @@
 // components react bootstrap
-import {Table} from 'react-bootstrap'
-import Moment from 'react-moment'
+import {Form, Card, Button, Image } from 'react-bootstrap'
 
 // image
 import transaction from '../../../assets/img/transaction.png'
+import listbook1 from '../../../assets/img/listbook1.png'
+import listbook2 from '../../../assets/img/listbook2.png'
+import trash from '../../../assets/img/delete.png'
+import flower1 from '../../../assets/img/flower1.png'
+import flower2 from '../../../assets/img/flower2.png'
+
+// scss
+import './Cart.scss'
 
 
 
@@ -11,78 +18,59 @@ const Cart = () => {
 
     return (
         <>
-            {/* <Popup popup={popup} setPopup={setPopup} /> */}
+            <Image src={flower1} alt='' className='flower1'/>
+            <Image src={flower2} alt='' className='flower2'/>
+            <h4 className='cart-title'>My Cart</h4>
             <div className="payment-container">
-            <div className="content1">
-              {/* <img src={icon} alt="" /> */}
-              <div className="sub-content1">
-                <h3 className="status">Booking</h3>
-                <p className="date">Saturday, 22 July 2020</p>
+              <div className='content-satu'>
+                <h3 className="review">Review your order</h3>
+                
+                <Card className='container-cart'>
+                  <Card.Img  src={listbook1} className='img-card' />
+                    <Card.Body className='review-book-desc'>
+                      <Card.Title className='review-book-title'>My Own Private Mr. Cool</Card.Title>
+                      <Form.Text className='review-artist'>By. Indah Hanaco</Form.Text>
+                      <Form.Text className='review-price'>Rp. 75.000</Form.Text>
+                    </Card.Body>
+                    <Button className='btn-trash'>
+                      <Image src={trash} className='img-trash' />
+                    </Button>
+                </Card>
+
+                <Card className='container-cart'>
+                  <Card.Img src={listbook2} className='img-card' />
+                    <Card.Body className='review-book-desc'>
+                      <Card.Title className='review-book-title'>Garis Waktu : Sebuah Perjalanan</Card.Title>
+                      <Form.Text className='review-artist'>By. Fiersa Besari</Form.Text>
+                      <Form.Text className='review-price'>Rp. 49.300</Form.Text>
+                    </Card.Body>
+                    <Button className='btn-trash'>
+                      <Image src={trash} className='img-trash' />
+                    </Button>
+                </Card>
+              </div>
+          
+            
+
+            <div className="content-dua">
+              <div className='content-subtotal'>
+                <h5 className="subtotal1">Subtotal</h5>
+                <h5 className='subtotal2'>134.000</h5>
+              </div>
+              <div className='content-qty'>
+                <h5 className="qty1">Qty</h5>
+                <h5 className='qty2'>2</h5>
+              </div>
+              <div className='content-total'>
+                <h5 className="total1">Total</h5>
+                <h5 className='total2'>134.000</h5>
+              </div>
+              <div className='transaction'>
+                <Image src={transaction} className='img-transaction' alt=''/>
+                <Button className='btn-transaction'>Pay</Button>
               </div>
             </div>
-
-            <div className="content2">
-            <div className="info-payment">
-              <h3 className="title">Title</h3>
-              <p className="country">name</p>
-              <p className="status-payment">Waiting Payment</p>
-            </div>
-
-            <div className="info-tour">
-            <div className="sub-info-tour">
-              <div className="date">
-                <h5>Date Trip</h5>
-                <p><Moment format="YYYY-MM-DD">date</Moment></p>
-              </div>
-
-            <div className="accomodation">
-              <h5>Accomodation</h5>
-              <p>accomodation</p>
-            </div>
-            </div>
           </div>
-
-          <div className="img-payment">
-            <img src={transaction} alt="" />
-            <p>Upload Payment Proof</p>
-          </div>
-        </div>
-
-              <Table striped bordered hover className="tables">
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Phone</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>rafi</td>
-                    <td>gender</td>
-                    <td>phone</td>
-                    <td className="fw-bold">Qty</td>
-                    <td className="fw-bold">: 1</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td className="fw-bold">Total</td>
-                    <td className="fw-bold text-danger">: IDR. 1000</td>
-                  </tr>
-                </tbody>
-              </Table>
-      
-            </div>
-            <div className="btn-pay">
-              <button type="submit">Pay</button>
-            </div>
         </>
     )
 }

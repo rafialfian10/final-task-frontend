@@ -18,7 +18,9 @@ const ListDownload = () => {
                     <Card.Body className='list-desc'>
                         <Card.Title className='list-title'>My Own Private Mr. Cool</Card.Title>
                         <Form.Text className='list-artist'>By. Indah Hanaco</Form.Text>
-                        <Button className='btn-download'>Download</Button>
+                        <div className='container-btn-download'>
+                            <Button className='btn-download-book'>Download</Button>
+                        </div>
                     </Card.Body>
                 </Card>
 
@@ -27,34 +29,9 @@ const ListDownload = () => {
                     <Card.Body className='list-desc'>
                         <Card.Title className='list-title'>Sebuah Seni untuk bersikap Bodo A...</Card.Title>
                         <Form.Text className='list-artist'>By. Mark Manson</Form.Text>
-                        <Button className='btn-download'>Download</Button>
-                    </Card.Body>
-                </Card>
-
-                <Card className='list-download'>
-                    <Card.Img variant="top" src={listbook2} className='img-list-download' />
-                    <Card.Body className='list-desc'>
-                        <Card.Title className='list-title'>Sebuah Seni untuk bersikap Bodo A...</Card.Title>
-                        <Form.Text className='list-artist'>By. Mark Manson</Form.Text>
-                        <Button className='btn-download'>Download</Button>
-                    </Card.Body>
-                </Card>
-
-                <Card className='list-download'>
-                    <Card.Img variant="top" src={listbook2} className='img-list-download' />
-                    <Card.Body className='list-desc'>
-                        <Card.Title className='list-title'>Sebuah Seni untuk bersikap Bodo A...</Card.Title>
-                        <Form.Text className='list-artist'>By. Mark Manson</Form.Text>
-                        <Button className='btn-download'>Download</Button>
-                    </Card.Body>
-                </Card>
-
-                <Card className='list-download'>
-                    <Card.Img variant="top" src={listbook2} className='img-list-download' />
-                    <Card.Body className='list-desc'>
-                        <Card.Title className='list-title'>Sebuah Seni untuk bersikap Bodo A...</Card.Title>
-                        <Form.Text className='list-artist'>By. Mark Manson</Form.Text>
-                        <Button className='btn-download'>Download</Button>
+                        <div className='container-btn-download'>
+                            <Button className='btn-download-book'>Download</Button>
+                        </div>
                     </Card.Body>
                 </Card>
             </div>

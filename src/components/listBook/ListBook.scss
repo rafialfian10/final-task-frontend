@@ -1,7 +1,7 @@
 .listbook-title {
     margin-left: 70px !important;
     position: relative;
-    top: 80px;
+    top: 50px;
     font-size: 30px;
     font-weight: bold;
     color: black;
@@ -16,8 +16,8 @@
     flex-direction: row;
     flex-wrap: wrap !important;
     justify-content: space-between;
-    margin-top: -170px;
-    padding-top: 300px !important;
+    margin-top: -150px;
+    padding-top: 200px !important;
     padding-bottom: 100px !important;
 }
 
@@ -53,4 +53,10 @@
     font-size: 16px;
     color: #44B200;
     font-weight: bold;
+}
+
+.container-list-price {
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
 }
