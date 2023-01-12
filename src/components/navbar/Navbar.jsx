@@ -217,6 +217,10 @@ const Navbars = () => {
     return response.data.data;
   });
 
+  useEffect(() => {
+
+  },[state])
+
     return (
         <>
             <Navbar expand="lg" className="background-navbar">
@@ -237,13 +241,13 @@ const Navbars = () => {
                                     <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                                     <Dropdown.Menu className="menu-dropdown">
                                     <Dropdown.Item onClick={() => navigate(`/add_book`)}>
-                                        <Image src={addbook} alt="" />
+                                    <p className="text-dropdown"><Image src={addbook} alt=""/>Add Book</p> 
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={() => navigate(`/complain`)}>
-                                        <Image src={complain} alt="" className="d-inline" />
+                                    <p className="text-dropdown"><Image src={complain} alt=""/>Complain</p> 
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={HandleLogout}>
-                                        <Image src={logout} alt="" />
+                                      <p className="text-dropdown"><Image src={logout} alt=""/>Logout</p> 
                                     </Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
@@ -261,13 +265,13 @@ const Navbars = () => {
                                         <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                                           <Dropdown.Menu className="menu-dropdown">
                                             <Dropdown.Item onClick={() => navigate(`/profile/${user.id}`)}>
-                                              <Image src={profile} alt="" />
+                                              <p className="text-dropdown"><Image src={profile} alt=""/> Profile</p> 
                                             </Dropdown.Item>
-                                            <Dropdown.Item onClick={() => navigate(`/complain/`)}>
-                                              <Image src={complain} alt="" />
+                                            <Dropdown.Item onClick={() => navigate(`/complain`)}>
+                                            <p className="text-dropdown"><Image src={complain} alt=""/> Complain</p> 
                                             </Dropdown.Item>
                                             <Dropdown.Item onClick={HandleLogout}>
-                                              <Image src={logout} alt="" />
+                                            <p className="text-dropdown"><Image src={logout} alt=""/> Logout</p> 
                                             </Dropdown.Item>
                                           </Dropdown.Menu>
                                     </Dropdown>

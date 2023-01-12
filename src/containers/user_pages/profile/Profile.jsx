@@ -5,7 +5,7 @@ import { Button, Form, Image } from 'react-bootstrap'
 
 // components
 import ListDownload from '../../../components/listDownload/ListDownload';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 // image
@@ -33,6 +33,30 @@ const Profile = () => {
       const response = await API.get(`/users`);
       return response.data.data;
     });
+
+  // handle submit image
+  const handleSubmitImage = useMutation(async (e) => {
+    try {
+      // form data
+      let formData = new FormData();
+      formData.append("image", e.target.files[0]);
+
+      // patch
+      let response = await API.patch(`/user/${id}`, formData, {
+        headers: {
+          "Content-type": "multipart/form-data",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      console.log(response)
+      if(response.status === 200) {
+        refetchProfile()
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
+  });
     return (
         <>
             <Image src={flower1} alt="" className='flower1'/>
@@ -82,7 +106,7 @@ const Profile = () => {
                             ) : (
                             <Image src={defaultPhoto} alt="" />
                           )}
-                          <Form.Control type="file" id="image" className="form-input input-image" name="image"/>
+                          <Form.Control type="file" id="image" className="form-input input-image" name="image" onChange={handleSubmitImage.mutate}/>
                           <Button onClick={() => {document.getElementById("image").click();}}>Change Photo Profile</Button>
                       </div>
                   </div>

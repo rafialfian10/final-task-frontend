@@ -29,6 +29,10 @@ h2.title-add-book {
     position: relative;
 }
 
+.form-input {
+  margin-bottom: 10px !important;
+}
+
 .form-add-book .dropdown {
     width: 15px !important;
     height: 10px !important;
@@ -36,12 +40,14 @@ h2.title-add-book {
     top: 47px !important;
     right: 13px !important;
 }
+
 .btn-add-book-content {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end !important;
 }
+
 .btn-add-book {
     display: flex;
     margin-right: 10px;

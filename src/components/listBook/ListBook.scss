@@ -15,7 +15,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap !important;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-top: -150px;
     padding-top: 200px !important;
     padding-bottom: 100px !important;
@@ -25,6 +25,8 @@
     width: 18%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 30px;
+    margin-right: 23px;
     border: none;
     background-color: transparent !important;
     box-shadow: 1.5px 1.5px 1.5px 1.5px rgb(128,128,128,0.5)
