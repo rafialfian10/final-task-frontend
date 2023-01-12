@@ -2,13 +2,13 @@ import { Navigate, Outlet, useParams } from "react-router-dom";
 import './PrivateRoute.scss'
 
 export const PrivateRouteAdmin = ({state}) => {
-    console.log("State Admin :", state)
+    
     return <>{state.user.role === "admin" ?  <Outlet/>:<Navigate to="/"/>}</>
 }
 //------------------------------------
 
 export const PrivateRouteUser = ({state}) => {
-    console.log("State User :", state)
+    
     return <>{state.user.role === "user" ?  <Outlet/>:<Navigate to="/"/>}</>
 }
 //--------------------------------------
