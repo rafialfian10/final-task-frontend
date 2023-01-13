@@ -3,13 +3,13 @@ import './PrivateRoute.scss'
 
 export const PrivateRouteAdmin = ({state}) => {
     
-    return <>{state.user.role === "admin" ?  <Outlet/>:<Navigate to="/"/>}</>
+    return <>{state.user.role === "admin" ?  <Outlet/> : <Navigate to="/"/>}</>
 }
 //------------------------------------
 
 export const PrivateRouteUser = ({state}) => {
     
-    return <>{state.user.role === "user" ?  <Outlet/>:<Navigate to="/"/>}</>
+    return <>{state.user.role === "user" ?  <Outlet/> : <Navigate to="/"/>}</>
 }
 //--------------------------------------
 

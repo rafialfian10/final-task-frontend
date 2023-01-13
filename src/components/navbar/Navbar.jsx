@@ -243,6 +243,9 @@ const Navbars = () => {
                                     <Dropdown.Item onClick={() => navigate(`/add_book`)}>
                                     <p className="text-dropdown"><Image src={addbook} alt=""/>Add Book</p> 
                                     </Dropdown.Item>
+                                    <Dropdown.Item onClick={() => navigate(`/incom_book`)}>
+                                    <p className="text-dropdown"><Image src={addbook} alt=""/>Incom Book</p> 
+                                    </Dropdown.Item>
                                     <Dropdown.Item onClick={() => navigate(`/complain`)}>
                                     <p className="text-dropdown"><Image src={complain} alt=""/>Complain</p> 
                                     </Dropdown.Item>

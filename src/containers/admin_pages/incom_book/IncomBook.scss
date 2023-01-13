@@ -1,0 +1,94 @@
+.incom-title {
+    margin-left: 70px !important;
+    position: relative;
+    top: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+}
+
+.container-list {
+    width: 100vw;
+    padding: 5%;
+    margin: auto;
+    background-color: #E5E5E5;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap !important;
+    justify-content: flex-start;
+    margin-top: -150px;
+    padding-top: 200px !important;
+    padding-bottom: 100px !important;
+}
+
+.list-book {
+    width: 18%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    margin-right: 23px;
+    border: none;
+    background-color: transparent !important;
+    box-shadow: 1.5px 1.5px 1.5px 1.5px rgb(128,128,128,0.5)
+}
+
+.list-image {
+    width: 100%;
+}
+
+.list-desc {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-title {
+    color: black;
+    font-weight: bold;
+}
+
+.list-artist {
+    color: #929292;
+    font-size: 12px;
+}
+
+.list-price {
+    font-size: 16px;
+    color: #44B200;
+    font-weight: bold;
+}
+
+.container-list-price {
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.dropdown-trip {
+    position: absolute !important;
+    margin-top: 10px;
+    top: 10px !important;
+    left: 10px !important;
+}
+
+.toggle-trip {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    top: 0px;
+    left: 0px;
+    opacity: 0;
+}
+
+.toggle-trip:hover {
+    background-color: transparent;
+}
+
+.dropdown-menu-trip {
+    transition: all 1s !important;
+    color: black !important;
+}
+
+.titik3 {
+    width: 25px;
+    height: 25px !important;
+}
