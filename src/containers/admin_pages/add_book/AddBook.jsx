@@ -15,6 +15,8 @@ import Swal from "sweetalert2";
 // image
 import attache from '../../../assets/img/attache.png'
 import addlistbook from '../../../assets/img/addlistbook.png'
+import flower1 from '../../../assets/img/flower1.png'
+import flower2 from '../../../assets/img/flower2.png'
 
 
 const AddBook = () => {
@@ -28,9 +30,11 @@ const AddBook = () => {
     const [form, setForm] = useState({
         title: '',
         publicationDate: '',
+        author: '',
         pages: '',
         isbn: '',
         price: '',
+        quota: '',
         description: '',
         image: '',
         document: '',
@@ -40,9 +44,11 @@ const AddBook = () => {
     const [error, setError] = useState({
         title: '',
         publicationDate: '',
+        author: '',
         pages: '',
         isbn: '',
         price: '',
+        quota: '',
         description: '',
         document: '',
         image: '',
@@ -77,9 +83,11 @@ const AddBook = () => {
             const messageError = {
                 title: '',
                 publicationDate: '',
+                author: '',
                 pages: '',
                 isbn: '',
                 price: '',
+                quota: '',
                 description: '',
                 document: '',
                 image: '',
@@ -97,6 +105,13 @@ const AddBook = () => {
                 messageError.publicationDate = "Publication date must be filled out";
             } else {
                 messageError.publicationDate = ""
+            }
+
+            // validasi form author
+            if (form.author === "") {
+                messageError.author = "Author date must be filled out";
+            } else {
+                messageError.author = ""
             }
 
             // validasi form pages
@@ -118,6 +133,15 @@ const AddBook = () => {
                 messageError.price = "Price must be filled out";
             } else {
                 messageError.price = ""
+            }
+
+             // validasi quota
+             if (form.quota === "") {
+                messageError.quota = "Quota must be filled out";
+            } else if (parseInt(form.quota) < 0) {
+                messageError.quota = "can't be less than 0"
+            } else {
+                messageError.quota = ""
             }
 
             // validasi form description
@@ -144,9 +168,11 @@ const AddBook = () => {
             if (
                 messageError.title === "" &&
                 messageError.publicationDate === "" &&
+                messageError.author === "" &&
                 messageError.pages === "" &&
                 messageError.isbn === "" &&
                 messageError.price === "" &&
+                messageError.quota === "" &&
                 messageError.description === "" &&
                 messageError.document === "" &&
                 messageError.image === ""
@@ -154,9 +180,11 @@ const AddBook = () => {
                 const formData = new FormData();
                 formData.append('title', form.title);
                 formData.append('publication_date', form.publicationDate);
+                formData.append('author', form.author);
                 formData.append('pages', form.pages);
                 formData.append('isbn', form.isbn);
                 formData.append('price', form.price);
+                formData.append('quota', form.quota);
                 formData.append('description', form.description);
                 formData.append('document', form.document[0]);
                 formData.append('image', form.image[0]);
@@ -171,7 +199,7 @@ const AddBook = () => {
                     confirmButtonText: 'Ok'
                 })
 
-                navigate('/list_transaction'); 
+                navigate('/incom_book'); 
               } else {
                 setError(messageError)
               }
@@ -181,6 +209,8 @@ const AddBook = () => {
     })
     return (
         <>
+            <Image src={flower1} alt="" className="flower1"/>
+            <Image src={flower2} alt="" className="flower2"/>
             <div className="add-book-container">
                 <h2 className="title-add-book">Add Book</h2>
                 <Form className='form-add-book' onSubmit={(e) => {e.preventDefault() 
@@ -196,6 +226,11 @@ const AddBook = () => {
                     </Form.Group>
 
                     <Form.Group className="form-group">
+                    <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={handleChange}/>
+                    {error.author && <Form.Text className="text-danger">{error.author}</Form.Text>}
+                    </Form.Group>
+
+                    <Form.Group className="form-group">
                     <Form.Control className="form-input" name="pages" type="text" placeholder='Pages' onChange={handleChange}/>
                     {error.pages && <Form.Text className="text-danger">{error.pages}</Form.Text>}
                     </Form.Group>
@@ -208,6 +243,11 @@ const AddBook = () => {
                     <Form.Group className="form-group">
                     <Form.Control className="form-input" name="price" type="text" placeholder='Price' onChange={handleChange}/>
                     {error.price && <Form.Text className="text-danger">{error.price}</Form.Text>}
+                    </Form.Group>
+
+                    <Form.Group className="form-group">
+                    <Form.Control className="form-input" name="quota" type="number" placeholder='Quota' onChange={handleChange}/>
+                    {error.quota && <Form.Text className="text-danger">{error.quota}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">

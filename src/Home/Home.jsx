@@ -11,14 +11,18 @@ import "./Home.scss";
 import Jumbotron from "../components/jumbotron/Jumbotron";
 import Cards from "../components/cards/Cards";
 import ListBook from "../components/listBook/ListBook";
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
 
-const Home = ({state}) => {
+const Home = () => {
+
+  const [myContext] = useContext(UserContext)
 
   const navigate = useNavigate()
 
   // jika sewaktu halaman dirender pertama kali ada local storage isAdmin maka navigate
   useEffect(() => {
-    state.user.role === "admin" &&
+    myContext.user.role === "admin" &&
     navigate("/list_transaction");
   });
 

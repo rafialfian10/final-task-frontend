@@ -1,7 +1,7 @@
 // components
+// eslint-disable-next-line no-unused-vars
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useContext } from "react";
-import { useNavigate } from 'react-router-dom'
 import { UserContext } from "./context/userContext";
 
 // api
@@ -11,21 +11,19 @@ import { API, setAuthToken } from "./config/api";
 import Navbars from "./components/navbar/Navbar";
 import Home from "./Home/Home";
 import IncrementDetailBook from "./containers/user_pages/increment_detail_book/IncrementDetailBook";
-import Profile from "./containers/user_pages/profile/Profile";
 import AddBook from "./containers/admin_pages/add_book/AddBook";
 import ListTransaction from "./containers/admin_pages/list_transaction/ListTransaction";
 import DetailBook from "./containers/user_pages/detail_book/DetailBook";
 import Cart from "./containers/user_pages/cart/Cart";
 import { PageNotFound, PrivateRouteAdmin, PrivateRouteUser } from "./components/private_route/PrivateRoute";
 import IncomBook from "./containers/admin_pages/incom_book/IncomBook";
+import Profile from "./containers/user_pages/profile/Profile";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
 function App() {
-  
-  const navigate = useNavigate()
 
   // panggil user context(menyimpan data sebagai global state)
   const [state, dispatch] = useContext(UserContext);
@@ -67,26 +65,17 @@ function App() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // if(state.isLogin === false) {
-  //   navigate('/')
-  // } else {
-  //   if(state.user.role === 'admin') {
-  //     navigate('/list_transaction')
-  //   } else if(state.user.role === 'user') {
-  //     navigate('/')
-  //   }
-  // }
-
   return (
     <>
       <Navbars/>
       <Routes>
           {/* public */}
-          <Route exact path="/" element={<Home state={state}/>}/>
-          <Route exact path="/increment_detail_book" element={<IncrementDetailBook/>}/>
+          <Route exact path="/" element={<Home />}/>
+          <Route exact path="/increment_detail_book/:id" element={<IncrementDetailBook/>}/>
+          
           
           {/* admin */}
-          <Route element={<PrivateRouteAdmin state={state}/>}>
+          <Route element={<PrivateRouteAdmin />}>
             <Route exact path="/list_transaction" element={<ListTransaction/>}/>
             <Route exact path="/add_book" element={<AddBook/>}/>
             <Route exact path="/incom_book" element={<IncomBook/>}/>
@@ -94,10 +83,10 @@ function App() {
           
 
           {/* user */}
-          <Route element={<PrivateRouteUser state={state}/>}>
-            <Route exact path="/profile/:id" element={<Profile/>}/>
-            <Route exact path="/detail_book" element={<DetailBook/>}/>
-            <Route exact path="/cart" element={<Cart/>}/> 
+          <Route element={<PrivateRouteUser />}>
+            <Route exact path="/detail_book/:id" element={<DetailBook/>}/>
+            <Route exact path="/cart/:id" element={<Cart/>}/> 
+            <Route exact path="/profile/:id" element={<Profile/>}/> 
           </Route>
 
           <Route exact path="/:pageName" element={<PageNotFound/>} />

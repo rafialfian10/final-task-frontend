@@ -1,5 +1,4 @@
 /* eslint-disable no-lone-blocks */
-
 // components react bootstrap
 import { Button, Form, Image } from 'react-bootstrap'
 
@@ -29,7 +28,7 @@ const Profile = () => {
     id = parseInt(id);
     
     // get data user
-    let { data: usersProfiles, refetch:refetchProfile } = useQuery("usersProfilesCache", async () => {
+    let { data: usersProfiles, refetch:refetchProfile } = useQuery("profileCache", async () => {
       const response = await API.get(`/users`);
       return response.data.data;
     });

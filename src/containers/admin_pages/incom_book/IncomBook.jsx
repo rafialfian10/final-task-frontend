@@ -2,20 +2,22 @@
 import { useQuery, useMutation } from 'react-query'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ModalUpdateBook from '../modal_update_book/ModalUpdateBook';
 
 // api
 import { API } from '../../../config/api';
 
 // react bootstrap
-import {Form, Card, Dropdown} from 'react-bootstrap';
+import {Form, Card, Dropdown, Image} from 'react-bootstrap';
 
 // image
 import titik3 from '../../../assets/img/titik3.png' 
+import flower1 from '../../../assets/img/flower1.png' 
+import flower2 from '../../../assets/img/flower2.png' 
 
 // scss
 import "./IncomBook.scss";
 import Swal from "sweetalert2";
-import ModalUpdateBook from '../modal_update_book/ModalUpdateBook';
 
 const IncomBook = () => {
 
@@ -86,6 +88,8 @@ const IncomBook = () => {
 
     return (
         <>
+            <Image src={flower1} alt="" className="flower1"/>
+            <Image src={flower2} alt="" className="flower2"/>
             <h4 className='incom-title'>Incom Book</h4>
             <ModalUpdateBook modalUpdate={modalUpdate} setModalUpdate={setModalUpdate} value={value} bookId={bookId} refetchBook={refetchBook}/>
             <div className='container-list'>

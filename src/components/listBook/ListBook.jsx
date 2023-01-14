@@ -1,14 +1,19 @@
 // components
 import { useQuery } from 'react-query'
-import { API } from '../../config/api'
+import { useNavigate } from 'react-router-dom';
 
 // react bootstrap
 import {Form, Card} from 'react-bootstrap';
+
+// api
+import { API } from '../../config/api'
 
 // scss
 import "./ListBook.scss";
 
 const ListBook = () => {
+
+    const navigate = useNavigate()
 
     // query data book
     let { data: books} = useQuery('booksCache', async () => {
@@ -16,7 +21,6 @@ const ListBook = () => {
         return response.data.data;
     });
 
-    console.log(books)
     return (
         <>
             <h4 className='listbook-title'>List Book</h4>
@@ -26,7 +30,10 @@ const ListBook = () => {
                         <Card className='list-book' key={i}>
                             <Card.Img variant="top" src={book.thumbnail} className='list-image' />
                             <Card.Body className='list-desc'>
-                                <Card.Title className='list-title'>{book.title}</Card.Title>
+                                <div className='page'>
+                                    {book.quota < 0 ? <p>{book.quota = 0 }</p>: <p>{book.quota}</p>}
+                                </div>
+                                <Card.Title className='list-title' onClick={() => {navigate(`/increment_detail_book/${book.id}`)}}>{book.title}</Card.Title>
                                 <Form.Text className='list-artist'>By. {book.author}</Form.Text>
                                 <div className='container-list-price'>
                                     <Form.Text className='list-price'>Rp. {book.price.toLocaleString()}</Form.Text>

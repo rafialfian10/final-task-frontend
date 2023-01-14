@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-lone-blocks */
 // components react bootstrap
 import {Container, Nav, Navbar, Button, Form, Modal, ButtonGroup, Dropdown, Image} from "react-bootstrap";
@@ -31,6 +32,9 @@ import defaultphoto from '../../assets/img/default-photo.png';
 
 const Navbars = () => {
     const navigate = useNavigate()
+
+    // user context
+    const [state, dispatch] = useContext(UserContext);
 
     // Login modal login
     const [showReg, setShowReg] = useState(false);
@@ -134,9 +138,6 @@ const Navbars = () => {
     password: "",
   });
 
-  // user context
-  const [state, dispatch] = useContext(UserContext)
-
   const HandleChangeLogin = (event) => {
     setFormLogin({ ...formlogin, [event.target.name]: event.target.value });
   };
@@ -217,6 +218,13 @@ const Navbars = () => {
     return response.data.data;
   });
 
+  // get order cart user
+   // query data user
+  //  let { data: orderCart} = useQuery('orderCart', async () => {
+  //   const response = await API.get(`/cart_order`);
+  //   return response.data.data;
+  // });
+
   useEffect(() => {
 
   },[state])
@@ -258,31 +266,40 @@ const Navbars = () => {
                         ) : (
                           // profile navbar user
                           <Navbar.Brand>
-                            {users?.map((user, i) => {
-                              {if(user.id === state.user.id) {
-                                return (
                                   <>
-                                    <Image src={bracket} alt="" className="bracket"/>
-                                    {user.image !== "" ?  (<Image src={user.image} className="photo-profile" alt="" />) : (<Image src={defaultphoto} className="photo-profile" alt=""/>)}
-                                    <Dropdown as={ButtonGroup} className="dropdown" key={i}>
+                                  {/* {orderCart?.map((order, i) => {
+                                    <>
+                                      {console.log(order)}
+                                      <div className='qty' key={i}>{order}</div>
+                                    </>
+                                   
+                                  })} */}
+                                  <div className='qty'>1</div>
+                                    <Image src={bracket} alt="" className="bracket" onClick={() => navigate(`cart/${state?.user.id}`)}/>
+                                    {users?.map((user, i) => {
+                                      {if(user.id === state?.user.id) {
+                                        return (
+                                          <>
+                                          {user.image !== "" ?  <Image src={user.image} className="photo-profile" alt="" key={i} /> : <Image src={defaultphoto} className="photo-profile" alt="" key={i}/>}
+                                          </>
+                                        )
+                                      }}
+                                    })}
+                                    <Dropdown as={ButtonGroup} className="dropdown">
                                         <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                                           <Dropdown.Menu className="menu-dropdown">
-                                            <Dropdown.Item onClick={() => navigate(`/profile/${user.id}`)}>
+                                            <Dropdown.Item onClick={() => navigate(`/profile/${state?.user.id}`)}>
                                               <p className="text-dropdown"><Image src={profile} alt=""/> Profile</p> 
                                             </Dropdown.Item>
                                             <Dropdown.Item onClick={() => navigate(`/complain`)}>
-                                            <p className="text-dropdown"><Image src={complain} alt=""/> Complain</p> 
+                                              <p className="text-dropdown"><Image src={complain} alt=""/> Complain</p> 
                                             </Dropdown.Item>
                                             <Dropdown.Item onClick={HandleLogout}>
                                             <p className="text-dropdown"><Image src={logout} alt=""/> Logout</p> 
                                             </Dropdown.Item>
                                           </Dropdown.Menu>
                                     </Dropdown>
-                                  </>
-                                )
-                              }}
-                            })}
-                              
+                                  </>              
                           </Navbar.Brand>
                         )}
                         </>

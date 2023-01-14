@@ -1,17 +1,41 @@
+import { useContext } from "react";
 import { Navigate, Outlet, useParams } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 import './PrivateRoute.scss'
 
-export const PrivateRouteAdmin = ({state}) => {
-    
-    return <>{state.user.role === "admin" ?  <Outlet/> : <Navigate to="/"/>}</>
-}
-//------------------------------------
+export const PrivateRouteAdmin = () => {
 
-export const PrivateRouteUser = ({state}) => {
-    
-    return <>{state.user.role === "user" ?  <Outlet/> : <Navigate to="/"/>}</>
+    const [myContext] = useContext(UserContext)
+    return (
+        <>
+            {!localStorage.getItem("token") ? (
+                <Navigate to="/" />
+            ) : myContext?.isLogin && myContext.user?.role === "admin" ? (
+                <Outlet />
+            ) : (
+                myContext?.isLogin && myContext.user.role === "user" && <Navigate to="/" />
+            )}
+        </>
+    )
 }
-//--------------------------------------
+// ------------------------------------
+
+export const PrivateRouteUser = () => {
+
+    const [myContext] = useContext(UserContext)
+    return (
+        <>
+            {!localStorage.getItem("token") ? (
+                <Navigate to="/" />
+            ) : myContext?.isLogin && myContext.user?.role === "user" ? (
+                <Outlet />
+            ) : (
+                myContext?.isLogin && myContext.user.role === "admin" && <Navigate to="/" />
+            )}
+        </>
+    )
+}
+
 
 export const PageNotFound = () => {
     const params = useParams;
