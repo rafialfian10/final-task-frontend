@@ -23,7 +23,6 @@ function Admin() {
     const response = await API.get(`/transactions`);
     return response.data.data;
   });
-  console.log(listTransaction)
 
   return (
     <>
@@ -50,7 +49,15 @@ function Admin() {
                   <td>{transaction.user.name}</td>
                   <td>bca.png</td>
                   <td>{transaction.cart[0].book.title}</td>
-                  <td>Rp. {transaction.total}</td>
+
+                  {/* transaction total */}
+                  {transaction.total && transaction.status === "success" ? (
+                    <td className="text-success">{transaction.total}</td>
+                  ) : (
+                    <td className="text-danger">{transaction.total}</td>
+                  )}
+
+                  {/* transaction status */}
                   {transaction.status === "success" && <td className="text-success">{transaction.status}</td>}
                   {transaction.status === "pending" && <td className="text-warning">{transaction.status}</td>}
                   {transaction.status === "failed" && <td className="text-danger">{transaction.status}</td>}
