@@ -87,12 +87,6 @@ const Cart = () => {
 // snap midtrans
  const handlePay = useMutation(async () => {
   try {
-    
-    // const data = {
-    //   qty: number,
-    //   total: number * book.price,
-    //   bookId: book.id,
-    // };
 
     // Configuration
     const config = {
@@ -106,11 +100,6 @@ const Cart = () => {
     const data = {
       total: TotalPrice,
     }
-
-    // const formData = new FormData()
-    // formData.append("qty", data.qty)
-    // formData.append("total", data.total)
-    // formData.append("book_id", data.bookId)
 
     // Insert transaction data
     const response = await API.patch("/transaction", data, config);
