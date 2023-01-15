@@ -1,5 +1,6 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable array-callback-return */
+
 // components
 import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +19,7 @@ const ListBook = () => {
     const navigate = useNavigate()
 
     // query data book
-    let { data: books} = useQuery('booksCache', async () => {
+    let { data: listBooks} = useQuery('listBooksCache', async () => {
         const response = await API.get(`/books`);
         return response.data.data;
     });
@@ -27,7 +28,7 @@ const ListBook = () => {
         <>
             <h4 className='listbook-title'>List Book</h4>
             <div className='container-list-book'>
-                {books?.map((book, i) => {
+                {listBooks?.map((book, i) => {
                     {if(book.discount <= 0) {
                         return (
                             <Card className='list-book' key={i}>

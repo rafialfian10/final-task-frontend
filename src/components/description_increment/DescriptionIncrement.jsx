@@ -2,6 +2,7 @@
 import { useQuery, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Popup from '../popup/Popup';
 
 // components react bootstrap
@@ -12,11 +13,14 @@ import { API } from '../../config/api';
 
 // scss
 import './DescriptionIncrement.scss'
+import Swal from "sweetalert2";
 
 // image
 import bracket from '../../assets/img/white-bracket.png';
 
 const DescriptionIncrement = () => {
+
+    const navigate = useNavigate()
 
     let {id} = useParams()
     id = parseInt(id)
@@ -49,8 +53,21 @@ const DescriptionIncrement = () => {
         await API.post("/cart", body, config)
         setPopup(true)
         refetchBracket()
-        
       })
+
+    // handler show login (jika belum login maka lempar kembali ke halaman home)
+    const showLogin = () => {
+    let token = localStorage.getItem("token")
+        if(!token) {     
+            //alert
+            Swal.fire({
+                text: 'Please login account',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            })
+            navigate("/")  
+        } 
+    }
 
     return (
         <> 
@@ -65,7 +82,7 @@ const DescriptionIncrement = () => {
                     <p className='detail-desc-info'>Dalam pelayaran menyusuri Venesia, Heidy bertemu raksasa bermata biru. Graeme MacLeod, pria yang mencuri napasnya di pertemuan pertama mereka. Meski ketertarikan di antara mereka begitu besar, Heidy tidak berniat menjalin asmara singkat. Graeme harus dilupakan. Ketika apa yang terjadi di Venesia tidak bisa tetap ditinggal di Venesia, Heidy mulai goyah. Apalagi Graeme ternyata lelaki gigih yang mengejarnya hingga ke Jakarta dan tak putus asa tatkala ditolak. Meski akhirnya satu per satu rahasia kelam lelaki itu terbuka, Heidy justru kian jatuh cinta. Pertanyaannya, apakah cinta memang benar-benar mampu menyatukan mereka?</p>
 
                     <div className='btn-cart'>
-                        <Button type='submit' onClick={(e) => {setPopup(); handleAddCart.mutate(e)}}><Image src={bracket} className='img-bracket'/> Add cart</Button>
+                        <Button type='submit' onClick={(e) => {setPopup(); handleAddCart.mutate(e); showLogin()}}><Image src={bracket} className='img-bracket'/> Add cart</Button>
                     </div>
                 </div>
             </div>

@@ -168,35 +168,10 @@ const Cart = () => {
     console.log(error);
   }
 });
-// //--------------------------------------  
-
-// // get data book
-// let { data: detailBooksCart} = useQuery('detailBooksCartCache', async () => {
-//   const response = await API.get(`/book/${id}`);
-//   console.log(response)
-//   return response.data.data;
-// });
-
-// console.log(detailBooksCart)
-
-    
-// // handler show login (jika belum login maka lempar kembali ke halaman home)
-// const showLogin = () => {
-//   let token = localStorage.getItem("token")
-//   if(!token) {     
-//       //alert
-//       Swal.fire({
-//           text: 'Please login account',
-//           icon: 'warning',
-//           confirmButtonText: 'Ok'
-//       })
-//       navigate("/")  
-  // } 
-// }
+// --------------------------------------  
 
     return (
         <>
-           
             <Image src={flower1} alt='' className='flower1'/>
             <Image src={flower2} alt='' className='flower2'/>
             <h4 className='cart-title'>My Cart</h4>
