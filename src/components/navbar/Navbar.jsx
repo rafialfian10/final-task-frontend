@@ -226,10 +226,6 @@ const Navbars = () => {
 
   useEffect(() => {
 
-  },[orderCartBracket])
-
-  useEffect(() => {
-
   },[state])
 
     return (

@@ -2,7 +2,6 @@
 import { useQuery, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Popup from '../popup/Popup';
 
 // components react bootstrap
@@ -19,8 +18,6 @@ import bracket from '../../assets/img/white-bracket.png';
 
 const DescriptionIncrement = () => {
 
-    const navigate = useNavigate()
-
     let {id} = useParams()
     id = parseInt(id)
 
@@ -28,8 +25,8 @@ const DescriptionIncrement = () => {
     const [popup, setPopup] = useState(false)
 
 
-     // query data book by id
-     let { data: detailBookDescription} = useQuery('bookDetailDescriptionCache', async () => {
+    // query data book by id
+    let { data: detailBookDescription, refetch: refetchBracket} = useQuery('bookDetailDescriptionCache', async () => {
         const response = await API.get(`/book/${id}`);
         return response.data.data;
     });
@@ -51,7 +48,7 @@ const DescriptionIncrement = () => {
     
         await API.post("/cart", body, config)
         setPopup(true)
-            // navigate("/")
+        refetchBracket()
         
       })
 

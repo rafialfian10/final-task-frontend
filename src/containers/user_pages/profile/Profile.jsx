@@ -56,6 +56,7 @@ const Profile = () => {
       console.log(err);
     }
   });
+
     return (
         <>
             <Image src={flower1} alt="" className='flower1'/>

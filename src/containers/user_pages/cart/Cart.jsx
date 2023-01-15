@@ -45,124 +45,129 @@ const Cart = () => {
     refetchOrder()       
   }
 
-//   const navigate = useNavigate()
+ 
+  const navigate = useNavigate()
     
-//   let {id}= useParams()
-//   id = parseInt(id)
+  let {id}= useParams()
+  id = parseInt(id)
 
-//   const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(0)
 
-//   // HandlerPlus Function
-//   const HandlerPlus = () => {
-//       setNumber(number+1)
-//       if (number === detailBooksCart?.quota){
-//         setNumber(detailBooksCart?.quota)
-//         Swal.fire({
-//           text: 'Quota is empty',
-//           icon: 'error',
-//           confirmButtonText: 'Ok'
-//         })
-//       } else if(detailBooksCart?.quota === 0){
-//         setNumber(detailBooksCart?.quota)
-//       }
-//   }
+  // HandlerPlus Function
+  // const HandlerPlus = () => {
+  //     setNumber(number+1)
+  //     if (number === orderCart?.quota){
+  //       setNumber(orderCart?.quota)
+  //       Swal.fire({
+  //         text: 'Quota is empty',
+  //         icon: 'error',
+  //         confirmButtonText: 'Ok'
+  //       })
+  //     } else if(orderCart?.quota === 0){
+  //       setNumber(orderCart?.quota)
+  //     }
+  // }
 
-//   useEffect(() => {
-//     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js"; // panngil snap middtrans
-//     const myMidtransClientKey = "SB-Mid-client-xBHWdiuU4aVE9vOq"; // clint key untuk custom snap
+  useEffect(() => {
+    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js"; // panngil snap middtrans
+    const myMidtransClientKey = "SB-Mid-client-xBHWdiuU4aVE9vOq"; // clint key untuk custom snap
   
-//     let scriptTag = document.createElement("script");
-//     scriptTag.src = midtransScriptUrl;
+    let scriptTag = document.createElement("script");
+    scriptTag.src = midtransScriptUrl;
    
-//     scriptTag.setAttribute("data-client-key", myMidtransClientKey);
+    scriptTag.setAttribute("data-client-key", myMidtransClientKey);
   
-//     document.body.appendChild(scriptTag);
-//     return () => {
-//       document.body.removeChild(scriptTag);
-//     };
-//   }, []);
-//   //----------------------------------------
+    document.body.appendChild(scriptTag);
+    return () => {
+      document.body.removeChild(scriptTag);
+    };
+  }, []);
+// ----------------------------------------
 
-//  // handle snap buy (parameter dari trip yang dilooping)
-//  const handleBuy = useMutation(async (book) => {
-//   try {
-//     // Get data from trip
-//     const data = {
-//       qty: number,
-//       total: number * book.price,
-//       bookId: book.id,
-//     };
+// snap midtrans
+ const handlePay = useMutation(async () => {
+  try {
+    
+    // const data = {
+    //   qty: number,
+    //   total: number * book.price,
+    //   bookId: book.id,
+    // };
 
-//     // Configuration
-//     const config = {
-//       method: "POST",
-//       headers: {
-//         Authorization: "Bearer " + localStorage.getItem("token"),
-//         "Content-type": "multipart/form-data",
-//       },
-//     };
+    // Configuration
+    const config = {
+      method: "PATCH",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-type": "apllication/json",
+      },
+    };
 
-//     const formData = new FormData()
-//     formData.append("qty", data.qty)
-//     formData.append("total", data.total)
-//     formData.append("book_id", data.bookId)
+    const data = {
+      total: TotalPrice,
+    }
 
-//     // Insert transaction data
-//     const response = await API.post("/transaction", formData, config);
+    // const formData = new FormData()
+    // formData.append("qty", data.qty)
+    // formData.append("total", data.total)
+    // formData.append("book_id", data.bookId)
 
-//     console.log("response beli", response)
-//     const token = response.data.data.token
-//     console.log(token)
+    // Insert transaction data
+    const response = await API.patch("/transaction", data, config);
 
-//     window.snap.pay(token, {
-//       onSuccess: function (result) {
-//         console.log(result);
-//         Swal.fire({
-//           text: 'Transaction success',
-//           icon: 'success',
-//           confirmButtonText: 'Ok'
-//         })
-//         navigate(`/profile/${id}`);
-//         window.location.reload()
-//       },
-//       onPending: function (result) {
-//         console.log(result);
-//         navigate(`/detail/${id}`);
-//         window.location.reload()
-//       },
-//       onError: function (result) {
-//         console.log(result);
-//         Swal.fire({
-//           title: 'Are you sure to cancel transaction?',
-//           icon: 'warning',
-//           showCancelButton: true,
-//           confirmButtonColor: '#3085d6',
-//           cancelButtonColor: '#d33',
-//           confirmButtonText: 'Yes!'
-//         }).then((result) => {
-//           if (result.isConfirmed) {
-//             Swal.fire({
-//               icon: 'success',
-//               text: 'cancel transaction successfully'
-//         })
-//         }
-//         })
-//         navigate(`/detail/${id}`)
+    console.log("response beli", response)
+    const token = response.data.data.token
+    console.log(token)
+
+    window.snap.pay(token, {
+      onSuccess: function (result) {
+        console.log(result);
+        Swal.fire({
+          text: 'Transaction success',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        })
+        navigate(`/profile/${id}`);
+        window.location.reload()
+      },
+      onPending: function (result) {
+        console.log(result);
+        navigate(`/cart/${id}`);
+        window.location.reload()
+      },
+      onError: function (result) {
+        console.log(result);
+        Swal.fire({
+          title: 'Are you sure to cancel transaction?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              icon: 'success',
+              text: 'cancel transaction successfully'
+        })
+        }
+        })
+        navigate(`/cart/${id}`)
         
-//       },
-//       onClose: function () {
-//         Swal.fire({
-//           text: 'please make payment first',
-//           confirmButtonText: 'Ok'
-//         })
+      },
+      onClose: function () {
+        Swal.fire({
+          text: 'please make payment first',
+          confirmButtonText: 'Ok'
+        })
 
-//       },
-//     })
+      },
+    })
 
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+  } catch (error) {
+    console.log(error);
+  }
+});
 // //--------------------------------------  
 
 // // get data book
@@ -232,7 +237,7 @@ const Cart = () => {
                     </div>
                     <div className='transaction'>
                             <Image src={transaction} className='img-transaction' alt=''/>
-                            <Button className='btn-transaction'>Pay</Button>
+                            <Button className='btn-transaction' onClick={() => handlePay.mutate()}>Pay</Button>
                     </div>
                   </div>
                 </div>

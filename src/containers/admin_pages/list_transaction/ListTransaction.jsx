@@ -1,5 +1,10 @@
+//components react bootstrap
 import {Table, Image} from 'react-bootstrap';
-import { useState } from 'react';
+
+// component
+import { useQuery } from 'react-query';
+
+// api
 import { API } from '../../../config/api';
 
 // css
@@ -10,6 +15,15 @@ import flower1 from '../../../assets/img/flower1.png';
 import flower2 from '../../../assets/img/flower2.png';
 
 function Admin() {
+
+  let no = 1
+
+   // get transaction user book
+   let { data: listTransaction } = useQuery('listTransaction', async () => {
+    const response = await API.get(`/transactions`);
+    return response.data.data;
+  });
+  console.log(listTransaction)
 
   return (
     <>
@@ -29,22 +43,20 @@ function Admin() {
         </thead>
         <tbody>
           <>
-            {/* {transactions?.map((transaction, i) => { */}
-              {/* return ( */}
-                <tr>
-                <td>1</td>
-                <td>Rafi Alfian</td>
-                <td>bca.png</td>
-                <td>My Own Private Mr. Cool</td>
-                <td>Rp. 75.000</td>
-                <td>Approve</td>
-                {/* {transaction.status === "success" && <td className="text-success">{transaction.status}</td>}
-                {transaction.status === "pending" && <td className="text-warning">{transaction.status}</td>}
-                {transaction.status === "failed" && <td className="text-danger">{transaction.status}</td>} */}
-                {/* <td><img src={search} alt="" className="search" onClick={() => setModalApproved(true)} /></td> */}
-                </tr>
-              {/* ) */}
-            {/* })} */}
+              {listTransaction?.map((transaction, i) => {
+                return (
+                  <tr>
+                  <td>{no++}</td>
+                  <td>{transaction.user.name}</td>
+                  <td>bca.png</td>
+                  <td>{transaction.cart[0].book.title}</td>
+                  <td>Rp. {transaction.total}</td>
+                  {transaction.status === "success" && <td className="text-success">{transaction.status}</td>}
+                  {transaction.status === "pending" && <td className="text-warning">{transaction.status}</td>}
+                  {transaction.status === "failed" && <td className="text-danger">{transaction.status}</td>}
+                  </tr>  
+                )
+              })}         
           </>
         </tbody>
         </Table>
