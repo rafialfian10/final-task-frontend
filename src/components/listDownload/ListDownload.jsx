@@ -17,7 +17,34 @@ const ListDownload = () => {
         return response.data.data;
     });
 
-    console.log(transactionBook)
+    const handleDownloadFile = (fileURL) => {
+        fetch(fileURL, {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/pdf',
+            },
+        })
+        .then((response) => response.blob())
+        .then((blob) => {
+        // Create blob link to download
+        const url = window.URL.createObjectURL(new Blob([blob]),);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute(
+        'download',
+        `FileName.pdf`,
+        );
+
+        // Append to html link element page
+        document.body.appendChild(link);
+
+        // Start download
+        link.click();
+
+        // Clean up and remove the link
+        link.parentNode.removeChild(link);
+        });
+    }
 
     return (
         <>
@@ -33,7 +60,7 @@ const ListDownload = () => {
                                 <Card.Title className='list-title'>{transaction.cart[0].book.title}</Card.Title>
                                 <Form.Text className='list-artist'>By. {transaction.cart[0].book.author}</Form.Text>
                                 <div className='container-btn-download'>
-                                    <Button className='btn-download-book'>Download</Button>
+                                    <Button className='btn-download-book' onClick={() => handleDownloadFile(transaction.cart[0].book.book_attachment)}>Download</Button>
                                 </div>
                             </Card.Body>
                         </Card>
