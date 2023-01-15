@@ -17,12 +17,16 @@ const ListDownload = () => {
         return response.data.data;
     });
 
+    console.log(transactionBook)
+
     return (
         <>
             <Form.Text className='download-title'>My Books</Form.Text>
             <div className='container-download'>
                 {transactionBook?.map((transaction, i) => {
                     return (
+                        <>
+                        {console.log(transaction)}
                         <Card className='list-download' key={i}>
                             <Card.Img variant="top" src={transaction.cart[0].book.thumbnail} className='img-list-download' />
                             <Card.Body className='list-desc'>
@@ -33,6 +37,7 @@ const ListDownload = () => {
                                 </div>
                             </Card.Body>
                         </Card>
+                        </>
                     )
                 })}
             </div>
