@@ -37,12 +37,6 @@ const IncomBook = () => {
 
     // state id trip
     const [bookId, setBookId] = useState()
-
-    const config = {
-        headers: {
-        'Content-type': 'multipart/form-data',
-        },
-     };
     
     // handle delete trip
     const handleDeleteBook = useMutation( async (id) => {
