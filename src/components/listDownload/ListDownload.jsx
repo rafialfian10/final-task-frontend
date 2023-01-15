@@ -12,10 +12,10 @@ import "./ListDownload.scss";
 
 const ListDownload = () => {
     // get transaction user book
-  let { data: transactionBook } = useQuery('orderCart', async () => {
-    const response = await API.get(`/my-trans`);
-    return response.data.data;
-  });
+    let { data: transactionBook } = useQuery('orderCart', async () => {
+        const response = await API.get(`/my-trans`);
+        return response.data.data;
+    });
 
     return (
         <>

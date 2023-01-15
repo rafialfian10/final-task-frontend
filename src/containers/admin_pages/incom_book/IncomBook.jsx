@@ -101,7 +101,7 @@ const IncomBook = () => {
                             </Dropdown>
                             <Card.Img variant="top" src={book.thumbnail} className='list-image' />
                             <Card.Body className='list-desc'>
-                                <Card.Title className='list-title'>{book.title}</Card.Title>
+                                <Card.Title className='list-title2'>{book.title}</Card.Title>
                                 <Form.Text className='list-artist'>By. {book.author}</Form.Text>
                                 <div className='container-list-price'>
                                     <Form.Text className='list-price'>Rp. {book.price.toLocaleString()}</Form.Text>
