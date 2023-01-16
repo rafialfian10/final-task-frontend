@@ -287,7 +287,7 @@ const Navbars = () => {
                                             <Dropdown.Item onClick={() => navigate(`/profile/${state?.user.id}`)}>
                                               <p className="text-dropdown"><Image src={profile} alt=""/> Profile</p> 
                                             </Dropdown.Item>
-                                            <Dropdown.Item onClick={() => navigate(`/complain`)}>
+                                            <Dropdown.Item onClick={() => navigate(`/complain_admin`)}>
                                               <p className="text-dropdown"><Image src={complain} alt=""/> Complain</p> 
                                             </Dropdown.Item>
                                             <Dropdown.Item onClick={HandleLogout}>
