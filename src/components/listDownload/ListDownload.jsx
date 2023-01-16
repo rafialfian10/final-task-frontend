@@ -61,7 +61,7 @@ const handleDownloadFile = (fileURL) => {
                                 <Card.Title className='list-title'>{transaction.cart[0].book.title}</Card.Title>
                                 <Form.Text className='list-artist'>By. {transaction.cart[0].book.author}</Form.Text>
                                 <div className='container-btn-download'>
-                                    <a className='btn-download-book' href={transaction.cart[0].book.book_attachment}>Download</a>
+                                    <Button className='btn-download-book' onClick={() => handleDownloadFile(transaction.cart[0].book.book_attachment)}>Download</Button>
                                 </div>
                             </Card.Body>
                         </Card>
