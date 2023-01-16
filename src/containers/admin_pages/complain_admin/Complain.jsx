@@ -61,7 +61,7 @@ const ComplainAdmin = () =>  {
                     />
                   </Col>
                   <Col className="mt-3 ms-2">
-                    <strong className="mt-3 fs-5">Azizul hakim</strong>
+                    <strong className="mt-3 fs-5">Dion</strong>
                   </Col>
                 </Row>
               </Card>
