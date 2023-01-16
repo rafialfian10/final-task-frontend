@@ -69,7 +69,7 @@ const Cards = () => {
         <>
             <Popup popup={popup} setPopup={setPopup} />
             <Popup popup={popup} setPopup={setPopup} />
-            <Swiper slidesPerView={3} spaceBetween={30} pagination={{ clickable: true}} modules={[Pagination]}className="mySwiper ">
+            <Swiper slidesPerView={3} spaceBetween={30} pagination={{ clickable: true}} modules={[Pagination]}className="mySwiper container-card-slider">
                 <SwiperSlide className="sub-content-card">
                     {booksPromo?.map((book, i) => {
                         return (
