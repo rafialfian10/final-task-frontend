@@ -18,7 +18,9 @@ import Cart from "./containers/user_pages/cart/Cart";
 import { PageNotFound, PrivateRouteAdmin, PrivateRouteUser } from "./components/private_route/PrivateRoute";
 import IncomBook from "./containers/admin_pages/incom_book/IncomBook";
 import Profile from "./containers/user_pages/profile/Profile";
-import ComplainAdmin from "./containers/admin_pages/complain_admin/Complain";
+import ComplainUser from "./containers/user_pages/complain_user/ComplainUser";
+import ComplainAdmin from "./containers/user_pages/complain_admin/Complain";
+// import ComplainAdmin from "./containers/admin_pages/complain_admin/ComplainAdmin";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -88,6 +90,7 @@ function App() {
             <Route exact path="/detail_book/:id" element={<DetailBook/>}/>
             <Route exact path="/cart/:id" element={<Cart/>}/> 
             <Route exact path="/profile/:id" element={<Profile/>}/> 
+            <Route exact path="/complain_user" element={<ComplainUser/>}/>
           </Route>
 
           <Route exact path="/:pageName" element={<PageNotFound/>} />

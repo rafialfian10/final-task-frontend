@@ -6,13 +6,13 @@ import profile2 from "../assest/img/images.jpg"
 import status from "../assest/icon/status.svg"
 import send from "../assest/icon/send.svg"
 
-const ComplainAdmin = () =>  {
+const ComplainUser = () =>  {
   return (
     <>
       <Container>
         <Row className="mt-5">
           <Row>
-            <h3 className="fw-bold">Customer Complain</h3>
+            <h3 className="fw-bold">Admin Complain</h3>
           </Row>
           <Col md={4}>
             <Row>
@@ -38,7 +38,7 @@ const ComplainAdmin = () =>  {
                     />
                   </Col>
                   <Col className="mt-3 ms-2">
-                    <strong className="mt-3 fs-5">Qidam Qolbi</strong>
+                    <strong className="mt-3 fs-5">Dion</strong>
                   </Col>
                 </Row>
                 <hr />
@@ -47,7 +47,7 @@ const ComplainAdmin = () =>  {
                     <img src={users} />
                   </Col>
                   <Col className="mt-3 ms-2">
-                    <strong className="mt-3 fs-5">Dicky Joel Saputra</strong>
+                    <strong className="mt-3 fs-5">Rafi Alfian</strong>
                   </Col>
                 </Row>
                 <hr />
@@ -80,7 +80,7 @@ const ComplainAdmin = () =>  {
                     />
                   </Col>
                   <Col>
-                    <p className="mt-2 ms-2 fw-bold fs-5">Dicky Joel Saputra</p>
+                    <p className="mt-2 ms-2 fw-bold fs-5">Rafi Alfian</p>
                     <div style={{ marginTop: "-10px" }}>
                       <img src={status} width="15" />
                       <span className="ms-1">Online</span>
@@ -141,4 +141,4 @@ const ComplainAdmin = () =>  {
   )
 }
 
-export default ComplainAdmin
+export default ComplainUser
