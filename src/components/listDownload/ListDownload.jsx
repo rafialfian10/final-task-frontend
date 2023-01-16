@@ -17,7 +17,8 @@ const ListDownload = () => {
         return response.data.data;
     });
 
-    const handleDownloadFile = (fileURL) => {
+// handle download file pdf
+const handleDownloadFile = (fileURL) => {
         fetch(fileURL, {
             method: 'GET',
             headers: {
@@ -25,9 +26,9 @@ const ListDownload = () => {
             },
         })
         .then((response) => response.blob())
-        .then((blob) => {
-        // Create blob link to download
-        const url = window.URL.createObjectURL(new Blob([blob]),);
+        .then((response) => {
+        
+        const url = window.URL.createObjectURL(new Blob([response]),);
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute(
@@ -60,7 +61,7 @@ const ListDownload = () => {
                                 <Card.Title className='list-title'>{transaction.cart[0].book.title}</Card.Title>
                                 <Form.Text className='list-artist'>By. {transaction.cart[0].book.author}</Form.Text>
                                 <div className='container-btn-download'>
-                                    <Button className='btn-download-book' onClick={() => handleDownloadFile(transaction.cart[0].book.book_attachment)}>Download</Button>
+                                    <a className='btn-download-book' href={transaction.cart[0].book.book_attachment}>Download</a>
                                 </div>
                             </Card.Body>
                         </Card>
