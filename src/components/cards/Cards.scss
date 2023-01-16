@@ -2,27 +2,32 @@
     width: 100vw;
     display: flex;
     flex-direction: row !important;
+    flex-wrap: nowrap !important;
     margin-top: -200px !important;
     background-color: transparent !important;
 }
 
 .sub-content-card {
-    width: 100% !important;
+    width: 40% !important;
+    // height: 250px;
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
     margin: 0px !important;
     margin-right: 20px;
     padding: 0px !important;
+    border: 1px solid red;
 }
 
 .book-container-promo {
-    width: 40% !important;
+    width: 100% !important;
     display: flex;
     flex-direction: row;
     margin: 0px !important;
     margin-right: 30px !important;
     background-color: transparent;
-    border: none !important;
+    border: 1px solid black !important;
 }
 
 .card-image {
