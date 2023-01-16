@@ -1,21 +1,23 @@
-.container-card {
+.container-card-slider {
     width: 100vw;
-    height: 350px;
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
     margin-top: -200px;
+    margin-right: 20px;
     background-color: transparent !important;
 }
 
 .sub-content-card {
-    width: 50%;
+    width: 100% !important;
     display: flex;
     flex-direction: row;
     margin: 0px !important;
+    margin-right: 20px;
     padding: 0px !important;
 }
 
 .book-container-promo {
+    width: 50% !important;
     display: flex;
     flex-direction: row;
     margin: 0px !important;

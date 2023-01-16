@@ -94,7 +94,7 @@ const ComplainAdmin = () =>  {
                 </Row>
                 <Row sm={3} className="justify-content-end">
                   <Card.Text className="bg-light rounded-2 p-2">
-                    Hallo Kak Dicky. Estimasi pengiriman ke alamat kakak 3 hari
+                    Hallo Kak Dion. Estimasi pengiriman ke alamat kakak 3 hari
                     ya, mohon ditunggu
                   </Card.Text>
                 </Row>

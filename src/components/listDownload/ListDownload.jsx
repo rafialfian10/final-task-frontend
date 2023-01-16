@@ -18,20 +18,34 @@ const ListDownload = () => {
     });
 
 // handle download file pdf
-const handleDownloadFile = (urlFile) => {
-    // using Java Script method to get PDF file
-    fetch(urlFile).then(response => {
-        response.blob().then(blob => {
-            // Creating new object of PDF file
-            const fileURL = window.URL.createObjectURL(blob);
-            // Setting various property values
-            let alink = document.createElement('a');
-            alink.href = fileURL;
-            alink.download = urlFile;
-            alink.click();
+const handleDownloadFile = (fileURL) => {
+        fetch(fileURL, {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/pdf',
+            },
         })
-    })
-}
+        .then((response) => response.blob())
+        .then((response) => {
+        
+        const url = window.URL.createObjectURL(new Blob([response]),);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute(
+        'download',
+        `FileName.pdf`,
+        );
+
+        // Append to html link element page
+        document.body.appendChild(link);
+
+        // Start download
+        link.click();
+
+        // Clean up and remove the link
+        link.parentNode.removeChild(link);
+        });
+    }
 
     return (
         <>
