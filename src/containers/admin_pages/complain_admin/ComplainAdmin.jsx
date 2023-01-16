@@ -1,10 +1,8 @@
 import React from "react"
 import { Row, Container, Col, Card } from "react-bootstrap"
-import users from "../assest/icon/user.svg"
-import profile1 from "../assest/img/profile.png"
-import profile2 from "../assest/img/images.jpg"
-import status from "../assest/icon/status.svg"
-import send from "../assest/icon/send.svg"
+
+import send from "../../../assets/img/send.png"
+import saitama from "../../../assets/img/saitama.png"
 
 const ComplainAdmin = () =>  {
   return (
@@ -12,14 +10,14 @@ const ComplainAdmin = () =>  {
       <Container>
         <Row className="mt-5">
           <Row>
-            <h3 className="fw-bold">Customer Complain</h3>
+            <h3 className="fw-bold">Admin Complain</h3>
           </Row>
           <Col md={4}>
             <Row>
               <Card className="p-4">
                 <Row>
                   <Col sm={2}>
-                    <img src={users} />
+                    <img src={saitama} />
                   </Col>
                   <Col className="mt-3">
                     <strong className="ms-2 mt-3 fs-5">
@@ -31,20 +29,11 @@ const ComplainAdmin = () =>  {
                 <Row>
                   <Col sm={2}>
                     <img
-                      src={profile1}
+                      src={saitama}
                       width="60"
                       height="60"
                       className="rounded-5"
                     />
-                  </Col>
-                  <Col className="mt-3 ms-2">
-                    <strong className="mt-3 fs-5">Rafi Alfian</strong>
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col sm={2}>
-                    <img src={users} />
                   </Col>
                   <Col className="mt-3 ms-2">
                     <strong className="mt-3 fs-5">Dion</strong>
@@ -53,15 +42,24 @@ const ComplainAdmin = () =>  {
                 <hr />
                 <Row>
                   <Col sm={2}>
+                    <img src={saitama} />
+                  </Col>
+                  <Col className="mt-3 ms-2">
+                    <strong className="mt-3 fs-5">Rafi Alfian</strong>
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col sm={2}>
                     <img
-                      src={profile2}
+                      src={saitama}
                       width="60"
                       height="60"
                       className="rounded-5"
                     />
                   </Col>
                   <Col className="mt-3 ms-2">
-                    <strong className="mt-3 fs-5">Rafi Alfian</strong>
+                    <strong className="mt-3 fs-5">Dion</strong>
                   </Col>
                 </Row>
               </Card>
@@ -73,16 +71,16 @@ const ComplainAdmin = () =>  {
                 <Row>
                   <Col md={1}>
                     <img
-                      src={profile1}
+                      src={saitama}
                       width="60"
                       height="60"
                       className="rounded-5"
                     />
                   </Col>
                   <Col>
-                    <p className="mt-2 ms-2 fw-bold fs-5">Dion</p>
+                    <p className="mt-2 ms-2 fw-bold fs-5">Rafi Alfian</p>
                     <div style={{ marginTop: "-10px" }}>
-                      <img src={status} width="15" />
+                      <img src={saitama} width="15" />
                       <span className="ms-1">Online</span>
                     </div>
                   </Col>
