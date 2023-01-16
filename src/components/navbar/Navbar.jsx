@@ -253,7 +253,7 @@ const Navbars = () => {
                                     <Dropdown.Item onClick={() => navigate(`/incom_book`)}>
                                     <p className="text-dropdown"><Image src={addbook} alt=""/>Incom Book</p> 
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => navigate(`/complain`)}>
+                                    <Dropdown.Item onClick={() => navigate(`/complain_admin`)}>
                                     <p className="text-dropdown"><Image src={complain} alt=""/>Complain</p> 
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={HandleLogout}>
