@@ -19,8 +19,7 @@ import { PageNotFound, PrivateRouteAdmin, PrivateRouteUser } from "./components/
 import IncomBook from "./containers/admin_pages/incom_book/IncomBook";
 import Profile from "./containers/user_pages/profile/Profile";
 import ComplainUser from "./containers/user_pages/complain_user/ComplainUser";
-import ComplainAdmin from "./containers/user_pages/complain_admin/Complain";
-// import ComplainAdmin from "./containers/admin_pages/complain_admin/ComplainAdmin";
+import ComplainAdmin from "./containers/user_pages/complain_admin/ComplainAdmin";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
