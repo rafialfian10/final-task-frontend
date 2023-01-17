@@ -51,7 +51,7 @@ const Cart = () => {
   let {id}= useParams()
   id = parseInt(id)
 
-  const [number, setNumber] = useState(0)
+  // const [number, setNumber] = useState(0)
 
   // HandlerPlus Function
   // const HandlerPlus = () => {

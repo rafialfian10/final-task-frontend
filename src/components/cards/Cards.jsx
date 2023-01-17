@@ -68,11 +68,11 @@ const Cards = () => {
     return (
         <>
             <Popup popup={popup} setPopup={setPopup} />
-            <Swiper slidesPerView={3} spaceBetween={30} pagination={{ clickable: true}} modules={[Pagination]}className="mySwiper container-card-slider">
-                <SwiperSlide className="sub-content-card">
-                    {booksPromo?.map((book, i) => {
-                        return (
-                            <>
+            <Swiper slidesPerView={3} spaceBetween={50} pagination={{ clickable: true}} modules={[Pagination]}className="mySwiper container-card-slider">
+                {booksPromo?.map((book, i) => {
+                    return (
+                        <SwiperSlide>
+                            <div className="container-sub-card-slider">
                                 <Card className="book-container-promo" key={i}>
                                     <Card.Img variant="top" src={book.thumbnail} className="card-image" />
                                     <Card.Body className="book-desc">
@@ -85,10 +85,10 @@ const Cards = () => {
                                         </div>
                                     </Card.Body>
                                 </Card>
-                            </>                          
-                        )
-                    })}    
-                </SwiperSlide>
+                            </div>                      
+                        </SwiperSlide>
+                    )
+                })}    
             </Swiper>
         </> 
   );
