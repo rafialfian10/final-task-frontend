@@ -21,6 +21,8 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
 
     const navigate = useNavigate()
 
+    const [preview, setPreview] = useState(null) 
+
     //state form
     const [form, setForm] = useState({
         title: '',
@@ -29,10 +31,10 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
         pages: '',
         author: '',
         price: '',
+        quota: '',
         description: '',
         book: '',
         thumbnail: '',
-        quota: '',
     })
 
     // console.log("Form", form)
@@ -45,10 +47,10 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
             pages: value?.pages,
             author: value?.author,
             price: value?.price,
+            quota: value?.quota,
             description: value?.description,
             book: value?.book,
             thumbnail: value?.thumbnail,
-            quota: value?.quota,
         })
     }, [value])
 
@@ -60,23 +62,27 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
         pages: '',
         author: '',
         price: '',
+        quota: '',
         description: '',
         book: '',
         thumbnail: '',
-        quota: '',
     });
 
     // handle change
     const handleChange = (e) => {
-        setForm({
-        ...form,
+        setForm({...form,
         [e.target.name]:
             e.target.type === 'file' ? e.target.files : e.target.value,
         })
+
+        if (e.target.type === 'file') {
+            let url = URL.createObjectURL(e.target.files[0]);
+            setPreview(url);
+        }
     };
 
     // handle set discount book
-    const handleUpdateBookPromo = useMutation( async () => {
+    const handleUpdateBook = useMutation( async (e) => {
         try {
             const config = {
                 headers: {
@@ -92,10 +98,10 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
                 pages: '',
                 author: '',
                 price: '',
+                quota: '',
                 description: '',
                 book: '',
                 thumbnail: '',
-                quota: '',
             };
 
             // validasi title
@@ -144,6 +150,15 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
                 messageError.price = ""
             }
 
+            // validasi quota
+            if (form.quota === "") {
+                messageError.quota = "Quota must be filled out";
+            } else if (form.quota < 0) {
+                messageError.quota = "can't be less than 0"
+            } else {
+                messageError.quota = ""
+            }
+
             // validasi description
             if (form.description === "") {
                 messageError.description = "Description must be filled out";
@@ -164,29 +179,18 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
             } else {
                 messageError.thumbnail = ""
             }
-
-            // validasi quota
-            if (form.quota === "") {
-                messageError.quota = "Quota must be filled out";
-            } else if (form.quota < 0) {
-                messageError.quota = "can't be less than 0"
-            } else {
-                messageError.quota = ""
-            }
-
-
+ 
             if (messageError.title === "" &&
                 messageError.publicationDate === "" &&
                 messageError.isbn === "" &&
                 messageError.pages === "" &&
                 messageError.author === "" &&
                 messageError.price === "" &&
+                messageError.quota === "" &&
                 messageError.description === "" &&
                 messageError.book === "" &&
-                messageError.thumbnail === "" &&
-                messageError.quota === ""
+                messageError.thumbnail === ""
                 ) {
-
                 const formData = new FormData();
                 formData.append('title', form.title);
                 formData.append('publication_date', form.publicationDate);
@@ -205,7 +209,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
                     refetchBook()
                 }
 
-                // setModalUpdate(false)
+                setModalUpdate(false)
 
                 Swal.fire({
                     text: 'Book successfully updated',
@@ -240,47 +244,47 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
             <Modal show={modalUpdate} onHide={() => setModalUpdate(false)} className="modal-update-book" size="lg">
                 <Modal.Body className="modal-body-update-book">
                     <h2 className="title-update-book">Update Book</h2>
-                        <Form className='form-update-book' onSubmit={(e) => {e.preventDefault() 
-                        handleUpdateBookPromo.mutate(e)}}>
+                        <Form className='form-update-book' onSubmit={(e) => {e.preventDefault()
+                        handleUpdateBook.mutate(e)}}>
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="title" type="text" placeholder='Title' value={form.title} onChange={(e) => handleChange(e, 'title')}/>
+                        <Form.Control className="form-input" name="title" type="text" placeholder='Title' onChange={(e) => handleChange(e, 'title')} value={form.title} />
                         </Form.Group>
                         {error.title && <Form.Text className="text-danger">{error.title}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="publication_date" type="date" placeholder='Publication Date' value={form.publicationDate} onChange={(e) => handleChange(e, 'publication_date')}/>
+                        <Form.Control className="form-input" name="publicationDate" type="date" placeholder='Publication Date' onChange={(e) => handleChange(e, 'publicationDate')}  value={form.publicationDate} />
                         </Form.Group>
                         {error.publicationDate && <Form.Text className="text-danger">{error.publicationDate}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="isbn" type="text" placeholder='isbn' value={form.isbn} onChange={(e) => handleChange(e, 'isbn')}/>
+                        <Form.Control className="form-input" name="isbn" type="text" placeholder='isbn' onChange={(e) => handleChange(e, 'isbn')}   value={form.isbn} />
                         </Form.Group>
                         {error.isbn && <Form.Text className="text-danger">{error.isbn}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="pages" type="number" placeholder='Pages' value={form.pages} onChange={(e) => handleChange(e, 'pages')}/>
+                        <Form.Control className="form-input" name="pages" type="number" placeholder='Pages' onChange={(e) => handleChange(e, 'pages')}  value={form.pages} />
                         </Form.Group>
                         {error.pages && <Form.Text className="text-danger">{error.pages}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="author" type="text" placeholder='Author' value={form.author} onChange={(e) => handleChange(e, 'author')}/>
+                        <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={(e) => handleChange(e, 'author')}  value={form.author} />
                         </Form.Group>
                         {error.author && <Form.Text className="text-danger">{error.author}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="price" type="number" placeholder='Price' value={form.price} onChange={(e) => handleChange(e, 'price')}/>
+                        <Form.Control className="form-input" name="price" type="number" placeholder='Price' onChange={(e) => handleChange(e, 'price')}  value={form.price} />
                         </Form.Group>
                         {error.price && <Form.Text className="text-danger">{error.price}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="quota" type="number" placeholder='Quota' value={form.quota} onChange={(e) => handleChange(e, 'quota')}/>
+                        <Form.Control className="form-input" name="quota" type="number" placeholder='Quota' onChange={(e) => handleChange(e, 'quota')}  value={form.quota} />
                         </Form.Group>
                         {error.quota && <Form.Text className="text-danger">{error.quota}</Form.Text>}
 
                         <Form.Group className="form-group">
                         <FloatingLabel controlId="floatingTextarea2">
-                            <Form.Control as="textarea" className="form-input" name="description" placeholder='Add This Book' style={{ height: '100px' }} value={form.description} onChange={(e) => handleChange(e, 'image')}/>
+                            <Form.Control as="textarea" className="form-input" name="description" placeholder='Add This Book' style={{ height: '100px' }} onChange={(e) => handleChange(e, 'description')}  value={form.description} />
                             {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
                         </FloatingLabel>
                         </Form.Group>
@@ -291,7 +295,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
                                 <p>Book</p>
                                 <img src={attache} alt=""/>
                             </label>
-                            <Form.Control className="form-input" name="book" type="file" id="book" onChange={(e) => handleChange(e, 'book')} />
+                            <Form.Control className="form-input" name="book" type="file" id="book" onChange={(e) => handleChange(e, 'book')}/>
                         </div>
                         {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
                         </Form.Group>

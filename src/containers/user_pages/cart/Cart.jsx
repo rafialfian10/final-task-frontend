@@ -207,11 +207,11 @@ const Cart = () => {
                               <Card.Title className='review-book-title'>{order.book.title}</Card.Title>
                               <Form.Text className='review-artist'>By. {order.book.author}</Form.Text>
                               <Form.Text className='review-price'>Rp. {order.book.price.toLocaleString()}</Form.Text>
-                              <div className='content-cart'>
+                              {/* <div className='content-cart'>
                                 <button  onClick={HandlerMinus} className='minus'><img src={minus} alt=""/></button>
                                 <h5 className='value'>{number}</h5>
                                 <button onClick={HandlerPlus} className="plus"> <img src={plus} alt=""/></button>
-                              </div>
+                              </div> */}
                             </Card.Body>
                             <Button className='btn-trash' onClick={() => { handledeleteCart(order.id)}}>
                               <Image src={trash} className='img-trash' />

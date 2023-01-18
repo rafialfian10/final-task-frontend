@@ -55,7 +55,7 @@ const AddBook = () => {
       });
 
     // function handlechange data di form
-    const handleChange = (e) => {
+      const handleChange = (e) => {
         setForm({
         ...form,
         [e.target.name]:
@@ -72,7 +72,6 @@ const AddBook = () => {
     // handle submit
     const handleSubmit = useMutation( async () => {
         try {
-            // konfigurasi file
             const config = {
                 headers: {
                     'Content-type': 'multipart/form-data',
@@ -179,7 +178,7 @@ const AddBook = () => {
               ) {
                 const formData = new FormData();
                 formData.append('title', form.title);
-                formData.append('publication_date', form.publicationDate);
+                formData.append('publicationdate', form.publicationDate);
                 formData.append('author', form.author);
                 formData.append('pages', form.pages);
                 formData.append('isbn', form.isbn);
@@ -265,7 +264,7 @@ const AddBook = () => {
                         </label>
                         <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange}/>
                     </div>
-                    {error.bookAttachment && <Form.Text className="text-danger">{error.bookAttachment}</Form.Text>}
+                    {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
