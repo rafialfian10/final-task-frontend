@@ -2,12 +2,13 @@
 import { useQuery, useMutation } from 'react-query'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ModalPromo from '../modal_promo/ModalPromo';
 import ModalUpdateBook from '../modal_update_book/ModalUpdateBook';
 
 // api
 import { API } from '../../../config/api';
 
-// react bootstrap
+// component react bootstrap
 import {Form, Card, Dropdown, Image} from 'react-bootstrap';
 
 // image
@@ -32,7 +33,10 @@ const IncomBook = () => {
     // state value
     const [value, setValue] = useState()
 
-    // state modal
+    // state modal promo
+    const [modalPromo, setModalPromo] = useState(false)
+
+    // state modal update book
     const [modalUpdate, setModalUpdate] = useState(false)
 
     // state id trip
@@ -86,6 +90,7 @@ const IncomBook = () => {
             <Image src={flower2} alt="" className="flower2"/>
             <h4 className='incom-title'>Incom Book</h4>
             <ModalUpdateBook modalUpdate={modalUpdate} setModalUpdate={setModalUpdate} value={value} bookId={bookId} refetchBook={refetchBook}/>
+            <ModalPromo modalPromo={modalPromo} setModalPromo={setModalPromo} value={value} bookId={bookId} refetchBook={refetchBook}/>
             <div className='container-list'>
                 {books?.map((book, i) => {
                     return (
@@ -95,8 +100,9 @@ const IncomBook = () => {
                                 <Dropdown.Toggle id="dropdown-autoclose-true" className="toggle-trip">
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="dropdown-menu-trip">
-                                    <Dropdown.Item onClick={() => {setBookId(book.id); setModalUpdate(true); setValue(book)}}>Edit</Dropdown.Item>
-                                <Dropdown.Item onClick={() => {setBookId(book.id); handleDeleteBook.mutate(book.id)}}>Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {setBookId(book.id); setModalUpdate(true); setValue(book)}}>Update Book</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {setBookId(book.id); setModalPromo(true); setValue(book)}}>Set Discount</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => {setBookId(book.id); handleDeleteBook.mutate(book.id)}}>Delete</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                             <Card.Img variant="top" src={book.thumbnail} className='list-image' />

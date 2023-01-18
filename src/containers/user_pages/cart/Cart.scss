@@ -70,7 +70,6 @@
     font-size: 16px;
     color: #44B200;
     font-weight: bold;
-    margin-bottom: 10px !important;
 }
 
 .btn-trash {
@@ -159,6 +158,36 @@
 .btn-transaction {
     background-color: #393939;
     width: 60%;
+}
+
+.content-cart {
+    width: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.value {
+    margin: 0px !important;
+    font-size: 14px;
+}
+
+.content-cart button {
+    width: 25px !important;
+    height: 25px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.content-cart img {
+    width: 20px !important;
+    height: 20px !important;
+    background-color: transparent !important;
 }
 
 

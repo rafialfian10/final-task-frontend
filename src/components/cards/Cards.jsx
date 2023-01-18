@@ -7,7 +7,7 @@ import { Pagination } from "swiper";
 // component
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Popup from "../popup/Popup";
 
 // api
@@ -28,6 +28,9 @@ const Cards = () => {
 
     // state popup
     const [popup, setPopup] = useState(false)
+
+    // state number
+    const [number, setNumber] = useState()
 
     // books promo
     let { data: booksPromo, refetch: refetchBookPromo } = useQuery('booksPromoCache', async () => {
@@ -51,6 +54,7 @@ const Cards = () => {
           console.log(error)
         }
       }
+
     // handler show login (jika belum login maka lempar kembali ke halaman home)
     const showLogin = () => {
     let token = localStorage.getItem("token")
@@ -81,7 +85,7 @@ const Cards = () => {
                                         <Card.Text className="desc">{book.description}</Card.Text>
                                         <div className="price-container">
                                             <Form.Text className="price">Rp. {book.price.toLocaleString()}</Form.Text>
-                                            <Button className="btn-book" onClick={() => {setPopup(); handleBookPromo(book.id); showLogin()}}>Add to Cart</Button>
+                                            <Button className="btn-book" onClick={() => {handleBookPromo(book.id); showLogin()}}>Add to Cart</Button>
                                         </div>
                                     </Card.Body>
                                 </Card>

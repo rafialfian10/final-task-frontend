@@ -36,8 +36,8 @@ const AddBook = () => {
         price: '',
         quota: '',
         description: '',
-        image: '',
-        document: '',
+        book: '',
+        thumbnail: '',
     })
 
     // state error
@@ -50,8 +50,8 @@ const AddBook = () => {
         price: '',
         quota: '',
         description: '',
-        document: '',
-        image: '',
+        book: '',
+        thumbnail: '',
       });
 
     // function handlechange data di form
@@ -89,8 +89,8 @@ const AddBook = () => {
                 price: '',
                 quota: '',
                 description: '',
-                document: '',
-                image: '',
+                book: '',
+                thumbnail: '',
             };
 
             // validasi form title
@@ -151,18 +151,18 @@ const AddBook = () => {
                 messageError.description = ""
             }
 
-            // validasi form image thumbnail
-            if (form.document === "") {
-                messageError.document = "Book attachment must be filled out";
+            // validasi form book thumbnail
+            if (form.book === "") {
+                messageError.book = "Book attachment must be filled out";
             } else {
-                messageError.document = ""
+                messageError.book = ""
             }
 
             // validasi form image thumbnail
-            if (form.image === "") {
-                messageError.image = "Image thumbnail must be filled out";
+            if (form.thumbnail === "") {
+                messageError.thumbnail = "Image thumbnail must be filled out";
             } else {
-                messageError.image = ""
+                messageError.thumbnail = ""
             }
 
             if (
@@ -174,8 +174,8 @@ const AddBook = () => {
                 messageError.price === "" &&
                 messageError.quota === "" &&
                 messageError.description === "" &&
-                messageError.document === "" &&
-                messageError.image === ""
+                messageError.book === "" &&
+                messageError.thumbnail === ""
               ) {
                 const formData = new FormData();
                 formData.append('title', form.title);
@@ -186,8 +186,8 @@ const AddBook = () => {
                 formData.append('price', form.price);
                 formData.append('quota', form.quota);
                 formData.append('description', form.description);
-                formData.append('document', form.document[0]);
-                formData.append('image', form.image[0]);
+                formData.append('book', form.book[0]);
+                formData.append('thumbnail', form.thumbnail[0]);
 
                 // Insert trip data
                 const response = await API.post('/book', formData, config);
@@ -259,24 +259,24 @@ const AddBook = () => {
 
                     <Form.Group className="form-group">
                     <div className="img-upload">
-                        <label for="document" className="form-input">
+                        <label for="book" className="form-input">
                             <p>Book</p>
                             <img src={attache} alt=""/>
                         </label>
-                        <Form.Control className="form-input" name="document" type="file" id="document" onChange={handleChange}/>
+                        <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange}/>
                     </div>
-                    {error.document && <Form.Text className="text-danger">{error.document}</Form.Text>}
+                    {error.bookAttachment && <Form.Text className="text-danger">{error.bookAttachment}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
                     <div className="img-upload">
-                        <label for="image" className="form-input">
+                        <label for="thumbnail" className="form-input">
                             <p>Image</p>
                             <img src={attache} alt=""/>
                         </label>
-                        <Form.Control className="form-input" name="image" type="file" id="image" onChange={handleChange}/>
+                        <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange}/>
                     </div>
-                    {error.image && <Form.Text className="text-danger">{error.image}</Form.Text>}
+                    {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
                     </Form.Group>
 
                     <div className='btn-add-book-content'>

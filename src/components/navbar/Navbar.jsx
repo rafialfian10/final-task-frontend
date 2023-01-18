@@ -266,10 +266,10 @@ const Navbars = () => {
                           // profile navbar user
                           <Navbar.Brand>
                                   <>
-                                    {orderCartBracket ? (
-                                        <div className='qty'>{orderCartBracket?.length}</div>
+                                    {orderCartBracket?.length === 0 ? (
+                                        null
                                     ) : (
-                                      null
+                                      <div className='qty'>{orderCartBracket?.length}</div>
                                     )}
                                     <Image src={bracket} alt="" className="bracket" onClick={() => navigate(`cart/${state?.user.id}`)}/>
                                     {users?.map((user, i) => {

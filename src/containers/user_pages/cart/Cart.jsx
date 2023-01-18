@@ -14,6 +14,8 @@ import transaction from '../../../assets/img/transaction.png'
 import trash from '../../../assets/img/delete.png'
 import flower1 from '../../../assets/img/flower1.png'
 import flower2 from '../../../assets/img/flower2.png'
+import plus from '../../../assets/img/plus.png'
+import minus from '../../../assets/img/minus.png'
 
 // scss
 import './Cart.scss'
@@ -45,28 +47,36 @@ const Cart = () => {
     refetchOrder()       
   }
 
- 
   const navigate = useNavigate()
     
   let {id}= useParams()
   id = parseInt(id)
 
-  // const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(0)
 
   // HandlerPlus Function
-  // const HandlerPlus = () => {
-  //     setNumber(number+1)
-  //     if (number === orderCart?.quota){
-  //       setNumber(orderCart?.quota)
-  //       Swal.fire({
-  //         text: 'Quota is empty',
-  //         icon: 'error',
-  //         confirmButtonText: 'Ok'
-  //       })
-  //     } else if(orderCart?.quota === 0){
-  //       setNumber(orderCart?.quota)
-  //     }
-  // }
+  const  HandlerPlus = () => {
+    setNumber(number+1)
+    // if (number === detailTrips?.quota){
+    //   setNumber(detailTrips?.quota)
+    //   Swal.fire({
+    //     text: 'Quota is empty',
+    //     icon: 'error',
+    //     confirmButtonText: 'Ok'
+    //   })
+    // } else if(detailTrips?.quota === 0){
+    //   setNumber(detailTrips?.quota)
+    // }
+    }
+
+    //HandlerMinus Function
+    const HandlerMinus = () => {
+    if (number <= 1) {
+        return 1
+    } else {
+        setNumber(number-1)
+    }
+    }
 
   useEffect(() => {
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js"; // panngil snap middtrans
@@ -159,6 +169,26 @@ const Cart = () => {
 });
 // --------------------------------------  
 
+// const handleAddCart = useMutation(async (e) => {
+//   e.preventDefault()
+
+//   const config = {
+//     headers: { "Content-type": "application/json" },
+//     Authorization: "Bearer " + localStorage.getItem("token"),
+//   }
+
+//   const dataBook = {
+//     book_id: detailBookDescription.id,
+//   }
+  
+//   console.log(dataBook)
+//   const body = JSON.stringify(dataBook)
+
+//   await API.post("/cart", body, config)
+//   setPopup(true)
+//   refetchBracket()
+// })
+
     return (
         <>
             <Image src={flower1} alt='' className='flower1'/>
@@ -177,6 +207,11 @@ const Cart = () => {
                               <Card.Title className='review-book-title'>{order.book.title}</Card.Title>
                               <Form.Text className='review-artist'>By. {order.book.author}</Form.Text>
                               <Form.Text className='review-price'>Rp. {order.book.price.toLocaleString()}</Form.Text>
+                              <div className='content-cart'>
+                                <button  onClick={HandlerMinus} className='minus'><img src={minus} alt=""/></button>
+                                <h5 className='value'>{number}</h5>
+                                <button onClick={HandlerPlus} className="plus"> <img src={plus} alt=""/></button>
+                              </div>
                             </Card.Body>
                             <Button className='btn-trash' onClick={() => { handledeleteCart(order.id)}}>
                               <Image src={trash} className='img-trash' />
