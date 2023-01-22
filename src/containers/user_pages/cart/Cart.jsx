@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // components react bootstrap
 import {Form, Card, Button, Image } from 'react-bootstrap'
 
@@ -23,18 +24,30 @@ import Swal from "sweetalert2";
 
 const Cart = () => {
 
+  const navigate = useNavigate()
+    
+  let {id}= useParams()
+  id = parseInt(id)
+
   // get order cart user
   let { data: orderCart, refetch: refetchOrder} = useQuery('orderCart', async () => {
-    const response = await API.get(`/order-cart`);
+    const response = await API.get(`/carts`);
     return response.data.data;
   });
 
-  // total price cart
-  let TotalPrice = 0
+  // get transaction
+  let { data: transaction } = useQuery('transactionCache', async () => {
+    const response = await API.get(`/transactions`);
+    return response.data.data;
+  });
 
-  orderCart?.map((item) => {
-    TotalPrice += item.total
-  })
+  // transaction?.map(tran => {
+  //   tran.status.map(t => {
+  //     return (
+  //       console.log(t)
+  //     )
+  //   })
+  // })
 
   // function delete cart
   const handledeleteCart = async (id) => {
@@ -47,147 +60,131 @@ const Cart = () => {
     refetchOrder()       
   }
 
-  const navigate = useNavigate()
-    
-  let {id}= useParams()
-  id = parseInt(id)
+  const [total, setTotal] = useState(0)
 
-  const [number, setNumber] = useState(0)
+  // add counter
+  const handleAddQty = useMutation(async (id) => {
+    try {
+      const response = await API.patch(`/cart/${id}`, {
+        event: "add",
+      });
+      if (response.data.code === 200) {
+        refetchOrder();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
-  // HandlerPlus Function
-  const  HandlerPlus = () => {
-    setNumber(number+1)
-    // if (number === detailTrips?.quota){
-    //   setNumber(detailTrips?.quota)
-    //   Swal.fire({
-    //     text: 'Quota is empty',
-    //     icon: 'error',
-    //     confirmButtonText: 'Ok'
-    //   })
-    // } else if(detailTrips?.quota === 0){
-    //   setNumber(detailTrips?.quota)
-    // }
+  // less counter
+  const handleLessQty = useMutation(async (id) => {
+    try {
+      const response = await API.patch(`/cart/${id}`, {
+        event: "less",
+      });
+      if (response.data.code === 200) {
+        refetchOrder();
+      }
+    } catch (error) {
+      console.log(error);
     }
+  });
 
-    //HandlerMinus Function
-    const HandlerMinus = () => {
-    if (number <= 1) {
-        return 1
-    } else {
-        setNumber(number-1)
+  useEffect(() => {
+    let total = orderCart?.reduce((sum, order) => {
+      return sum + order.order_qty * order.book.price;
+    }, 0);
+
+    setTotal(total);
+  });
+ 
+  // snap midtrans
+  const handlePay = useMutation(async () => {
+    try {
+      let books = [];
+
+      orderCart.forEach((el) => {
+        books.push({
+          id: el.id,
+          book_id: el.book.id,
+          orderQty: el.order_qty,
+        });
+      });
+
+      const body = {
+        total: total,
+        books: books,
+      };
+      
+      const response = await API.post("/transaction", body);
+      if (response.data.code === 200) {
+        window.snap.pay(response.data.data.midtrans_id, {
+          // success
+          onSuccess: function (result) {
+            Swal.fire({
+              text: 'Transaction success',
+              icon: 'success',
+              confirmButtonText: 'Ok'
+            })
+            navigate(`/profile/${id}`);
+            window.location.reload()
+            refetchOrder();
+          },
+          // pending
+          onPending: function (result) {
+            navigate(`/cart/${id}`);
+            window.location.reload()
+            refetchOrder();
+          },
+          // error
+          onError: function (result) {
+            Swal.fire({
+              title: 'Are you sure to cancel transaction?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes!'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  Swal.fire({
+                    icon: 'success',
+                    text: 'cancel transaction successfully'
+                  })
+                }
+            })
+            refetchOrder();
+          },
+          // close
+          onClose: function () {
+            Swal.fire({
+              icon: "warning",
+              text: "please make payment first",
+            });
+            navigate(`/profile/${id}`);
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error)
     }
-    }
+  });
+  //-----------------------------------------------------------------
 
   useEffect(() => {
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js"; // panngil snap middtrans
     const myMidtransClientKey = "SB-Mid-client-xBHWdiuU4aVE9vOq"; // clint key untuk custom snap
-  
+
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransScriptUrl;
-   
-    scriptTag.setAttribute("data-client-key", myMidtransClientKey);
   
+    scriptTag.setAttribute("data-client-key", myMidtransClientKey);
+
     document.body.appendChild(scriptTag);
     return () => {
       document.body.removeChild(scriptTag);
     };
   }, []);
-// ----------------------------------------
-
-// snap midtrans
- const handlePay = useMutation(async () => {
-  try {
-
-    // Configuration
-    const config = {
-      method: "PATCH",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-        "Content-type": "apllication/json",
-      },
-    };
-
-    const data = {
-      total: TotalPrice,
-    }
-
-    // Insert transaction data
-    const response = await API.patch("/transaction", data, config);
-
-    console.log("response beli", response)
-    const token = response.data.data.token
-    console.log(token)
-
-    window.snap.pay(token, {
-      onSuccess: function (result) {
-        console.log(result);
-        Swal.fire({
-          text: 'Transaction success',
-          icon: 'success',
-          confirmButtonText: 'Ok'
-        })
-        navigate(`/profile/${id}`);
-        window.location.reload()
-      },
-      onPending: function (result) {
-        console.log(result);
-        navigate(`/cart/${id}`);
-        window.location.reload()
-      },
-      onError: function (result) {
-        console.log(result);
-        Swal.fire({
-          title: 'Are you sure to cancel transaction?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              icon: 'success',
-              text: 'cancel transaction successfully'
-        })
-        }
-        })
-        navigate(`/cart/${id}`)
-        
-      },
-      onClose: function () {
-        Swal.fire({
-          text: 'please make payment first',
-          confirmButtonText: 'Ok'
-        })
-
-      },
-    })
-
-  } catch (error) {
-    console.log(error);
-  }
-});
-// --------------------------------------  
-
-// const handleAddCart = useMutation(async (e) => {
-//   e.preventDefault()
-
-//   const config = {
-//     headers: { "Content-type": "application/json" },
-//     Authorization: "Bearer " + localStorage.getItem("token"),
-//   }
-
-//   const dataBook = {
-//     book_id: detailBookDescription.id,
-//   }
-  
-//   console.log(dataBook)
-//   const body = JSON.stringify(dataBook)
-
-//   await API.post("/cart", body, config)
-//   setPopup(true)
-//   refetchBracket()
-// })
 
     return (
         <>
@@ -198,7 +195,6 @@ const Cart = () => {
                 <div className="payment-container" >
                   <div className='content-satu'>
                     <h3 className="review">Review your order</h3>
-                    
                     {orderCart?.map((order, i) => {
                       return (
                         <Card className='container-cart' key={i}>
@@ -207,11 +203,18 @@ const Cart = () => {
                               <Card.Title className='review-book-title'>{order.book.title}</Card.Title>
                               <Form.Text className='review-artist'>By. {order.book.author}</Form.Text>
                               <Form.Text className='review-price'>Rp. {order.book.price.toLocaleString()}</Form.Text>
-                              {/* <div className='content-cart'>
-                                <button  onClick={HandlerMinus} className='minus'><img src={minus} alt=""/></button>
-                                <h5 className='value'>{number}</h5>
-                                <button onClick={HandlerPlus} className="plus"> <img src={plus} alt=""/></button>
-                              </div> */}
+                              <div className='content-cart'>
+                                <button onClick={() => {order.order_qty > 1 && handleLessQty.mutate(order.id)}} className='minus'><img src={minus} alt=""/></button>
+                                <h5 className='value'>{order.order_qty}</h5>
+                                <button  onClick={() => {order.order_qty < order.book.quota 
+                                ? handleAddQty.mutate(order.id)
+                                : Swal.fire({
+                                    icon: "error",
+                                    title: "Out of stock",
+                                  });
+                                }} className="plus"> <img src={plus} alt=""/>
+                                </button>
+                              </div>
                             </Card.Body>
                             <Button className='btn-trash' onClick={() => { handledeleteCart(order.id)}}>
                               <Image src={trash} className='img-trash' />
@@ -221,24 +224,32 @@ const Cart = () => {
                     })}
                   </div>
                     
-                  <div className="content-dua">
-                    <div className='content-subtotal'>
-                            <h5 className="subtotal1">Subtotal</h5>
-                            <h5 className='subtotal2'>{TotalPrice.toLocaleString()}</h5>
-                    </div>
-                    <div className='content-qty'>
-                            <h5 className="qty1">Qty</h5>
-                            <h5 className='qty2'>{orderCart?.length}</h5>
-                    </div>
-                    <div className='content-total'>
-                            <h5 className="total1">Total</h5>
-                            <h5 className='total2'>{TotalPrice.toLocaleString()}</h5>
-                    </div>
-                    <div className='transaction'>
-                            <Image src={transaction} className='img-transaction' alt=''/>
-                            <Button className='btn-transaction' onClick={() => handlePay.mutate()}>Pay</Button>
-                    </div>
-                  </div>
+                      <div className="content-dua">
+                        {orderCart?.map((order, i) => {
+
+                          return (
+                            <>
+                              <div className='content-subtotal' key={i}>
+                                      <h5 className="subtotal1">Subtotal</h5>
+                                      <h5 className='subtotal2'>{(order.order_qty * order.book.price).toLocaleString()}</h5>
+                              </div>
+                              <div className='content-qty'>
+                                      <h5 className="qty1">Qty</h5>
+                                      <h5 className='qty2'>{order.order_qty}</h5>
+                              </div>
+                              <div className='content-total'>
+                                      <h5 className="total1">Total</h5>
+                                      <h5 className='total2'>{(order.order_qty * order.book.price).toLocaleString()}</h5>
+                              </div>
+                              <div className='transaction'>
+                                      <Image src={transaction} className='img-transaction' alt=''/>
+                                      <Button className='btn-transaction' onClick={() => handlePay.mutate()}>Pay</Button>
+                              </div>
+                            </>
+                        )
+                      })}
+                      </div>
+
                 </div>
               
         </>

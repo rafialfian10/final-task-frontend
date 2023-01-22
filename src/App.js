@@ -93,7 +93,7 @@ function App() {
             <Route exact path="/complain_user" element={<ComplainUser/>}/>     
           </Route>
 
-          <Route exact path="/:pageName" element={<PageNotFound/>} />
+          {/* <Route exact path="/:pageName" element={<PageNotFound/>} /> */}
       </Routes>  
     </>
   );

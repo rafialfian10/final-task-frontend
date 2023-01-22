@@ -30,13 +30,15 @@ const Cards = () => {
     const [popup, setPopup] = useState(false)
 
     // state number
-    const [number, setNumber] = useState()
+    // const [number, setNumber] = useState()
 
     // books promo
     let { data: booksPromo, refetch: refetchBookPromo } = useQuery('booksPromoCache', async () => {
         const response = await API.get(`/books-promo`);
         return response.data.data;
     });
+
+    console.log(booksPromo)
     
     const handleBookPromo = async (id) => {
         try {
@@ -46,8 +48,10 @@ const Cards = () => {
     
           const body = JSON.stringify(data)
     
-          await API.post("/cart", body)
-          setPopup(true)
+          const response = await API.post("/cart", body)
+          if(response.data.code === 200) {
+            setPopup(true)
+          }
           refetchBookPromo()
 
         } catch (error) {

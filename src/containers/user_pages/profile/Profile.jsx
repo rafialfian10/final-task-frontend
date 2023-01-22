@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-lone-blocks */
 // components react bootstrap
 import { Button, Form, Image } from 'react-bootstrap'
@@ -33,29 +34,30 @@ const Profile = () => {
       return response.data.data;
     });
 
-  // handle submit image
-  const handleSubmitImage = useMutation(async (e) => {
-    try {
-      // form data
-      let formData = new FormData();
-      formData.append("image", e.target.files[0]);
 
-      // patch
-      let response = await API.patch(`/user/${id}`, formData, {
-        headers: {
-          "Content-type": "multipart/form-data",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      console.log(response)
-      if(response.status === 200) {
-        refetchProfile()
+    // handle submit image
+    const handleSubmitImage = useMutation(async (e) => {
+      try {
+        // form data
+        let formData = new FormData();
+        formData.append("thumbnail", e.target.files[0]);
+
+        // patch
+        let response = await API.patch(`/user/${id}`, formData, {
+          headers: {
+            "Content-type": "multipart/form-data",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        console.log(response)
+        if(response.data.code === 200) {
+          refetchProfile()
+        }
+
+      } catch (err) {
+        console.log(err);
       }
-
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    });
 
     return (
         <>
@@ -101,8 +103,8 @@ const Profile = () => {
                       </div>
     
                       <div className="content-profile2">
-                          {user.image !== "" ? (
-                            <Image src={user.image} alt="" /> 
+                          {user.thumbnail !== "" ? (
+                            <Image src={user.thumbnail} alt="" /> 
                             ) : (
                             <Image src={defaultPhoto} alt="" />
                           )}

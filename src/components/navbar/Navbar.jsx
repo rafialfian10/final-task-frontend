@@ -220,7 +220,7 @@ const Navbars = () => {
 
   // get order cart user
   let { data: orderCartBracket} = useQuery('orderCartBracket', async () => {
-    const response = await API.get(`/order-cart`);
+    const response = await API.get(`/carts`);
     return response.data.data;
   });
 
@@ -266,17 +266,17 @@ const Navbars = () => {
                           // profile navbar user
                           <Navbar.Brand>
                                   <>
-                                    {orderCartBracket?.length === 0 ? (
+                                    {orderCartBracket === null ? (
                                         null
                                     ) : (
                                       <div className='qty'>{orderCartBracket?.length}</div>
                                     )}
                                     <Image src={bracket} alt="" className="bracket" onClick={() => navigate(`cart/${state?.user.id}`)}/>
-                                    {users?.map((user, i) => {
+                                    {users?.map(user => {
                                       {if(user.id === state?.user.id) {
                                         return (
                                           <>
-                                          {user.image !== "" ?  <Image src={user.image} className="photo-profile" alt="" key={i} /> : <Image src={defaultphoto} className="photo-profile" alt="" key={i}/>}
+                                          {user.thumbnail !== "" ?  <Image src={user.thumbnail} className="photo-profile" alt="" key={user} /> : <Image src={defaultphoto} className="photo-profile" alt="" key={user}/>}
                                           </>
                                         )
                                       }}

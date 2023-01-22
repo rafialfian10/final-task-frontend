@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable no-lone-blocks */
 // components react bootstrap
 import { Button, Card, Form } from 'react-bootstrap'
 
@@ -12,13 +14,13 @@ import "./ListDownload.scss";
 
 const ListDownload = () => {
     // get transaction user book
-    let { data: transactionBook } = useQuery('orderCart', async () => {
-        const response = await API.get(`/my-trans`);
+    let { data: transactionBook } = useQuery('transactionBookCache', async () => {
+        const response = await API.get(`/transactions`);
         return response.data.data;
     });
 
-// handle download file pdf
-const handleDownloadFile = (fileURL) => {
+    // handle download file pdf
+    const handleDownloadFile = (fileURL) => {
         fetch(fileURL, {
             method: 'GET',
             headers: {
@@ -51,22 +53,27 @@ const handleDownloadFile = (fileURL) => {
         <>
             <Form.Text className='download-title'>My Books</Form.Text>
             <div className='container-download'>
-                {transactionBook?.map((transaction, i) => {
-                    return (
-                        <>
-                        {console.log(transaction)}
-                        <Card className='list-download' key={i}>
-                            <Card.Img variant="top" src={transaction.cart[0].book.thumbnail} className='img-list-download' />
-                            <Card.Body className='list-desc'>
-                                <Card.Title className='list-title'>{transaction.cart[0].book.title}</Card.Title>
-                                <Form.Text className='list-artist'>By. {transaction.cart[0].book.author}</Form.Text>
-                                <div className='container-btn-download'>
-                                    <Button className='btn-download-book' onClick={() => handleDownloadFile(transaction.cart[0].book.book_attachment)}>Download</Button>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                        </>
-                    )
+                {transactionBook?.map((transaction) => {
+                    {if(transaction.status === "success") {
+                        return (
+                            <>
+                                {transaction.book?.map((item, i) => {
+                                    return (    
+                                        <Card className='list-download' key={i}>
+                                            <Card.Img variant="top" src={item.thumbnail} className='img-list-download' />
+                                            <Card.Body className='list-desc'>
+                                                <Card.Title className='list-title'>{item.title}</Card.Title>
+                                                <Form.Text className='list-artist'>By. {item.author}</Form.Text>
+                                                <div className='container-btn-download'>
+                                                    <Button className='btn-download-book' onClick={() => handleDownloadFile(item.book)} >Download</Button>
+                                                </div>
+                                            </Card.Body>
+                                        </Card>
+                                    )
+                                })}
+                            </>
+                        )
+                    }}
                 })}
             </div>
         </>

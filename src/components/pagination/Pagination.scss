@@ -1,0 +1,20 @@
+.pagination {
+    width: 80vw;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start !important;
+}
+
+.page-item p:hover {
+    cursor: pointer;
+}
+
+.prev, .next {
+    width: 70px;
+    &:hover {
+        cursor: pointer;
+    }
+}

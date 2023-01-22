@@ -2,7 +2,8 @@
 import {Table, Image} from 'react-bootstrap';
 
 // component
-import { useQuery } from 'react-query';
+import { useState, useEffect } from 'react';
+import Pagination from '../../../components/pagination/Pagination';
 
 // api
 import { API } from '../../../config/api';
@@ -16,20 +17,42 @@ import flower2 from '../../../assets/img/flower2.png';
 
 function Admin() {
 
-  let no = 1
+  let no = 1;
 
-   // get transaction user book
-   let { data: listTransaction } = useQuery('listTransaction', async () => {
-    const response = await API.get(`/transactions`);
-    return response.data.data;
-  });
+  const [dataTransaction, setDataTransaction] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [halamanAktif, setHalamanAktif] = useState(1);
+  const [dataPerHalaman] = useState(2);
+
+  useEffect(() => {
+      const fetchdata = async () => {
+          setLoading(true)
+          const response = await API.get(`/transactions-admin`)
+          setDataTransaction(response.data.data)
+          setLoading(false)
+      }
+
+      fetchdata()
+  }, [])
+
+  // get current post data
+  const indexLastPost = halamanAktif * dataPerHalaman
+  const indexFirstPost = indexLastPost - dataPerHalaman 
+  const currentPost = dataTransaction.slice(indexFirstPost, indexLastPost)
+
+  if(loading) {
+    return <h4>Loading...</h4>
+  }
+
+  // function handle pagination
+  const paginate = (pageNumber) => setHalamanAktif(pageNumber)
 
   return (
     <>
-     <h4>Incoming Transaction</h4>
-     <Image src={flower1} alt="" className='flower1'/>
-     <Image src={flower2} alt="" className='flower2'/>
-     <Table striped bordered hover className="list-transaction">
+      <h4>Incoming Transaction</h4>
+      <Image src={flower1} alt="" className='flower1'/>
+      <Image src={flower2} alt="" className='flower2'/>
+      <Table striped bordered hover className="list-transaction">
         <thead>
             <tr>
             <th>No</th>
@@ -42,32 +65,33 @@ function Admin() {
         </thead>
         <tbody>
           <>
-              {listTransaction?.map((transaction, i) => {
+            {currentPost?.map((transaction, i) => {
                 return (
-                  <tr>
-                  <td>{no++}</td>
-                  <td>{transaction.user.name}</td>
-                  <td>bca.png</td>
-                  <td>{transaction.cart[0].book.title}</td>
+                  <tr key={i}>
+                    <td>{no++ + indexFirstPost}</td>
+                    <td>{transaction.user.name}</td>
+                    <td>bca.png</td>
+                    <td>{transaction.book[0].title}</td>
 
-                  {/* transaction total */}
-                  {transaction.total && transaction.status === "success" ? (
-                    <td className="text-success">{transaction.total}</td>
-                  ) : (
-                    <td className="text-danger">{transaction.total}</td>
-                  )}
+                    {/* transaction total */}
+                    {transaction.total && transaction.status === "success" ? (
+                      <td className="text-success">{transaction.total}</td>
+                    ) : (
+                      <td className="text-danger">{transaction.total}</td>
+                    )}
 
-                  {/* transaction status */}
-                  {transaction.status === "success" && <td className="text-success">{transaction.status}</td>}
-                  {transaction.status === "pending" && <td className="text-warning">{transaction.status}</td>}
-                  {transaction.status === "failed" && <td className="text-danger">{transaction.status}</td>}
+                    {/* transaction status */}
+                    {transaction.status === "success" && <td className="text-success">{transaction.status}</td>}
+                    {transaction.status === "pending" && <td className="text-warning">{transaction.status}</td>}
+                    {transaction.status === "failed" && <td className="text-danger">{transaction.status}</td>}
                   </tr>  
                 )
-              })}         
+            })}
           </>
         </tbody>
-        </Table>
-        </>
+      </Table>
+      <Pagination dataPerHalaman={dataPerHalaman} halamanAktif={halamanAktif} totalData={dataTransaction.length} paginate={paginate}/>
+    </>
   );
 }
 
