@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 // components
 import { useNavigate } from "react-router-dom";
-import { useContext, useState,  useEffect } from "react";
+import { useContext, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { UserContext } from "../../context/userContext";
 
