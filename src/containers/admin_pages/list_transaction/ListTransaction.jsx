@@ -3,7 +3,7 @@ import {Table, Image} from 'react-bootstrap';
 
 // component
 import { useState, useEffect } from 'react';
-import Pagination from '../../../components/pagination/Pagination';
+import Paginations from '../../../components/pagination/Paginations';
 
 // api
 import { API } from '../../../config/api';
@@ -22,7 +22,7 @@ function Admin() {
   const [dataTransaction, setDataTransaction] = useState([]);
   const [loading, setLoading] = useState(false);
   const [halamanAktif, setHalamanAktif] = useState(1);
-  const [dataPerHalaman] = useState(2);
+  const [dataPerHalaman] = useState(3);
 
   useEffect(() => {
       const fetchdata = async () => {
@@ -34,7 +34,7 @@ function Admin() {
 
       fetchdata()
   }, [])
-
+ 
   // get current post data
   const indexLastPost = halamanAktif * dataPerHalaman
   const indexFirstPost = indexLastPost - dataPerHalaman 
@@ -90,7 +90,7 @@ function Admin() {
           </>
         </tbody>
       </Table>
-      <Pagination dataPerHalaman={dataPerHalaman} halamanAktif={halamanAktif} totalData={dataTransaction.length} paginate={paginate}/>
+      <Paginations dataPerHalaman={dataPerHalaman} halamanAktif={halamanAktif} setHalamanAktif={setHalamanAktif} totalData={dataTransaction.length} paginate={paginate}/>
     </>
   );
 }

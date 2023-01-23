@@ -38,7 +38,7 @@ const Cards = () => {
         return response.data.data;
     });
 
-    console.log(booksPromo)
+    // console.log(booksPromo)
     
     const handleBookPromo = async (id) => {
         try {
@@ -79,9 +79,9 @@ const Cards = () => {
             <Swiper slidesPerView={3} spaceBetween={50} pagination={{ clickable: true}} modules={[Pagination]}className="mySwiper container-card-slider">
                 {booksPromo?.map((book, i) => {
                     return (
-                        <SwiperSlide>
+                        <SwiperSlide key={i}>
                             <div className="container-sub-card-slider">
-                                <Card className="book-container-promo" key={i}>
+                                <Card className="book-container-promo">
                                     <Card.Img variant="top" src={book.thumbnail} className="card-image" />
                                     <Card.Body className="book-desc">
                                         <Card.Title className="book-title">{book.title}</Card.Title>

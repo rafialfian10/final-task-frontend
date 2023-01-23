@@ -41,14 +41,6 @@ const Cart = () => {
     return response.data.data;
   });
 
-  // transaction?.map(tran => {
-  //   tran.status.map(t => {
-  //     return (
-  //       console.log(t)
-  //     )
-  //   })
-  // })
-
   // function delete cart
   const handledeleteCart = async (id) => {
     await API.delete(`/cart/${id}`);  

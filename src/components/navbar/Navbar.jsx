@@ -213,20 +213,24 @@ const Navbars = () => {
   // end process logout
 
   // query data user
-  let { data: users} = useQuery('usersCache', async () => {
+  let { data: users, refetch: refetchUser} = useQuery('usersCache', async () => {
     const response = await API.get(`/users`);
     return response.data.data;
   });
+  refetchUser()
+
 
   // get order cart user
-  let { data: orderCartBracket} = useQuery('orderCartBracket', async () => {
+  
+  let { data: orderCartBracket , refetch: refetchCartBracket} = useQuery('orderCartBracket', async () => {
     const response = await API.get(`/carts`);
     return response.data.data;
   });
+  
+  refetchCartBracket()
 
-  useEffect(() => {
-
-  },[state])
+  // useEffect(() => {
+  // },[])
 
     return (
         <>
@@ -238,8 +242,8 @@ const Navbars = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto sub-navbar">
-                   {state.isLogin === true ? (
-                        <>
+                    {state.isLogin === true ? (
+                      <>
                         {state.user.role === "admin" ? (
                           // profile navbar admin
                           <Navbar.Brand>
@@ -266,17 +270,20 @@ const Navbars = () => {
                           // profile navbar user
                           <Navbar.Brand>
                                   <>
+                                    {/* bracket */}
                                     {orderCartBracket === null ? (
                                         null
                                     ) : (
                                       <div className='qty'>{orderCartBracket?.length}</div>
                                     )}
                                     <Image src={bracket} alt="" className="bracket" onClick={() => navigate(`cart/${state?.user.id}`)}/>
-                                    {users?.map(user => {
+
+                                    {/* photo profile */}
+                                    {users?.map((user, i) => {
                                       {if(user.id === state?.user.id) {
                                         return (
                                           <>
-                                          {user.thumbnail !== "" ?  <Image src={user.thumbnail} className="photo-profile" alt="" key={user} /> : <Image src={defaultphoto} className="photo-profile" alt="" key={user}/>}
+                                            {user.thumbnail ? <Image src={user.thumbnail} className="photo-profile" alt="" /> : <Image src={defaultphoto} className="photo-profile" alt=""/>}
                                           </>
                                         )
                                       }}
@@ -298,7 +305,7 @@ const Navbars = () => {
                                   </>              
                           </Navbar.Brand>
                         )}
-                        </>
+                      </>
                    ) : (
                         <>
                             {/* modal login */}

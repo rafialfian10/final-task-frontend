@@ -1,6 +1,6 @@
 // components
 // eslint-disable-next-line no-unused-vars
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import { UserContext } from "./context/userContext";
 
@@ -31,8 +31,7 @@ function App() {
   const [state, dispatch] = useContext(UserContext);
   // console.clear();
   console.log("State :", state);
-
-
+  
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
@@ -93,7 +92,7 @@ function App() {
             <Route exact path="/complain_user" element={<ComplainUser/>}/>     
           </Route>
 
-          {/* <Route exact path="/:pageName" element={<PageNotFound/>} /> */}
+          <Route exact path="/:pageName" element={<PageNotFound/>} />
       </Routes>  
     </>
   );
