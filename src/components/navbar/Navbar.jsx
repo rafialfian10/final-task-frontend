@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 // components
 import { useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { UserContext } from "../../context/userContext";
 
@@ -42,16 +42,6 @@ const Navbars = () => {
   const [showReg, setShowReg] = useState(false);
   const handleShowReg = () => setShowReg(true);
 
-  // get data user
-  let { data: photoProfile} = useQuery('photoProfileCache', async () => {
-    const response = await API.get(`/user`);
-    return response.data.data
-  }, {
-    enabled: !!state.isLogin,
-  });
-
-  console.log("Photo :", photoProfile )
-
   // function logout
   const HandleLogout = (e) => {
     e.preventDefault();
@@ -85,9 +75,15 @@ const Navbars = () => {
   });
     
   refetchCartBracket()
+
+  // get data user
+  let { data: user} = useQuery('userCache', async () => {
+    const response = await API.get(`/user`);
+    return response.data.data
+  });
   
-  useEffect(() => {
-  },[])
+  // useEffect(() => {
+  // },[])
 
   return (
         <>
@@ -105,10 +101,10 @@ const Navbars = () => {
                         // profile navbar admin
                         <Navbar.Brand>
                           {/* image */}
-                          {photoProfile?.thumbnail === "" ? (
-                              <Image src={admin} className="photo-profile" alt="" />
+                          {user?.thumbnail !== "" ? (
+                              <Image src={user?.thumbnail} className="photo-profile" alt="" />
                             ) : (
-                              <Image src={photoProfile?.thumbnail} className="photo-profile" alt="" />
+                              <Image src={admin} className="photo-profile" alt="" />
                           )}
                           <Dropdown as={ButtonGroup} className="dropdown">
                             <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
@@ -141,16 +137,16 @@ const Navbars = () => {
                             <Image src={bracket} alt="" className="bracket" onClick={() => navigate(`cart/${state?.user.id}`)}/>
 
                             {/* image */}
-                            {photoProfile?.thumbnail === "" ? (
+                            {user?.thumbnail !== undefined && user?.thumbnail !== "" ? (
+                              <Image src={user?.thumbnail} className="photo-profile" alt="" />
+                              ) : (
                               <Image src={defaultPhoto} className="photo-profile" alt="" />
-                            ) : (
-                              <Image src={photoProfile?.thumbnail} className="photo-profile" alt="" />
                             )}
 
                               <Dropdown as={ButtonGroup} className="dropdown">
                                 <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                                   <Dropdown.Menu className="menu-dropdown">
-                                    <Dropdown.Item onClick={() => navigate(`/profile/${state?.user.id}`)}>
+                                    <Dropdown.Item onClick={() => navigate(`/profile/${user?.id}`)}>
                                       <Form.Text className="text-dropdown"><Image src={profile} alt=""/> Profile</Form.Text> 
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={() => navigate(`/complain_user`)}>
@@ -167,7 +163,7 @@ const Navbars = () => {
                     </>
                   ) : (
                       <>
-                        <Login showLog={showLog} setShowLog={setShowLog} handleShowReg={handleShowReg} handleShowLog={handleShowLog}/>
+                        <Login showLog={showLog} setShowLog={setShowLog} handleShowReg={handleShowReg} handleShowLog={handleShowLog} />
                         <Register showReg={showReg} setShowReg={setShowReg} handleShowReg={handleShowReg} setShowLog={setShowLog} />
                       </>
                   )}   

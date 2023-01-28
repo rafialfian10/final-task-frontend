@@ -3,7 +3,7 @@ import {Nav, Button, Form, Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 // components
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useMutation } from "react-query";
 import { UserContext } from "../../context/userContext";
@@ -14,10 +14,11 @@ import { API } from "../../config/api";
 // css
 import "./Login.scss";
 
-const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog}) => {
-   
+const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog }) => {
+  
+  // const navigate = useNavigate()
+
     const [state, dispatch] = useContext(UserContext);
-    const navigate = useNavigate()
 
     const handleCloseLog = () => setShowLog(false);
  
@@ -38,6 +39,7 @@ const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog}) => {
       const config = {
         headers: {
           "Content-type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       };
 
@@ -59,7 +61,7 @@ const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog}) => {
         icon: 'success',
         confirmButtonText: 'Ok'
       })
-      navigate("/")
+      window.location.href="/"
 
     } catch(err) {
       // alert
@@ -77,6 +79,14 @@ const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog}) => {
     handleCloseLog()
     handleShowReg()
   }
+
+  // if(isFetching) {
+  //   return (
+  //     <>
+  //       <h1>Loading</h1>
+  //     </>
+  //   )
+  // }
 
     return (
         <>
