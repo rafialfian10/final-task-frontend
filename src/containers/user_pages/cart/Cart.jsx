@@ -178,73 +178,69 @@ const Cart = () => {
     };
   }, []);
 
-    return (
-        <>
-            <Image src={flower1} alt='' className='flower1'/>
-            <Image src={flower2} alt='' className='flower2'/>
-            <h4 className='cart-title'>My Cart</h4>
-           
-                <div className="payment-container" >
-                  <div className='content-satu'>
-                    <h3 className="review">Review your order</h3>
-                    {orderCart?.map((order, i) => {
-                      return (
-                        <Card className='container-cart' key={i}>
-                          <Card.Img  src={order.book.thumbnail} className='img-card' />
-                            <Card.Body className='review-book-desc'>
-                              <Card.Title className='review-book-title'>{order.book.title}</Card.Title>
-                              <Form.Text className='review-artist'>By. {order.book.author}</Form.Text>
-                              <Form.Text className='review-price'>Rp. {order.book.price.toLocaleString()}</Form.Text>
-                              <div className='content-cart'>
-                                <button onClick={() => {order.order_qty > 1 && handleLessQty.mutate(order.id)}} className='minus'><img src={minus} alt=""/></button>
-                                <h5 className='value'>{order.order_qty}</h5>
-                                <button  onClick={() => {order.order_qty < order.book.quota 
-                                ? handleAddQty.mutate(order.id)
-                                : Swal.fire({
-                                    icon: "error",
-                                    title: "Out of stock",
-                                  });
-                                }} className="plus"> <img src={plus} alt=""/>
-                                </button>
-                              </div>
-                            </Card.Body>
-                            <Button className='btn-trash' onClick={() => { handledeleteCart(order.id)}}>
-                              <Image src={trash} className='img-trash' />
-                            </Button>
-                        </Card>
-                      )
-                    })}
-                  </div>
+  return (
+    <>
+      <Image src={flower1} alt='' className='flower1'/>
+      <Image src={flower2} alt='' className='flower2'/>
+      <h4 className='cart-title'>My Cart</h4>     
+        <div className="payment-container" >
+          <div className='content-satu'>
+            <h3 className="review">Review your order</h3>
+            {orderCart?.map((order, i) => {
+              return (
+                <Card className='container-cart' key={i}>
+                  <Card.Img  src={order.book.thumbnail} className='img-card' />
+                  <Card.Body className='review-book-desc'>
+                    <Card.Title className='review-book-title'>{order.book.title}</Card.Title>
+                    <Form.Text className='review-artist'>By. {order.book.author}</Form.Text>
+                    <Form.Text className='review-price'>Rp. {order.book.price.toLocaleString()}</Form.Text>
+                    <div className='content-cart'>
+                      <Button onClick={() => {order.order_qty > 1 && handleLessQty.mutate(order.id)}} className='minus'><Image src={minus} alt=""/></Button>
+                      <h5 className='value'>{order.order_qty}</h5>
+                      <Button  onClick={() => {order.order_qty < order.book.quota 
+                        ? handleAddQty.mutate(order.id)
+                        : Swal.fire({
+                            icon: "error",
+                            title: "Out of stock",
+                        });
+                      }} className="plus"> <img src={plus} alt=""/>
+                      </Button>
+                    </div>
+                  </Card.Body>
+                  <Button className='btn-trash' onClick={() => { handledeleteCart(order.id)}}>
+                    <Image src={trash} className='img-trash' />
+                  </Button>
+                </Card>
+              )
+            })}
+          </div>
                     
-                      <div className="content-dua">
-                        {orderCart?.map((order, i) => {
-
-                          return (
-                            <>
-                              <div className='content-subtotal' key={i}>
-                                      <h5 className="subtotal1">Subtotal</h5>
-                                      <h5 className='subtotal2'>{(order.order_qty * order.book.price).toLocaleString()}</h5>
-                              </div>
-                              <div className='content-qty'>
-                                      <h5 className="qty1">Qty</h5>
-                                      <h5 className='qty2'>{order.order_qty}</h5>
-                              </div>
-                              <div className='content-total'>
-                                      <h5 className="total1">Total</h5>
-                                      <h5 className='total2'>{(order.order_qty * order.book.price).toLocaleString()}</h5>
-                              </div>
-                              <div className='transaction'>
-                                      <Image src={transaction} className='img-transaction' alt=''/>
-                                      <Button className='btn-transaction' onClick={() => handlePay.mutate()}>Pay</Button>
-                              </div>
-                            </>
-                        )
-                      })}
-                      </div>
-
-                </div>
-              
-        </>
-    )
+          <div className="content-dua">
+            {orderCart?.map((order, i) => {
+              return (
+                <>
+                  <div className='content-subtotal' key={i}>
+                    <h5 className="subtotal1">Subtotal</h5>
+                    <h5 className='subtotal2'>{(order.order_qty * order.book.price).toLocaleString()}</h5>
+                  </div>
+                  <div className='content-qty'>
+                    <h5 className="qty1">Qty</h5>
+                    <h5 className='qty2'>{order.order_qty}</h5>
+                  </div>
+                </>
+              )
+            })}
+                  <div className='content-total'>
+                    <h5 className="total1">Total</h5>
+                    <h5 className='total2'>{total?.toLocaleString()}</h5>
+                  </div>
+            <div className='transaction'>
+              <Image src={transaction} className='img-transaction' alt=''/>
+              <Button className='btn-transaction' onClick={() => handlePay.mutate()}>Pay</Button>
+            </div>
+          </div>
+        </div>
+    </>
+  )
 }
 export default Cart
