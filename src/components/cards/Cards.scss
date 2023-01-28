@@ -73,5 +73,9 @@
     color: white;
     font-weight: bold;
     text-align: center !important;
-    border-color: #393939;
+    border: none !important;
+    &:hover {
+        opacity: 0.8;
+        background-color: #393939;
+    }
 }

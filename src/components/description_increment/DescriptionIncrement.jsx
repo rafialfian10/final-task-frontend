@@ -50,8 +50,10 @@ const DescriptionIncrement = () => {
         console.log(dataBook)
         const body = JSON.stringify(dataBook)
     
-        await API.post("/cart", body, config)
-        setPopup(true)
+        const response = await API.post("/cart", body, config)
+        if(response.data.code === 200) {
+            setPopup(true)
+          }
         refetchBracket()
       })
 
@@ -82,7 +84,7 @@ const DescriptionIncrement = () => {
                     <p className='detail-desc-info'>Dalam pelayaran menyusuri Venesia, Heidy bertemu raksasa bermata biru. Graeme MacLeod, pria yang mencuri napasnya di pertemuan pertama mereka. Meski ketertarikan di antara mereka begitu besar, Heidy tidak berniat menjalin asmara singkat. Graeme harus dilupakan. Ketika apa yang terjadi di Venesia tidak bisa tetap ditinggal di Venesia, Heidy mulai goyah. Apalagi Graeme ternyata lelaki gigih yang mengejarnya hingga ke Jakarta dan tak putus asa tatkala ditolak. Meski akhirnya satu per satu rahasia kelam lelaki itu terbuka, Heidy justru kian jatuh cinta. Pertanyaannya, apakah cinta memang benar-benar mampu menyatukan mereka?</p>
 
                     <div className='btn-cart'>
-                        <Button type='submit' onClick={(e) => {setPopup(); handleAddCart.mutate(e); showLogin()}}><Image src={bracket} className='img-bracket'/> Add cart</Button>
+                        <Button type='submit' className='button-cart' onClick={(e) => {showLogin(); handleAddCart.mutate(e)}}><Image src={bracket} className='img-bracket'/> Add cart</Button>
                     </div>
                 </div>
             </div>

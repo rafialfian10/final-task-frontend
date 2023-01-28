@@ -114,7 +114,7 @@ const Register = ({showReg, setShowReg, setShowLog, handleShowReg}) => {
                   <Form.Label>Address</Form.Label>
                   <Form.Control type="text" name="address" onChange={HandleChangeRegister} />
                 </Form.Group>
-                <Button variant="primary" type="submit" className="button-submit">Submit</Button>                               
+                <Button type="submit" className="button-submit">Submit</Button>                               
                 </Form>
         </Modal.Body>
       </Modal>

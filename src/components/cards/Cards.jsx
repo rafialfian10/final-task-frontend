@@ -89,7 +89,7 @@ const Cards = () => {
                                         <Card.Text className="desc">{book.description}</Card.Text>
                                         <div className="price-container">
                                             <Form.Text className="price">Rp. {book.price.toLocaleString()}</Form.Text>
-                                            <Button className="btn-book" onClick={() => {handleBookPromo(book.id); showLogin()}}>Add to Cart</Button>
+                                            <Button className="btn-book" onClick={() => { showLogin();handleBookPromo(book.id)}}>Add to Cart</Button>
                                         </div>
                                     </Card.Body>
                                 </Card>

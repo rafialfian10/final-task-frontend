@@ -46,6 +46,11 @@ h2.title-update-book {
     color: white;
     font-weight: bold;
     border: none;
+    border: none !important;
+    &:hover {
+        opacity: 0.8;
+        background-color: #393939;
+    }
 }
 
 .img-update-book {

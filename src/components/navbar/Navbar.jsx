@@ -28,7 +28,10 @@ import { useEffect } from "react";
 
 const Navbars = () => {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+    // user context
+    const [state, dispatch] = useContext(UserContext);
 
   // Handle Login
   const [showLog, setShowLog] = useState(false);
@@ -37,9 +40,6 @@ const Navbars = () => {
   // Handle Register
   const [showReg, setShowReg] = useState(false);
   const handleShowReg = () => setShowReg(true);
-
-  // user context
-  const [state, dispatch] = useContext(UserContext);
 
   // function logout
   const HandleLogout = (e) => {
@@ -68,11 +68,11 @@ const Navbars = () => {
   };
 
   // get data user
+  let id = state?.user.id;
   let { data: photoProfile} = useQuery('photoProfileCache', async () => {
-    const response = await API.get("/user/" + state?.user.id);
+    const response = await API.get(`/user/${id}`);
     return response.data.data;
   });
-  console.log("User :", photoProfile)
 
   // get order cart user
   let { data: orderCartBracket , refetch: refetchCartBracket} = useQuery('orderCartBracket', async () => {

@@ -34,6 +34,10 @@
     background-color: #393939 !important;
     border: none !important;
     margin-bottom: 20px;
+    &:hover {
+        opacity: 0.8;
+        background-color: #393939;
+    }
 }
 
 p {
