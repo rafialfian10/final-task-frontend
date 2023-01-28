@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 // components
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { UserContext } from "../../context/userContext";
 
@@ -21,17 +21,18 @@ import complain from '../../assets/img/complain.png';
 import logout from '../../assets/img/logout.png';
 import addbook from '../../assets/img/addbook.png';
 import bracket from '../../assets/img/bracket.png';
-import saitama from '../../assets/img/saitama.png';
+import admin from '../../assets/img/admin.png';
+import defaultPhoto from '../../assets/img/default-photo.png';
 import Login from "../login/Login";
 import Register from "../register/Register";
-import { useEffect } from "react";
+
 
 const Navbars = () => {
 
   const navigate = useNavigate();
 
-    // user context
-    const [state, dispatch] = useContext(UserContext);
+  // user context
+  const [state, dispatch] = useContext(UserContext);
 
   // Handle Login
   const [showLog, setShowLog] = useState(false);
@@ -40,6 +41,16 @@ const Navbars = () => {
   // Handle Register
   const [showReg, setShowReg] = useState(false);
   const handleShowReg = () => setShowReg(true);
+
+  // get data user
+  let { data: photoProfile} = useQuery('photoProfileCache', async () => {
+    const response = await API.get(`/user`);
+    return response.data.data
+  }, {
+    enabled: !!state.isLogin,
+  });
+
+  console.log("Photo :", photoProfile )
 
   // function logout
   const HandleLogout = (e) => {
@@ -58,7 +69,7 @@ const Navbars = () => {
           icon: 'success',
           text: 'Logout successfully'
        })
-      // logout dan hapus token
+
         dispatch({
           type: "LOGOUT",
         })
@@ -67,13 +78,6 @@ const Navbars = () => {
     })
   };
 
-  // get data user
-  let id = state?.user.id;
-  let { data: photoProfile} = useQuery('photoProfileCache', async () => {
-    const response = await API.get(`/user/${id}`);
-    return response.data.data;
-  });
-
   // get order cart user
   let { data: orderCartBracket , refetch: refetchCartBracket} = useQuery('orderCartBracket', async () => {
     const response = await API.get(`/carts`);
@@ -81,9 +85,8 @@ const Navbars = () => {
   });
     
   refetchCartBracket()
-
+  
   useEffect(() => {
-
   },[])
 
   return (
@@ -101,7 +104,12 @@ const Navbars = () => {
                       {state.user.role === "admin" ? (
                         // profile navbar admin
                         <Navbar.Brand>
-                          <Image src={saitama} alt=""  className="photo-profile"/>
+                          {/* image */}
+                          {photoProfile?.thumbnail === "" ? (
+                              <Image src={admin} className="photo-profile" alt="" />
+                            ) : (
+                              <Image src={photoProfile?.thumbnail} className="photo-profile" alt="" />
+                          )}
                           <Dropdown as={ButtonGroup} className="dropdown">
                             <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                             <Dropdown.Menu className="menu-dropdown">
@@ -131,7 +139,14 @@ const Navbars = () => {
                               <div className='qty'>{orderCartBracket?.length}</div>
                             )}
                             <Image src={bracket} alt="" className="bracket" onClick={() => navigate(`cart/${state?.user.id}`)}/>
-                            <Image src={photoProfile?.thumbnail} className="photo-profile" alt="" />
+
+                            {/* image */}
+                            {photoProfile?.thumbnail === "" ? (
+                              <Image src={defaultPhoto} className="photo-profile" alt="" />
+                            ) : (
+                              <Image src={photoProfile?.thumbnail} className="photo-profile" alt="" />
+                            )}
+
                               <Dropdown as={ButtonGroup} className="dropdown">
                                 <Dropdown.Toggle split variant="success" id="dropdown-split-basic" className="toggle-navbar"/>
                                   <Dropdown.Menu className="menu-dropdown">
