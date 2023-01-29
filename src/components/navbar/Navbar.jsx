@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 // components
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { UserContext } from "../../context/userContext";
 
@@ -68,22 +68,22 @@ const Navbars = () => {
     })
   };
 
-  // get order cart user
-  let { data: orderCartBracket , refetch: refetchCartBracket} = useQuery('orderCartBracket', async () => {
-    const response = await API.get(`/carts`);
-    return response.data.data;
-  });
-    
-  refetchCartBracket()
-
-  // get data user
-  let { data: user} = useQuery('userCache', async () => {
+   // get data user
+   let { data: user, refetch: refetchUser} = useQuery('userCache', async () => {
     const response = await API.get(`/user`);
     return response.data.data
   });
-  
-  // useEffect(() => {
-  // },[])
+
+  // get order cart user
+  let { data: orderCart , refetch: refetchCart} = useQuery('cartCache', async () => {
+    const response = await API.get(`/carts`);
+    return response.data.data;
+  });
+
+  useEffect(() => {
+    orderCart && refetchCart();
+    user && refetchUser()
+  });
 
   return (
         <>
@@ -101,8 +101,8 @@ const Navbars = () => {
                         // profile navbar admin
                         <Navbar.Brand>
                           {/* image */}
-                          {user?.thumbnail !== "" ? (
-                              <Image src={user?.thumbnail} className="photo-profile" alt="" />
+                          {user !== undefined && user.thumbnail !== "" ? (
+                              <Image src={user.thumbnail} className="photo-profile" alt="" />
                             ) : (
                               <Image src={admin} className="photo-profile" alt="" />
                           )}
@@ -129,16 +129,16 @@ const Navbars = () => {
                         <Navbar.Brand>
                           <>
                             {/* bracket */}
-                            {orderCartBracket === null ? (
+                            {orderCart === null ? (
                               null
                             ) : (
-                              <div className='qty'>{orderCartBracket?.length}</div>
+                              <div className='qty'>{orderCart?.length}</div>
                             )}
                             <Image src={bracket} alt="" className="bracket" onClick={() => navigate(`cart/${state?.user.id}`)}/>
 
                             {/* image */}
-                            {user?.thumbnail !== undefined && user?.thumbnail !== "" ? (
-                              <Image src={user?.thumbnail} className="photo-profile" alt="" />
+                            {user !== undefined && user.thumbnail !== "" ? (
+                              <Image src={user.thumbnail} className="photo-profile" alt="" />
                               ) : (
                               <Image src={defaultPhoto} className="photo-profile" alt="" />
                             )}

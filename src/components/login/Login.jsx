@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 // component react bootstrap
 import {Nav, Button, Form, Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 // components
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useMutation } from "react-query";
 import { UserContext } from "../../context/userContext";
@@ -16,7 +17,7 @@ import "./Login.scss";
 
 const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog }) => {
   
-  // const navigate = useNavigate()
+  const navigate = useNavigate();
 
     const [state, dispatch] = useContext(UserContext);
 
@@ -53,40 +54,34 @@ const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog }) => {
           type: "LOGIN_SUCCESS",
           payload: response.data.data,
         })
+
+        setShowLog(false)
+        
+        Swal.fire({
+          text: 'Login successfully',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        })
+
+        navigate("/")
       }
-      setShowLog(false)
-      // alert
-      Swal.fire({
-        text: 'Login successfully',
-        icon: 'success',
-        confirmButtonText: 'Ok'
-      })
-      window.location.href="/"
+     
 
     } catch(err) {
-      // alert
+  
       Swal.fire({
         text: 'Login failed (email / password incorrect)',
         icon: 'error',
         confirmButtonText: 'Ok'
       })
       console.log(err)
-    }
-    
+    } 
   });
 
   const handleShowRegister = () => {
     handleCloseLog()
     handleShowReg()
   }
-
-  // if(isFetching) {
-  //   return (
-  //     <>
-  //       <h1>Loading</h1>
-  //     </>
-  //   )
-  // }
 
     return (
         <>

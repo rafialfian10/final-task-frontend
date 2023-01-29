@@ -51,8 +51,6 @@ const Cart = () => {
     refetchOrder()       
   }
 
-  const [total, setTotal] = useState(0)
-
   // add counter
   const handleAddQty = useMutation(async (id) => {
     try {
@@ -81,6 +79,9 @@ const Cart = () => {
     }
   });
 
+  // state total
+  const [total, setTotal] = useState(0)
+
   useEffect(() => {
     let total = orderCart?.reduce((sum, order) => {  // reduce : par 1 accumulator, par2 current value
       return sum + order.order_qty * order.book.price;
@@ -94,11 +95,11 @@ const Cart = () => {
     try {
       let books = [];
 
-      orderCart.forEach((el) => {
+      orderCart.forEach((item) => {
         books.push({
-          id: el.id,
-          book_id: el.book.id,
-          orderQty: el.order_qty,
+          id: item.id,
+          book_id: item.book.id,
+          orderQty: item.order_qty,
         });
       });
 
@@ -160,7 +161,6 @@ const Cart = () => {
       console.log(error)
     }
   });
-  //-----------------------------------------------------------------
 
   useEffect(() => {
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js"; // panngil snap middtrans
