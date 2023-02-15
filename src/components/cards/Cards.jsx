@@ -42,18 +42,30 @@ const Cards = () => {
     
     const handleBookPromo = async (id) => {
         try {
-          const data = {
-            book_id: id,
-          }
-    
-          const body = JSON.stringify(data)
-    
-          const response = await API.post("/cart", body)
-          if(response.data.code === 200) {
-            setPopup(true)
-          }
-          refetchBookPromo()
 
+            let token = localStorage.getItem("token")
+            if(!token) {     
+                //alert
+                Swal.fire({
+                    text: 'Please login account',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok'
+                })
+                navigate("/")  
+            } else {
+                
+                const data = {
+                    book_id: id,
+                }
+                        
+                const body = JSON.stringify(data)
+                        
+                const response = await API.post("/cart", body)
+                if(response.data.code === 200) {
+                    setPopup(true)
+                }
+                refetchBookPromo()
+            }
         } catch (error) {
           console.log(error)
         }
@@ -89,7 +101,7 @@ const Cards = () => {
                                         <Card.Text className="desc">{book.description}</Card.Text>
                                         <div className="price-container">
                                             <Form.Text className="price">Rp. {book.price.toLocaleString()}</Form.Text>
-                                            <Button className="btn-book" onClick={() => { showLogin();handleBookPromo(book.id)}}>Add to Cart</Button>
+                                            <Button className="btn-book" onClick={() => handleBookPromo(book.id)}>Add to Cart</Button>
                                         </div>
                                     </Card.Body>
                                 </Card>

@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 // components
 import { useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { UserContext } from "../../context/userContext";
 
@@ -80,10 +80,13 @@ const Navbars = () => {
     return response.data.data;
   });
 
-  useEffect(() => {
-    orderCart && refetchCart();
-    user && refetchUser()
-  });
+  refetchCart();
+  refetchUser();
+
+  // useEffect(() => {
+  //   orderCart && refetchCart();
+  //   user && refetchUser()
+  // });
 
   return (
         <>
