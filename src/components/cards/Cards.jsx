@@ -71,20 +71,6 @@ const Cards = () => {
         }
       }
 
-    // handler show login (jika belum login maka lempar kembali ke halaman home)
-    const showLogin = () => {
-    let token = localStorage.getItem("token")
-        if(!token) {     
-            //alert
-            Swal.fire({
-                text: 'Please login account',
-                icon: 'warning',
-                confirmButtonText: 'Ok'
-            })
-            navigate("/")  
-        } 
-    }
-
     return (
         <>
             <Popup popup={popup} setPopup={setPopup} />
