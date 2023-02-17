@@ -33,7 +33,9 @@ const DetailImage = () => {
             <Image src={flower2} className='flower2'/>
             <div className='detail-img-container'>
                 <div className="thumbnail">
-                    <Image src={detailBook?.thumbnail} className="img-thumbnail" alt=""/> 
+                    <div className='content-thumbnail'>
+                        <Image src={detailBook?.thumbnail} className="img-thumbnail" alt=""/> 
+                    </div>
                     <div className="detail-book-info">  
                         <Form.Text className='detail-title'>{detailBook?.title}</Form.Text>
                         <Form.Text className='detail-artist'>By. {detailBook?.author}</Form.Text>
