@@ -23,9 +23,9 @@ function Admin() {
   const [loading, setLoading] = useState(false);
   const [halamanAktif, setHalamanAktif] = useState(1);
   const [dataPerHalaman] = useState(3);
-
+  
   useEffect(() => {
-      const fetchdata = async () => {
+    const fetchdata = async () => {
           setLoading(true)
           const response = await API.get(`/transactions-admin`)
           setDataTransaction(response.data.data)
@@ -38,8 +38,8 @@ function Admin() {
   // get current post data
   const indexLastPost = halamanAktif * dataPerHalaman
   const indexFirstPost = indexLastPost - dataPerHalaman 
-  const currentPost = dataTransaction.slice(indexFirstPost, indexLastPost)
-
+  const currentPost = dataTransaction?.slice(indexFirstPost, indexLastPost)
+  
   if(loading) {
     return <h4>Loading...</h4>
   }
@@ -54,43 +54,43 @@ function Admin() {
       <Image src={flower2} alt="" className='flower2'/>
       <Table striped bordered hover className="list-transaction">
         <thead>
-            <tr>
+          <tr>
             <th>No</th>
             <th>Users</th>
             <th>Evidence of Transfer</th>
             <th>Product Purchased</th>
             <th>Total Payment</th>
             <th>Status Payment</th>
-            </tr>
+          </tr>
         </thead>
         <tbody>
           <>
             {currentPost?.map((transaction, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{no++ + indexFirstPost}</td>
-                    <td>{transaction.user.name}</td>
-                    <td>bca.png</td>
-                    <td>{transaction.book[0].title}</td>
+              return (
+                <tr key={i}>
+                  <td>{no++ + indexFirstPost}</td>
+                  <td>{transaction.user.name}</td>
+                  <td>bca.png</td>
+                  <td>{transaction.book[0].title}</td>
 
-                    {/* transaction total */}
-                    {transaction.total && transaction.status === "success" ? (
-                      <td className="text-success">{transaction.total}</td>
-                    ) : (
-                      <td className="text-danger">{transaction.total}</td>
-                    )}
+                  {/* transaction total */}
+                  {transaction.total && transaction.status === "success" ? (
+                    <td className="text-success">{transaction.total}</td>
+                  ) : (
+                    <td className="text-danger">{transaction.total}</td>
+                  )}
 
-                    {/* transaction status */}
-                    {transaction.status === "success" && <td className="text-success">{transaction.status}</td>}
-                    {transaction.status === "pending" && <td className="text-warning">{transaction.status}</td>}
-                    {transaction.status === "failed" && <td className="text-danger">{transaction.status}</td>}
-                  </tr>  
-                )
+                  {/* transaction status */}
+                  {transaction.status === "success" && <td className="text-success">{transaction.status}</td>}
+                  {transaction.status === "pending" && <td className="text-warning">{transaction.status}</td>}
+                  {transaction.status === "failed" && <td className="text-danger">{transaction.status}</td>}
+                </tr>  
+              )
             })}
           </>
         </tbody>
       </Table>
-      <Paginations dataPerHalaman={dataPerHalaman} halamanAktif={halamanAktif} setHalamanAktif={setHalamanAktif} totalData={dataTransaction.length} paginate={paginate}/>
+      <Paginations dataPerHalaman={dataPerHalaman} halamanAktif={halamanAktif} setHalamanAktif={setHalamanAktif} totalData={dataTransaction?.length} paginate={paginate}/>
     </>
   );
 }
