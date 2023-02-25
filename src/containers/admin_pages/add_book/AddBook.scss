@@ -56,6 +56,10 @@ h2.title-add-book {
     color: white;
     font-weight: bold;
     border: none;
+    &:hover {
+      background-color: #393939;
+      opacity: 0.8;
+    }
 }
 
 .img-add-book {

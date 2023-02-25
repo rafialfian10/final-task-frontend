@@ -76,7 +76,8 @@ const ModalPromo = ({modalPromo, setModalPromo, value, bookId, refetchBook}) => 
                 console.log("Response :", response);
                 if(response.status === 200) {
                     refetchBook()
-                  }
+                    setModalPromo(false)
+                }
 
                 Swal.fire({
                     text: 'Discount Book successfully added',
