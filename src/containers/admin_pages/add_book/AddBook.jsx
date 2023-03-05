@@ -192,13 +192,16 @@ const AddBook = () => {
                 const response = await API.post('/book', formData, config);
                 console.log("Response :", response);
 
-                Swal.fire({
-                    text: 'Book successfully added',
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
-                })
+                if(response.data.code === 200) {
+                    Swal.fire({
+                        text: 'Book successfully added',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    })
+    
+                    navigate('/incom_book'); 
+                }
 
-                navigate('/incom_book'); 
               } else {
                 setError(messageError)
               }
