@@ -21,7 +21,7 @@
     text-align: justify;
 }
 
-.btn-download { 
+.content-btn-download { 
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -30,13 +30,18 @@
     border: none;
 }
 
-.btn-download Button {
+.btn-download {
     text-align: center;
     position: relative;
     width: 13% !important;
     padding: 5px 10px !important;
     background-color: #393939;
     border: 1px solid #393939;
+    &:hover {
+        opacity: 0.8;
+        background-color: #393939;
+        border: 1px solid #393939;
+    }
 }
 
 .img-bracket {
