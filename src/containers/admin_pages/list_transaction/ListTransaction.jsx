@@ -69,9 +69,9 @@ function Admin() {
               return (
                 <tr key={i}>
                   <td>{no++ + indexFirstPost}</td>
-                  <td>{transaction.user.name}</td>
+                  <td>{transaction.user?.name}</td>
                   <td>bca.png</td>
-                  <td>{transaction.book[0].title}</td>
+                  <td>{transaction.book?.title}</td>
 
                   {/* transaction total */}
                   {transaction.total && transaction.status === "success" ? (
