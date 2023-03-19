@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // components react bootstrap
 import {Table, Modal, Alert, Image} from 'react-bootstrap'
 import Swal from "sweetalert2";
@@ -5,7 +6,7 @@ import Moment from 'react-moment';
 
 // components
 import { useMutation } from 'react-query';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // api
 import { API } from '../../../config/api';
@@ -18,13 +19,23 @@ import logo from '../../../assets/img/logo.png'
 import transaction from '../../../assets/img/transaction.png' 
 
 const ModalApproved = ({modalApproved, setModalApproved, order, refetchAllTransactionsAdmin}) => {
-    
-    console.log(order)
 
     let no = 1;
 
-    // const [orderQuantity, setOrderQuantity] = useState()
-    // console.log("XXX", orderQuantity)
+    // state total order
+    const [orderQty, setOrderQty] = useState()
+
+    useEffect(() => {
+        let qty = order?.book.map(item => {
+            return item.order_qty
+        })
+
+        let totalOrder = qty?.reduce((sum, order) => {  
+          return sum + order;
+        }, 0);
+    
+        setOrderQty(totalOrder);
+      });
 
     // handle approve order
     const handleApproveOrder = useMutation(async () => {
@@ -123,8 +134,8 @@ const ModalApproved = ({modalApproved, setModalApproved, order, refetchAllTransa
                                                 <td>{item?.pages}</td>
                                                 <td>{item?.publication_date}</td>
                                                 <td>IDR. {item?.price.toLocaleString()}</td>
-                                                <td>{item?.order_qty}</td>
-                                                <td>{item?.order_qty * item?.price}</td>
+                                                <td>{item?.order_qty} pcs</td>
+                                                <td>IDR. {(item?.order_qty * item?.price).toLocaleString()}</td>
                                             </tr>
                                         )
                                     })}
@@ -135,32 +146,32 @@ const ModalApproved = ({modalApproved, setModalApproved, order, refetchAllTransa
                 <Table striped bordered hover className="tables">
                     <thead>
                         <tr>
-                        <th>No</th>
-                        <th>Full Name</th>
-                        <th>Gender</th>
-                        <th>Phone</th>
-                        <th>Order Date</th>
-                        <th></th>
+                            <th>No</th>
+                            <th>Full Name</th>
+                            <th>Gender</th>
+                            <th>Phone</th>
+                            <th>Order Date</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                        <td>{no++}</td>
-                        <td>{order?.user.name}</td>
-                        <td>{order?.user.gender}</td>
-                        <td>{order?.user.phone}</td>
-                        <td><Moment format="DD MMM YYYY, h:mm:ss A">{order?.order_date}</Moment></td>
-                        <td className="fw-bold">Qty</td>
-                        <td className="fw-bold">: {order?.book.orderQty} q</td>
+                            <td>{no++}</td>
+                            <td>{order?.user.name}</td>
+                            <td>{order?.user.gender}</td>
+                            <td>{order?.user.phone}</td>
+                            <td><Moment format="DD MMM YYYY, h:mm:ss A">{order?.order_date}</Moment></td>
+                            <td className="fw-bold">Total Quantity</td>
+                            <td className="fw-bold">: {orderQty} pcs</td>
                         </tr>
                         <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td className="fw-bold">Total</td>
-                        <td className="fw-bold text-danger">: IDR. {order?.total.toLocaleString()} </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td className="fw-bold">Total</td>
+                            <td className="fw-bold text-danger">: IDR. {order?.total.toLocaleString()} </td>
                         </tr>
                     </tbody>
                 </Table>
