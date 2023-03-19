@@ -1,39 +1,52 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-vars */
 //components react bootstrap
 import {Table, Image} from 'react-bootstrap';
+import Paginations from '../../../components/pagination/Paginations';
+import ModalApproved from '../modal_approved/ModalApproved';
 
 // component
-import { useState, useEffect } from 'react';
-import Paginations from '../../../components/pagination/Paginations';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
 
 // api
 import { API } from '../../../config/api';
 
 // css
-import './ListTransaction.scss'
+import './ListTransaction.scss';
 
 // images
 import flower1 from '../../../assets/img/flower1.png';
 import flower2 from '../../../assets/img/flower2.png';
+import action from '../../../assets/img/search.png';
 
-function Admin() {
+function Admin({search}) {
 
   let no = 1;
 
+  // state modal
+  const [modalApproved, setModalApproved] = useState(false);
+
+  // state order
+  const [order, setOrder] = useState(null);
+
+  // modal pagination
   const [dataTransaction, setDataTransaction] = useState([]);
   const [loading, setLoading] = useState(false);
   const [halamanAktif, setHalamanAktif] = useState(1);
   const [dataPerHalaman] = useState(2);
-  
-  useEffect(() => {
-    const fetchdata = async () => {
-          setLoading(true)
-          const response = await API.get(`/transactions-admin`)
-          setDataTransaction(response.data.data)
-          setLoading(false)
-      }
 
-      fetchdata()
-  }, [])
+  const { data, refetch: refetchAllTransactionsAdmin } = useQuery("allTransactionsAdminCache", async () => {
+      try {
+        const response = await API.get(`/transactions-admin`)
+        setDataTransaction(response.data.data)
+        setLoading(false)
+        return response.data.data;
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  );
  
   // get current post data
   const indexLastPost = halamanAktif * dataPerHalaman
@@ -49,6 +62,7 @@ function Admin() {
 
   return (
     <>
+     <ModalApproved modalApproved={modalApproved} setModalApproved={setModalApproved} order={order} refetchAllTransactionsAdmin={refetchAllTransactionsAdmin}/>
       <h4>Incoming Transaction</h4>
       <Image src={flower1} alt="" className='flower1'/>
       <Image src={flower2} alt="" className='flower2'/>
@@ -61,29 +75,46 @@ function Admin() {
             <th>Product Purchased</th>
             <th>Total Payment</th>
             <th>Status Payment</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <>
-            {currentPost?.map((transaction, i) => {
+            {currentPost?.filter(item => {
+              if(search === "") {
+                return item
+              } else if(item?.user.name.toLowerCase().includes(search.toLowerCase())) {
+                return item
+              } 
+            }).map((transaction, i) => {
               return (
                 <tr key={i}>
                   <td>{no++ + indexFirstPost}</td>
-                  <td>{transaction.user?.name}</td>
+                  <td>{transaction?.user.name}</td>
                   <td>bca.png</td>
-                  <td>{transaction.book?.title}</td>
+                  <td>
+                    {transaction?.book.map((item, i) => (
+                      <ul key={i}>
+                        <li>{item?.title}</li>
+                      </ul> 
+                    ))}
+                  </td>
 
                   {/* transaction total */}
-                  {transaction.total && transaction.status === "success" ? (
-                    <td className="text-success">{transaction.total}</td>
+                  {transaction?.status === "success" || transaction?.status === "approve" ? (
+                    <td className="text-success">IDR. {transaction?.total}</td>
                   ) : (
-                    <td className="text-danger">{transaction.total}</td>
+                    <td className="text-danger">IDR. {transaction?.total}</td>
                   )}
 
                   {/* transaction status */}
-                  {transaction.status === "success" && <td className="text-success">{transaction.status}</td>}
-                  {transaction.status === "pending" && <td className="text-warning">{transaction.status}</td>}
-                  {transaction.status === "failed" && <td className="text-danger">{transaction.status}</td>}
+                  {transaction?.status === "pending" && <td className="text-warning">{transaction?.status}</td>}
+                  {transaction?.status === "cancel" && <td className="text-danger">{transaction?.status}</td>}
+                  {transaction?.status === "reject" && <td className="text-danger">{transaction?.status}</td>}
+                  {transaction?.status === "failed" && <td className="text-danger">{transaction?.status}</td>}
+                  {transaction?.status === "success" && <td className="text-success">{transaction?.status}</td>}
+                  {transaction?.status === "approve" && <td className="text-success">{transaction?.status}</td>}
+                  <td><img src={action} alt="" className="search" onClick={() => {setModalApproved(true); setOrder(transaction)} } /></td>
                 </tr>  
               )
             })}

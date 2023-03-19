@@ -20,13 +20,7 @@ import flower2 from '../../../assets/img/flower2.png'
 import "./IncomBook.scss";
 import Swal from "sweetalert2";
 
-const IncomBook = () => {
-
-    // query data book
-    let { data: books, refetch:refetchBook} = useQuery('booksCache', async () => {
-        const response = await API.get(`/books`);
-        return response.data.data;
-    });
+const IncomBook = ({books, search, refetchAllBooks}) => {
 
     const navigate = useNavigate()
 
@@ -66,7 +60,7 @@ const IncomBook = () => {
                 // delete trip data
                 const response = await API.delete(`/book/${id}`, config);
                 if(response.status === 200) {
-                    refetchBook()
+                    refetchAllBooks()
                 }
                 console.log("Response :", response);
 
@@ -89,10 +83,16 @@ const IncomBook = () => {
             <Image src={flower1} alt="" className="flower1"/>
             <Image src={flower2} alt="" className="flower2"/>
             <h4 className='incom-title'>Incom Book</h4>
-            <ModalUpdateBook modalUpdate={modalUpdate} setModalUpdate={setModalUpdate} value={value} bookId={bookId} refetchBook={refetchBook}/>
-            <ModalPromo modalPromo={modalPromo} setModalPromo={setModalPromo} value={value} bookId={bookId} refetchBook={refetchBook}/>
+            <ModalUpdateBook modalUpdate={modalUpdate} setModalUpdate={setModalUpdate} value={value} bookId={bookId} refetchAllBooks={refetchAllBooks}/>
+            <ModalPromo modalPromo={modalPromo} setModalPromo={setModalPromo} value={value} bookId={bookId} refetchAllBooks={refetchAllBooks}/>
             <div className='container-list'>
-                {books?.map((book, i) => {
+                {books?.filter(book => {
+                    if(search === "") {
+                        return book
+                    } else if(book?.title.toLowerCase().includes(search.toLowerCase()) || book?.author.toLowerCase().includes(search.toLowerCase())) {
+                        return book
+                    } 
+                }).map((book, i) => {
                     return (
                         <Card className='list-book' key={i}>
                              <Dropdown className="d-inline mx-2 dropdown-trip">
@@ -110,7 +110,7 @@ const IncomBook = () => {
                                 <Card.Title className='list-title2'>{book.title}</Card.Title>
                                 <Form.Text className='list-artist'>By. {book.author}</Form.Text>
                                 <div className='container-list-price'>
-                                    <Form.Text className='list-price'>Rp. {book.price.toLocaleString()}</Form.Text>
+                                    <Form.Text className='list-price'>IDR. {book.price.toLocaleString()}</Form.Text>
                                 </div>
                             </Card.Body>
                         </Card>

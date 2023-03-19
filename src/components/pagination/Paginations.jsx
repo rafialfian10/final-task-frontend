@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+// components
 import { useState, useEffect } from 'react'
 
 // css
@@ -56,7 +58,8 @@ const Paginations = ({dataPerHalaman, halamanAktif, setHalamanAktif, totalData, 
     
         setArrOfCurrButtons(tempNumberOfPages)
         setHalamanAktif(halamanAktif)
-      }, [halamanAktif])
+
+      }, [halamanAktif, totalData])
 
     return (
         <>

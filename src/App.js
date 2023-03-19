@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 // components
 // eslint-disable-next-line no-unused-vars
 import { Route, Routes } from "react-router-dom";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { UserContext } from "./context/userContext";
+import { useQuery } from "react-query";
 
 // api
 import { API, setAuthToken } from "./config/api";
@@ -66,20 +68,43 @@ function App() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+   // state search
+   const [search, setSearch] = useState("")
+
+   // state data trips
+   const [books, setBooks] = useState();
+ 
+   const config = {
+     headers: {
+       'Content-type': 'multipart/form-data',
+       Authorization: "Bearer " + localStorage.getItem("token")
+     },
+   };
+ 
+   // get trips 
+   let { data, refetch: refetchAllBooks } = useQuery('allBooksCache', async () => {
+     const response = await API.get(`/books`, config);
+     setBooks(response.data.data)
+   });
+ 
+   // handle search
+   const handleSearch = (e) => {
+     setSearch(e.target.value)
+   }
   return (
     <>
-      <Navbars/>
+      <Navbars search={search} handleSearch={handleSearch}/>
       <Routes>
           {/* public */}
-          <Route exact path="/" element={<Home />}/>
+          <Route exact path="/" element={<Home books={books} search={search} />}/>
           <Route exact path="/increment_detail_book/:id" element={<IncrementDetailBook/>}/>
           
           
           {/* admin */}
           <Route element={<PrivateRouteAdmin />}>
-            <Route exact path="/list_transaction" element={<ListTransaction/>}/>
+            <Route exact path="/list_transaction" element={<ListTransaction search={search} />}/>
             <Route exact path="/add_book" element={<AddBook/>}/>
-            <Route exact path="/incom_book" element={<IncomBook/>}/>
+            <Route exact path="/incom_book" element={<IncomBook books={books} search={search} refetchAllBooks={refetchAllBooks}/>}/>
             <Route exact path="/complain_admin" element={<ComplainAdmin/>}/>
           </Route>
           

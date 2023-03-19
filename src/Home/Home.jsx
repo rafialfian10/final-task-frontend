@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 // react bootstrap
@@ -11,10 +11,9 @@ import "./Home.scss";
 import Jumbotron from "../components/jumbotron/Jumbotron";
 import Cards from "../components/cards/Cards";
 import ListBook from "../components/listBook/ListBook";
-import { useContext } from "react";
 import { UserContext } from "../context/userContext";
 
-const Home = () => {
+const Home = ({books, search}) => {
 
   const [myContext] = useContext(UserContext)
 
@@ -26,11 +25,13 @@ const Home = () => {
     navigate("/list_transaction");
   });
 
+  
+
   return (
     <>
       <Jumbotron/>
       <Cards/>
-      <ListBook/>
+      <ListBook books={books} search={search}/>
     </>
   );
 };

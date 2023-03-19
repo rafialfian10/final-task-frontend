@@ -19,6 +19,7 @@
 .login {
     width: 100px;
     margin: auto 10px !important;
+    margin-left: 3em !important;
     text-align: center;
     font-weight: bold !important;
     background-color: white;
@@ -50,7 +51,6 @@
     border-radius: 60%;
     margin-left: 30px;
     overflow: hidden;
-    border: 2px solid black !important;
 }
 
 .dropdown {
@@ -102,6 +102,7 @@
 
 .bracket {
     cursor: pointer;
+    margin-left: 3em !important;
 }
 
 .qty {
@@ -118,4 +119,23 @@
     background-color: #F13F3F;
     border-radius: 50%;
     z-index: 1;
+}
+
+.search {
+    width: 20em !important;
+    height: 45px;
+    border-radius: 5px;
+}
+
+.btn-search {
+    background-color: #393939 !important;
+    border: none !important;
+    border-radius: 5px !important;
+    font-weight: bold;
+    color: white !important;
+    &:hover {
+        cursor: pointer;
+        background-color: #393939 !important;
+        border: none !important;
+    }
 }

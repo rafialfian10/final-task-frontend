@@ -1,5 +1,5 @@
 // components react bootstrap
-import {Container, Nav, Navbar, ButtonGroup, Dropdown, Image, Form} from "react-bootstrap";
+import {Container, Nav, Navbar, ButtonGroup, Dropdown, Image, Form, InputGroup, Button} from "react-bootstrap";
 import Swal from "sweetalert2";
 
 // components
@@ -27,7 +27,7 @@ import Login from "../login/Login";
 import Register from "../register/Register";
 
 
-const Navbars = () => {
+const Navbars = ({search, handleSearch}) => {
 
   const navigate = useNavigate();
 
@@ -68,8 +68,8 @@ const Navbars = () => {
     })
   };
 
-   // get data user
-   let { data: user, refetch: refetchUser} = useQuery('userCache', async () => {
+  // get data user
+  let { data: user, refetch: refetchUser} = useQuery('userCache', async () => {
     const response = await API.get(`/user`);
     return response.data.data
   });
@@ -93,11 +93,20 @@ const Navbars = () => {
           <Navbar expand="lg" className="background-navbar">
             <Container>
                 <Navbar.Brand href="/" className="logo">
-                <Image src={logo} alt="" />
+                  <Image src={logo} alt="" />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                   <Nav className="me-auto sub-navbar">
+
+                  {/* search */}
+                  <Navbar.Brand>
+                    <InputGroup className="search">
+                      <Form.Control aria-label="Recipient's username" placeholder="Search..." aria-describedby="basic-addon2" onChange={(value) => handleSearch(value)} value={search}/>
+                      <Button className="btn-search">Search</Button>
+                    </InputGroup>
+                  </Navbar.Brand>
+
                   {state.isLogin === true ? (
                     <>
                       {state.user.role === "admin" ? (

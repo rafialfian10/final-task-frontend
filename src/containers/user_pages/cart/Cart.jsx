@@ -196,7 +196,7 @@ const Cart = () => {
                         <Card.Body className='review-book-desc'>
                           <Card.Title className='review-book-title'>{order.book.title}</Card.Title>
                           <Form.Text className='review-artist'>By. {order.book.author}</Form.Text>
-                          <Form.Text className='review-price'>Rp. {order.book.price.toLocaleString()}</Form.Text>
+                          <Form.Text className='review-price'>IDR. {order.book.price.toLocaleString()}</Form.Text>
                           <div className='content-cart'>
                             <Button onClick={() => {order.order_qty > 1 && handleLessQty.mutate(order.id)}} className='minus'><Image src={minus} alt=""/></Button>
                             <h5 className='value'>{order.order_qty}</h5>

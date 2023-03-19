@@ -46,7 +46,7 @@ const DetailImage = () => {
                         <Form.Text className='detail-isbn'>ISBN</Form.Text> 
                         <Form.Text className='isbn'>{detailBook?.isbn}</Form.Text> 
                         <Form.Text className='detail-price'>Price</Form.Text> 
-                        <Form.Text className='price'>Rp. {detailBook?.price.toLocaleString()}</Form.Text> 
+                        <Form.Text className='price'>IDR. {detailBook?.price.toLocaleString()}</Form.Text> 
                     </div>
                 </div>
             </div>

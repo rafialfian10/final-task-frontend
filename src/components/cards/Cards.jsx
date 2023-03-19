@@ -29,15 +29,11 @@ const Cards = () => {
     // state popup
     const [popup, setPopup] = useState(false)
 
-    // state number
-    // const [number, setNumber] = useState()
-
     // books promo
     let { data: booksPromo, refetch: refetchBookPromo } = useQuery('booksPromoCache', async () => {
         const response = await API.get(`/books-promo`);
         return response.data.data;
     });
-
     // console.log(booksPromo)
     
     const handleBookPromo = async (id) => {
@@ -53,7 +49,6 @@ const Cards = () => {
                 })
                 navigate("/")  
             } else {
-                
                 const data = {
                     book_id: id,
                 }
@@ -86,7 +81,7 @@ const Cards = () => {
                                         <Form.Text className="author">By. {book.author}</Form.Text>
                                         <Card.Text className="desc">{book.description}</Card.Text>
                                         <div className="price-container">
-                                            <Form.Text className="price">Rp. {book.price.toLocaleString()}</Form.Text>
+                                            <Form.Text className="price">IDR. {book.price.toLocaleString()}</Form.Text>
                                             <Button className="btn-book" onClick={() => handleBookPromo(book.id)}>Add to Cart</Button>
                                         </div>
                                     </Card.Body>

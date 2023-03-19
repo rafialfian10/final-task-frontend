@@ -33,10 +33,7 @@ const ListDownload = () => {
         const url = window.URL.createObjectURL(new Blob([response]),);
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute(
-        'download',
-        `FileName.pdf`,
-        );
+        link.setAttribute('download', `FileName.pdf`);
 
         // Append to html link element page
         document.body.appendChild(link);
@@ -54,7 +51,7 @@ const ListDownload = () => {
             <Form.Text className='download-title'>My Books</Form.Text>
             <div className='container-download'>
                 {transactionBook?.map((transaction) => {
-                    {if(transaction.status === "success") {
+                    {if(transaction.status === "approve") {
                         return (
                             <>
                                 {transaction.book?.map((item, i) => {
@@ -72,6 +69,25 @@ const ListDownload = () => {
                                     )
                                 })}
                             </>
+                        )
+                    } else if(transaction.status === "success") {
+                        return (
+                            <>
+                            {transaction.book?.map((item, i) => {
+                                return (    
+                                    <Card className='list-download' key={i}>
+                                        <Card.Img variant="top" src={item.thumbnail} className='img-list-download' />
+                                        <Card.Body className='list-desc'>
+                                            <Card.Title className='list-title'>{item.title}</Card.Title>
+                                            <Form.Text className='list-artist'>By. {item.author}</Form.Text>
+                                            <div className='container-waiting'>
+                                                <Form.Text className='waiting'>Waiting to be approved By Admin for download</Form.Text>
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+                                )
+                            })}
+                        </>
                         )
                     }}
                 })}
