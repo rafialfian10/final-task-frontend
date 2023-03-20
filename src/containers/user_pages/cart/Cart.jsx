@@ -28,28 +28,29 @@ const Cart = () => {
   let {id}= useParams()
   id = parseInt(id)
 
+  const [book, setBook] = useState();
+  // console.log(book)
+
+  // get books
+  let { data: allBooks } = useQuery('allBooksCache', async () => {
+    const response = await API.get(`/books`);
+    return response.data.data;
+  });
+  // console.log("Books", allBooks)
+
   // get order cart user
   let { data: orderCart, refetch: refetchOrder} = useQuery('orderCart', async () => {
     const response = await API.get(`/carts`);
     return response.data.data;
   });
 
+  // console.log("Order Cart", orderCart)
+
   // get transaction
   let { data: transaction } = useQuery('transactionCache', async () => {
     const response = await API.get(`/transactions`);
     return response.data.data;
   });
-
-  // function delete cart
-  const handledeleteCart = async (id) => {
-    await API.delete(`/cart/${id}`);  
-    Swal.fire({
-          text: 'Cart successfully deleted',
-          icon: 'success',
-          confirmButtonText: 'Ok'
-    })
-    refetchOrder()       
-  }
 
   // add counter
   const handleAddQty = useMutation(async (id) => {
@@ -79,16 +80,16 @@ const Cart = () => {
     }
   });
 
-  // state total
-  const [total, setTotal] = useState(0)
-
-  useEffect(() => {
-    let total = orderCart?.reduce((sum, order) => {  // reduce : par 1 accumulator, par2 current value
-      return sum + order.order_qty * order.book.price;
-    }, 0);
-
-    setTotal(total);
-  });
+  // function delete cart
+  const handledeleteCart = async (id) => {
+    await API.delete(`/cart/${id}`);  
+    Swal.fire({
+          text: 'Cart successfully deleted',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+    })
+    refetchOrder()       
+  }
  
   // snap midtrans
   const handlePay = useMutation(async () => {
@@ -107,55 +108,73 @@ const Cart = () => {
         total: total,
         books: books,
       };
-      
-      const response = await API.post("/transaction", body);
-      if (response.data.code === 200) {
-        window.snap.pay(response.data.data.midtrans_id, {
-          // success
-          onSuccess: function (result) {
-            Swal.fire({
-              text: 'Transaction success',
-              icon: 'success',
-              confirmButtonText: 'Ok'
-            })
-            navigate(`/profile/${id}`);
-            window.location.reload()
-            refetchOrder();
-          },
-          // pending
-          onPending: function (result) {
-            navigate(`/cart/${id}`);
-            window.location.reload()
-            refetchOrder();
-          },
-          // error
-          onError: function (result) {
-            Swal.fire({
-              title: 'Are you sure to cancel transaction?',
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes!'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                  Swal.fire({
-                    icon: 'success',
-                    text: 'cancel transaction successfully'
-                  })
-                }
-            })
-            refetchOrder();
-          },
-          // close
-          onClose: function () {
-            Swal.fire({
-              icon: "warning",
-              text: "please make payment first",
-            });
-            navigate(`/profile/${id}`);
-          },
-        });
+
+      let bookId = book?.map(item => {
+        return item
+      })
+      console.log(bookId)
+
+      let cart = orderCart?.map(item => {
+        return item.book_id
+      })
+      console.log(cart)
+
+      if(bookId === cart ) {
+        Swal.fire({
+          text: 'you already have this book',
+          icon: 'warning',
+          confirmButtonText: 'Ok'
+        })
+      } else {
+        const response = await API.post("/transaction", body);
+        if (response.data.code === 200) {
+          window.snap.pay(response.data.data.midtrans_id, {
+            // success
+            onSuccess: function (result) {
+              Swal.fire({
+                text: 'Transaction success',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+              })
+              navigate(`/profile/${id}`);
+              window.location.reload()
+              refetchOrder();
+            },
+            // pending
+            onPending: function (result) {
+              navigate(`/cart/${id}`);
+              window.location.reload()
+              refetchOrder();
+            },
+            // error
+            onError: function (result) {
+              Swal.fire({
+                title: 'Are you sure to cancel transaction?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                      icon: 'success',
+                      text: 'cancel transaction successfully'
+                    })
+                  }
+              })
+              refetchOrder();
+            },
+            // close
+            onClose: function () {
+              Swal.fire({
+                icon: "warning",
+                text: "please make payment first",
+              });
+              navigate(`/profile/${id}`);
+            },
+          });
+        }
       }
     } catch (error) {
       console.log(error)
@@ -176,6 +195,25 @@ const Cart = () => {
       document.body.removeChild(scriptTag);
     };
   }, []);
+
+  // state total
+  const [total, setTotal] = useState(0)
+
+  useEffect(() => {
+    // total order
+    let total = orderCart?.reduce((sum, order) => {  // reduce : par 1 accumulator, par2 current value
+      return sum + order.order_qty * order.book.price;
+    }, 0);
+ 
+    setTotal(total);
+
+    // books
+    let books = allBooks?.map(item => {
+      return item.id
+    })
+
+    setBook(books)
+  });
 
   return (
     <>
