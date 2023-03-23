@@ -15,7 +15,7 @@ import attache from '../../../assets/img/attache.png'
 // api
 import { API } from "../../../config/api";
 
-const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBook}) => {
+const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAllBook}) => {
 
     console.log("Value", value)
 
@@ -205,8 +205,8 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchBoo
                
                 const response = await API.patch(`/book/${bookId}`, formData, config);
                 console.log("Response :", response);
-                if(response.status === 200) {
-                    refetchBook()
+                if(response.code === 200) {
+                    refetchAllBook()
                 }
 
                 setModalUpdate(false)

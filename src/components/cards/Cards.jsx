@@ -75,11 +75,11 @@ const Cards = () => {
                         <SwiperSlide key={i}>
                             <div className="container-sub-card-slider">
                                 <Card className="book-container-promo">
-                                    <Card.Img variant="top" src={book.thumbnail} className="card-image" />
+                                    <Card.Img variant="top" src={book?.thumbnail} className="card-image" />
                                     <Card.Body className="book-desc">
-                                        <Card.Title className="book-title" onClick={() => {navigate(`/increment_detail_book/${book.id}`)}}>{book.title}</Card.Title>
-                                        <Form.Text className="author">By. {book.author}</Form.Text>
-                                        <Card.Text className="desc">{book.description}</Card.Text>
+                                        <Card.Title className="book-title" onClick={() => {navigate(`/increment_detail_book/${book?.id}`)}}>{book?.title}</Card.Title>
+                                        <Form.Text className="author">By. {book?.author}</Form.Text>
+                                        <Card.Text className="desc">{book?.description.length > 30 && book?.description.slice(0, 75) + '...'}</Card.Text>
                                         <div className="price-container">
                                             <Form.Text className="price">IDR. {book.price.toLocaleString()}</Form.Text>
                                             <Button className="btn-book" onClick={() => handleBookPromo(book.id)}>Add to Cart</Button>

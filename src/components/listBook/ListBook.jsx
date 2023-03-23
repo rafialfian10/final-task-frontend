@@ -12,8 +12,6 @@ import "./ListBook.scss";
 
 const ListBook = ({books, search}) => {
 
-    console.log(books)
-
     const navigate = useNavigate()
 
     return (
@@ -38,7 +36,7 @@ const ListBook = ({books, search}) => {
                                     <Card.Title className='list-title' onClick={() => {navigate(`/increment_detail_book/${book?.id}`)}}>{book?.title}</Card.Title>
                                     <Form.Text className='list-artist'>By. {book?.author}</Form.Text>
                                     <div className='container-list-price'>
-                                        <Form.Text className='list-price'>Rp. {book?.price.toLocaleString()}</Form.Text>
+                                        <Form.Text className='list-price'>IDR. {book?.price.toLocaleString()}</Form.Text>
                                     </div>
                                 </Card.Body>
                             </Card>

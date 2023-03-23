@@ -28,23 +28,28 @@ const Cart = () => {
   let {id}= useParams()
   id = parseInt(id)
 
-  const [book, setBook] = useState();
-  // console.log(book)
+  const [carts, setCarts] = useState({title: ''});
+  const [trans, setTrans] = useState({title: ''});
+  // console.log(carts)
+  // console.log(trans)
 
-  // get books
-  let { data: allBooks } = useQuery('allBooksCache', async () => {
-    const response = await API.get(`/books`);
-    return response.data.data;
-  });
-  // console.log("Books", allBooks)
+  // data cart & data transaction
+  let dataCart = ''
+  let dataTransaction = ''
+
+  for(let i in trans) {
+    dataTransaction += trans[i]
+  }
+
+  for(let i in carts) {
+    dataCart += carts[i]
+  }
 
   // get order cart user
   let { data: orderCart, refetch: refetchOrder} = useQuery('orderCart', async () => {
     const response = await API.get(`/carts`);
     return response.data.data;
   });
-
-  // console.log("Order Cart", orderCart)
 
   // get transaction
   let { data: transaction } = useQuery('transactionCache', async () => {
@@ -108,18 +113,9 @@ const Cart = () => {
         total: total,
         books: books,
       };
-
-      let bookId = book?.map(item => {
-        return item
-      })
-      console.log(bookId)
-
-      let cart = orderCart?.map(item => {
-        return item.book_id
-      })
-      console.log(cart)
-
-      if(bookId === cart ) {
+      
+      // check condition
+      if(dataTransaction.includes(dataCart)) {
         Swal.fire({
           text: 'you already have this book',
           icon: 'warning',
@@ -204,17 +200,29 @@ const Cart = () => {
     let total = orderCart?.reduce((sum, order) => {  // reduce : par 1 accumulator, par2 current value
       return sum + order.order_qty * order.book.price;
     }, 0);
- 
     setTotal(total);
 
-    // books
-    let books = allBooks?.map(item => {
-      return item.id
+    // set carts
+    const allCart = orderCart?.map(item => {
+      return item.book_title
+    })
+    setCarts({title: allCart})
+
+    // set transaction book
+    const allTransaction = transaction?.map((item) => {
+      return item.book?.map(item2 => (
+        item2
+      ))
     })
 
-    setBook(books)
-  });
+    const objTransaction = allTransaction?.map(item => (
+      item?.map(item2 => (
+         item2?.title
+      ))
+    ));
+    setTrans({title: objTransaction})
 
+  });
   return (
     <>
       <Image src={flower1} alt='' className='flower1'/>
