@@ -32,7 +32,7 @@ function App() {
 
   const [state, dispatch] = useContext(UserContext);
   // console.clear();
-  console.log("State :", state);
+  // console.log("State :", state);
   
   useEffect(() => {
     if (localStorage.token) {

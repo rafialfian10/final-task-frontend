@@ -67,8 +67,8 @@ h2.title-add-book {
 }
 
 /* Input Upload Image */
-.img-upload {
-    height: 30px;
+div.img-upload {
+    height: 40px !important;
     display: flex;
     align-items: center;
     border-radius: 5px;
@@ -78,10 +78,11 @@ h2.title-add-book {
   .img-upload label {
     width: 30%;
     height: 40px;
+    margin: 0px !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 5px;
+    border-radius: 5px; 
   }
   
   .img-upload input {
@@ -93,7 +94,7 @@ h2.title-add-book {
     padding-left: 10px;
     text-align: left;
     color: #393939 !important;
-    font-weight: bold;
+    font-weight: normal !important;
     border-radius: 5px;
   }
   

@@ -1,16 +1,18 @@
 /* eslint-disable no-unused-vars */
+// components react bootstrap
+import { Button, Image, Form, Modal } from "react-bootstrap";
+
+// componets
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { Button, Image, Form, Modal } from "react-bootstrap";
 
 // css
-import './ModalPromo.scss'
+import "./ModalPromo.scss"
 import Swal from "sweetalert2";
 
 // image
-import attache from '../../../assets/img/attache.png'
-import addlistbook from '../../../assets/img/addlistbook.png'
+import addlistbook from "../../../assets/img/addlistbook.png"
 
 // api
 import { API } from "../../../config/api";
@@ -21,7 +23,7 @@ const ModalPromo = ({modalPromo, setModalPromo, value, bookId, refetchBook}) => 
 
    //state form
    const [form, setForm] = useState({
-        discount: '',
+        discount: "",
     })
 
     useEffect(() => {
@@ -32,7 +34,7 @@ const ModalPromo = ({modalPromo, setModalPromo, value, bookId, refetchBook}) => 
 
     // state error
     const [error, setError] = useState({
-        discount: '',
+        discount: "",
     });
 
     // handle change
@@ -40,7 +42,7 @@ const ModalPromo = ({modalPromo, setModalPromo, value, bookId, refetchBook}) => 
         setForm({
         ...form,
         [e.target.name]:
-            e.target.type === 'file' ? e.target.files : e.target.value,
+            e.target.type === "file" ? e.target.files : e.target.value,
         })
     };
 
@@ -49,13 +51,13 @@ const ModalPromo = ({modalPromo, setModalPromo, value, bookId, refetchBook}) => 
         try {
             const config = {
                 headers: {
-                    'Content-type': 'multipart/form-data',
+                    "Content-type": "multipart/form-data",
                     Authorization: "Bearer " + localStorage.getItem("token"),
                 },
             };
 
             const messageError = {
-                discount: '',
+                discount: "",
             };
 
             //validasi discount
@@ -70,22 +72,21 @@ const ModalPromo = ({modalPromo, setModalPromo, value, bookId, refetchBook}) => 
             if (messageError.discount === "" ) {
 
                 const formData = new FormData();
-                formData.append('discount', form.discount);
+                formData.append("discount", form.discount);
                
                 const response = await API.patch(`/book-promo/${bookId}`, formData, config);
                 console.log("Response :", response);
-                if(response.status === 200) {
-                    refetchBook()
+                if(response.data.code === 200) {
+                    Swal.fire({
+                        text: "Discount Book successfully added",
+                        icon: "success",
+                        confirmButtonText: "Ok"
+                    })
                     setModalPromo(false)
+                    refetchBook()
                 }
 
-                Swal.fire({
-                    text: 'Discount Book successfully added',
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
-                })
-
-                navigate('/incom_book'); 
+                navigate("/incom_book"); 
             } else {
                 setError(messageError)
             }
@@ -99,16 +100,16 @@ const ModalPromo = ({modalPromo, setModalPromo, value, bookId, refetchBook}) => 
             <Modal show={modalPromo} onHide={() => setModalPromo(false)} className="modal-update-book" size="lg">
                 <Modal.Body className="modal-body-update-book">
                     <h2 className="title-update-book">Set Discount Book</h2>
-                        <Form className='form-update-book' onSubmit={(e) => {e.preventDefault() 
+                        <Form className="form-update-book" onSubmit={(e) => {e.preventDefault() 
                         handleUpdateBookPromo.mutate(e)}}>
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="discount" type="number" placeholder='Discount' value={form.discount} onChange={(e) => handleChange(e, 'discount')}/>
+                            <Form.Control className="form-input" name="discount" type="number" placeholder="Discount" value={form.discount} onChange={(e) => handleChange(e, "discount")}/>
                         </Form.Group>
                         {error.discount && <Form.Text className="text-danger">{error.discount}</Form.Text>}
 
-                        <div className='btn-update-book-content'>
-                            <Button type="submit" className='btn-update-book'>Set Promo<Image src={addlistbook} className='img-update-book'/></Button>
+                        <div className="btn-update-book-content">
+                            <Button type="submit" className="btn-update-book">Set Promo<Image src={addlistbook} className="img-update-book"/></Button>
                         </div>
                     </Form>
                 </Modal.Body>

@@ -93,7 +93,7 @@ function Admin({search}) {
                   <td>{transaction?.user.name}</td>
                   <td>bca.png</td>
                   <td>
-                    {transaction?.book.map((item, i) => (
+                    {transaction?.book?.map((item, i) => (
                       <ul key={i}>
                         <li>{item?.title}</li>
                       </ul> 

@@ -248,67 +248,67 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                         handleUpdateBook.mutate(e)}}>
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="title" type="text" placeholder='Title' onChange={(e) => handleChange(e, 'title')} value={form.title} />
+                            <Form.Control className="form-input" name="title" type="text" placeholder='Title' onChange={(e) => handleChange(e, 'title')} value={form.title} />
                         </Form.Group>
                         {error.title && <Form.Text className="text-danger">{error.title}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="publicationDate" type="date" placeholder='Publication Date' onChange={(e) => handleChange(e, 'publicationDate')}  value={form.publicationDate} />
+                            <Form.Control className="form-input" name="publicationDate" type="date" placeholder='Publication Date' onChange={(e) => handleChange(e, 'publicationDate')}  value={form.publicationDate} />
                         </Form.Group>
                         {error.publicationDate && <Form.Text className="text-danger">{error.publicationDate}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="isbn" type="text" placeholder='isbn' onChange={(e) => handleChange(e, 'isbn')}   value={form.isbn} />
+                            <Form.Control className="form-input" name="isbn" type="text" placeholder='isbn' onChange={(e) => handleChange(e, 'isbn')}   value={form.isbn} />
                         </Form.Group>
                         {error.isbn && <Form.Text className="text-danger">{error.isbn}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="pages" type="number" placeholder='Pages' onChange={(e) => handleChange(e, 'pages')}  value={form.pages} />
+                            <Form.Control className="form-input" name="pages" type="number" placeholder='Pages' onChange={(e) => handleChange(e, 'pages')}  value={form.pages} />
                         </Form.Group>
                         {error.pages && <Form.Text className="text-danger">{error.pages}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={(e) => handleChange(e, 'author')}  value={form.author} />
+                            <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={(e) => handleChange(e, 'author')}  value={form.author} />
                         </Form.Group>
                         {error.author && <Form.Text className="text-danger">{error.author}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="price" type="number" placeholder='Price' onChange={(e) => handleChange(e, 'price')}  value={form.price} />
+                            <Form.Control className="form-input" name="price" type="number" placeholder='Price' onChange={(e) => handleChange(e, 'price')}  value={form.price} />
                         </Form.Group>
                         {error.price && <Form.Text className="text-danger">{error.price}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="quota" type="number" placeholder='Quota' onChange={(e) => handleChange(e, 'quota')}  value={form.quota} />
+                            <Form.Control className="form-input" name="quota" type="number" placeholder='Quota' onChange={(e) => handleChange(e, 'quota')}  value={form.quota} />
                         </Form.Group>
                         {error.quota && <Form.Text className="text-danger">{error.quota}</Form.Text>}
 
                         <Form.Group className="form-group">
-                        <FloatingLabel controlId="floatingTextarea2">
-                            <Form.Control as="textarea" className="form-input" name="description" placeholder='Add This Book' style={{ height: '100px' }} onChange={(e) => handleChange(e, 'description')}  value={form.description} />
-                            {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
-                        </FloatingLabel>
+                            <FloatingLabel controlId="floatingTextarea2">
+                                <Form.Control as="textarea" className="form-input" name="description" placeholder='Add This Book' style={{ height: '100px' }} onChange={(e) => handleChange(e, 'description')}  value={form.description} />
+                                {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
+                            </FloatingLabel>
                         </Form.Group>
 
                         <Form.Group className="form-group">
-                        <div className="img-upload">
-                            <label for="book" className="form-input">
-                                <p>Book</p>
-                                <img src={attache} alt=""/>
-                            </label>
-                            <Form.Control className="form-input" name="book" type="file" id="book" onChange={(e) => handleChange(e, 'book')}/>
-                        </div>
-                        {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
+                            <div className="img-upload">
+                                <label htmlFor="book" className="form-input">
+                                    <p>Book</p>
+                                    <img src={attache} alt=""/>
+                                </label>
+                                <Form.Control className="form-input" name="book" type="file" id="book" onChange={(e) => handleChange(e, 'book')}/>
+                            </div>
+                            {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
                         </Form.Group>
 
                         <Form.Group className="form-group">
-                        <div className="img-upload">
-                            <label for="thumbnail" className="form-input">
-                                <p>Image</p>
-                                <img src={attache} alt=""/>
-                            </label>
-                            <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={(e) => handleChange(e, 'thumbnail')}/>
-                        </div>
-                        {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
+                            <div className="img-upload">
+                                <label htmlFor="thumbnail" className="form-input">
+                                    <p>Image</p>
+                                    <img src={attache} alt=""/>
+                                </label>
+                                <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={(e) => handleChange(e, 'thumbnail')}/>
+                            </div>
+                            {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
                         </Form.Group>
 
                         <div className='btn-update-book-content'>

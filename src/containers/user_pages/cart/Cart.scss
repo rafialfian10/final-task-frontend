@@ -143,9 +143,47 @@
     color: #44B200;
 }
 
+/* Input Upload Image */
+.content-proof-transfer {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 20px 0px;
+}
+
+.content-proof-transfer .img-upload {
+    width: 70%;
+    height: 100% !important;
+    border-radius: 5px;
+    margin: 0px !important;
+  }
+  
+.img-upload label {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.img-proof {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0px !important;
+    border-radius: 5px;
+}
+  
+.img-upload label img:hover {
+    cursor: pointer;
+}
+
+.text-proof {
+    font-weight: bold;
+    color: black;
+}
+/* End input upload image */
+
 .transaction {
     width: 100%;
-    margin-top: 40px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;

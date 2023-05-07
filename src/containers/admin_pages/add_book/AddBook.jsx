@@ -62,11 +62,11 @@ const AddBook = () => {
             e.target.type === 'file' ? e.target.files : e.target.value, 
         })
 
-    // buat url image
-    if (e.target.type === 'file') {
-        let url = URL.createObjectURL(e.target.files[0]);
-        setPreview(url);
-      }
+        // buat url image
+        if (e.target.type === 'file') {
+            let url = URL.createObjectURL(e.target.files[0]);
+            setPreview(url);
+        }
     };
 
     // handle submit
@@ -218,67 +218,67 @@ const AddBook = () => {
                 <Form className='form-add-book' onSubmit={(e) => {e.preventDefault() 
                     handleSubmit.mutate(e)}}>
                     <Form.Group className="form-group">
-                    <Form.Control className="form-input" name="title" type="text" placeholder='Title' onChange={handleChange}/>
-                    {error.title && <Form.Text className="text-danger">{error.title}</Form.Text>}
+                        <Form.Control className="form-input" name="title" type="text" placeholder='Title' onChange={handleChange}/>
+                        {error.title && <Form.Text className="text-danger">{error.title}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                    <Form.Control className="form-input" name="publicationDate" type="date" placeholder='Publication Date' onChange={handleChange}/>
-                    {error.publicationDate && <Form.Text className="text-danger">{error.publicationDate}</Form.Text>}
+                        <Form.Control className="form-input" name="publicationDate" type="date" placeholder='Publication Date' onChange={handleChange}/>
+                        {error.publicationDate && <Form.Text className="text-danger">{error.publicationDate}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                    <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={handleChange}/>
-                    {error.author && <Form.Text className="text-danger">{error.author}</Form.Text>}
+                        <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={handleChange}/>
+                        {error.author && <Form.Text className="text-danger">{error.author}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                    <Form.Control className="form-input" name="pages" type="text" placeholder='Pages' onChange={handleChange}/>
-                    {error.pages && <Form.Text className="text-danger">{error.pages}</Form.Text>}
+                        <Form.Control className="form-input" name="pages" type="text" placeholder='Pages' onChange={handleChange}/>
+                        {error.pages && <Form.Text className="text-danger">{error.pages}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                    <Form.Control className="form-input" name="isbn" type="text" placeholder='ISBN' onChange={handleChange}/>
-                    {error.isbn && <Form.Text className="text-danger">{error.isbn}</Form.Text>}
+                        <Form.Control className="form-input" name="isbn" type="text" placeholder='ISBN' onChange={handleChange}/>
+                        {error.isbn && <Form.Text className="text-danger">{error.isbn}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                    <Form.Control className="form-input" name="price" type="text" placeholder='Price' onChange={handleChange}/>
-                    {error.price && <Form.Text className="text-danger">{error.price}</Form.Text>}
+                        <Form.Control className="form-input" name="price" type="text" placeholder='Price' onChange={handleChange}/>
+                        {error.price && <Form.Text className="text-danger">{error.price}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                    <Form.Control className="form-input" name="quota" type="number" placeholder='Quota' onChange={handleChange}/>
-                    {error.quota && <Form.Text className="text-danger">{error.quota}</Form.Text>}
+                        <Form.Control className="form-input" name="quota" type="number" placeholder="Quota" onChange={handleChange}/>
+                        {error.quota && <Form.Text className="text-danger">{error.quota}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                    <FloatingLabel controlId="floatingTextarea2">
-                        <Form.Control as="textarea" className="form-input" name="description" placeholder='Add This Book' style={{ height: '100px' }} onChange={handleChange}/>
-                        {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
-                    </FloatingLabel>
+                        {/* <FloatingLabel controlId="floatingTextarea2"> */}
+                            <Form.Control as="textarea" className="form-input text-dark" name="description" placeholder="Description" style={{ height: "100px" }} onChange={handleChange}/>
+                            {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
+                        {/* </FloatingLabel> */}
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                    <div className="img-upload">
-                        <label for="book" className="form-input">
-                            <p>Book</p>
-                            <img src={attache} alt=""/>
-                        </label>
-                        <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange}/>
-                    </div>
-                    {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
+                        <div className="img-upload">
+                            <label htmlFor="book" className="form-input">
+                                <p>Book</p>
+                                <img src={attache} alt=""/>
+                            </label>
+                            <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange}/>
+                        </div>
+                        {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                    <div className="img-upload">
-                        <label for="thumbnail" className="form-input">
-                            <p>Image</p>
-                            <img src={attache} alt=""/>
-                        </label>
-                        <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange}/>
-                    </div>
-                    {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
+                        <div className="img-upload">
+                            <label htmlFor="thumbnail" className="form-input">
+                                <p>Image</p>
+                                <img src={attache} alt=""/>
+                            </label>
+                            <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange}/>
+                        </div>
+                        {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
                     </Form.Group>
 
                     <div className='btn-add-book-content'>

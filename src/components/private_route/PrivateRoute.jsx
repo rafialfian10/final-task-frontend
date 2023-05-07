@@ -38,11 +38,9 @@ export const PrivateRouteUser = () => {
 
 export const PageNotFound = () => {
     const params = useParams;
-    let message = `"${params.pageName}" page not found!`;
-    // if (params.pageName == "about") {
-    //   message = "You need to be logged in to access this page.";
-    // }
-  
-    return <p className="pages-not-found">{message}</p>;
+    let message = `"${params.pageName}`;
+    if(message) {
+        return <p className="pages-not-found">404 Page not found</p>;
+    }
   }
 
