@@ -2,12 +2,17 @@
 import DescriptionDownload from "../../../components/description_download/DescriptionDownload"
 import DetailImage from "../../../components/detailImage/DetailImage"
 
+// scss
+import './DetailBook.scss'
+
 const DetailBook = () => {
 
     return (
-        <>
-            <DetailImage/>
-            <DescriptionDownload/>
+        <>  
+            <div className="container-detail-book">
+                <DetailImage/>
+                <DescriptionDownload/>
+            </div>
         </>
     )
 }

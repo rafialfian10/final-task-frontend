@@ -17,8 +17,6 @@ import { API } from "../../../config/api";
 
 const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAllBook}) => {
 
-    console.log("Value", value)
-
     const navigate = useNavigate()
 
     const [preview, setPreview] = useState(null) 
@@ -26,7 +24,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
     //state form
     const [form, setForm] = useState({
         title: '',
-        publicationDate: '',
+        publication_date: '',
         isbn: '',
         pages: '',
         author: '',
@@ -37,12 +35,18 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
         thumbnail: '',
     })
 
-    // console.log("Form", form)
+    console.log("Form", form)
+
+    const date = new Date(value?.publication_date);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const formattedDate = `${month}/${day}/${year}`;
 
     useEffect(() => {
         setForm({
             title: value?.title,
-            publicationDate: value?.publicationDate,
+            publication_date: value?.publication_date,
             isbn: value?.isbn,
             pages: value?.pages,
             author: value?.author,
@@ -57,7 +61,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
     // state error
     const [error, setError] = useState({
         title: '',
-        publicationDate: '',
+        publication_date: '',
         isbn: '',
         pages: '',
         author: '',
@@ -93,7 +97,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
 
             const messageError = {
                 title: '',
-                publicationDate: '',
+                publication_date: '',
                 isbn: '',
                 pages: '',
                 author: '',
@@ -112,10 +116,10 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
             }
 
             // validasi publication date
-            if (form.publicationDate === "") {
-                messageError.publicationDate = "Publication Date must be filled out";
+            if (form.publication_date === "") {
+                messageError.publication_date = "Publication Date must be filled out";
             } else {
-                messageError.publicationDate = ""
+                messageError.publication_date = ""
             }
 
             // validasi isbn
@@ -175,13 +179,13 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
 
             // validasi Image
             if (form.thumbnail === "") {
-                messageError.thumbnail = "image must be filled out";
+                messageError.thumbnail = "Image must be filled out";
             } else {
                 messageError.thumbnail = ""
             }
  
             if (messageError.title === "" &&
-                messageError.publicationDate === "" &&
+                messageError.publication_date === "" &&
                 messageError.isbn === "" &&
                 messageError.pages === "" &&
                 messageError.author === "" &&
@@ -193,7 +197,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                 ) {
                 const formData = new FormData();
                 formData.append('title', form.title);
-                formData.append('publication_date', form.publicationDate);
+                formData.append('publication_date', form.publication_date);
                 formData.append('author', form.author);
                 formData.append('pages', form.pages);
                 formData.append('isbn', form.isbn);
@@ -204,7 +208,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                 formData.append('thumbnail', form.thumbnail[0]);
                
                 const response = await API.patch(`/book/${bookId}`, formData, config);
-                console.log("Response :", response);
+                // console.log("Response :", response);
                 if(response.code === 200) {
                     refetchAllBook()
                 }
@@ -219,7 +223,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
 
                 setForm({
                     title: '',
-                    publicationDate: '',
+                    publication_date: '',
                     isbn: '',                   
                     pages: '',
                     author: '',
@@ -253,9 +257,9 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                         {error.title && <Form.Text className="text-danger">{error.title}</Form.Text>}
 
                         <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="publicationDate" type="date" placeholder='Publication Date' onChange={(e) => handleChange(e, 'publicationDate')}  value={form.publicationDate} />
+                            <Form.Control className="form-input" name="publication_date" type="date" placeholder='Publication Date' onChange={(e) => handleChange(e, 'publication_date')} value={form.publication_date} />
                         </Form.Group>
-                        {error.publicationDate && <Form.Text className="text-danger">{error.publicationDate}</Form.Text>}
+                        {error.publication_date && <Form.Text className="text-danger">{error.publication_date}</Form.Text>}
 
                         <Form.Group className="form-group">
                             <Form.Control className="form-input" name="isbn" type="text" placeholder='isbn' onChange={(e) => handleChange(e, 'isbn')}   value={form.isbn} />
@@ -295,7 +299,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                                     <p>Book</p>
                                     <img src={attache} alt=""/>
                                 </label>
-                                <Form.Control className="form-input" name="book" type="file" id="book" onChange={(e) => handleChange(e, 'book')}/>
+                                <Form.Control className="form-input" name="book" type="file" id="book" onChange={(e) => handleChange(e, 'book[0]')}/>
                             </div>
                             {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
                         </Form.Group>
@@ -306,7 +310,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                                     <p>Image</p>
                                     <img src={attache} alt=""/>
                                 </label>
-                                <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={(e) => handleChange(e, 'thumbnail')}/>
+                                <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={(e) => handleChange(e, 'thumbnail[0]')}/>
                             </div>
                             {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
                         </Form.Group>

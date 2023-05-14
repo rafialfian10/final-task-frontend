@@ -172,18 +172,16 @@ const Cart = () => {
       console.log(body)
       
       // check condition
-      // if(dataTransaction?.includes(dataCart)) {
-      //   Swal.fire({
-      //     text: "you already have this book",
-      //     icon: "warning",
-      //     confirmButtonText: "Ok"
-      //   })
-      // } else {
-        const response = await API.post("/transaction", body, config);
-        let token = response.data.data.midtrans_id;
-        console.log("Token coy", token);
+      if(dataTransaction?.includes(dataCart)) {
+        Swal.fire({
+          text: "you already have this book",
+          icon: "warning",
+          confirmButtonText: "Ok"
+        })
+      } else {
+        const response = await API.post("/transaction", body);
         if (response.data.code === 200) {
-          window.snap.pay(token, {
+          window.snap.pay(response.data.data.midtrans_id, {
             // success
             onSuccess: function (result) {
               Swal.fire({
@@ -230,7 +228,7 @@ const Cart = () => {
             },
           });
         }
-      // }
+      }
     } catch (error) {
       console.log(error)
     }

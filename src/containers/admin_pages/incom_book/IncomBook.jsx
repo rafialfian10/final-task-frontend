@@ -62,7 +62,6 @@ const IncomBook = ({books, search, refetchAllBooks}) => {
                 if(response.status === 200) {
                     refetchAllBooks()
                 }
-                console.log("Response :", response);
 
                 Swal.fire({
                     text: "Country successfully deleted",
