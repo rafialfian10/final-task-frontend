@@ -179,7 +179,7 @@ const Cart = () => {
           confirmButtonText: "Ok"
         })
       } else {
-        const response = await API.post("/transaction", body);
+        const response = await API.post("/transaction", body, config);
         if (response.data.code === 200) {
           window.snap.pay(response.data.data.midtrans_id, {
             // success

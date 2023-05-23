@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { Button, Image, Form, Modal, FloatingLabel } from "react-bootstrap";
+import { Button, Form, Modal, FloatingLabel } from "react-bootstrap";
+import { Image, CloudinaryContext } from 'cloudinary-react';
 
 // css
 import './ModalUpdateBook.scss'
@@ -37,26 +38,34 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
 
     console.log("Form", form)
 
-    const date = new Date(value?.publication_date);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const formattedDate = `${month}/${day}/${year}`;
-
     useEffect(() => {
-        setForm({
-            title: value?.title,
-            publication_date: value?.publication_date,
-            isbn: value?.isbn,
-            pages: value?.pages,
-            author: value?.author,
-            price: value?.price,
-            quota: value?.quota,
-            description: value?.description,
-            book: value?.book,
-            thumbnail: value?.thumbnail,
-        })
-    }, [value])
+        setForm((prevForm) => ({
+            ...prevForm,
+            title: value?.title || "",
+            publication_date: value?.publication_date || "",
+            isbn: value?.isbn || "",
+            pages: value?.pages || "",
+            author: value?.author || "",
+            price: value?.price || "",
+            quota: value?.quota || "",
+            description: value?.description || "",
+            book: value?.book || "",
+            thumbnail: value?.thumbnail || "",
+        }));
+
+        if (value?.publication_date) {
+            const date = new Date(value.publication_date);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+            const formattedDate = `${year}-${month}-${day}`;
+            setForm((prevForm) => ({
+              ...prevForm,
+              publication_date: formattedDate,
+            }));
+        }
+
+    }, [value]);
 
     // state error
     const [error, setError] = useState({
@@ -83,6 +92,42 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
             let url = URL.createObjectURL(e.target.files[0]);
             setPreview(url);
         }
+
+        
+        // const { name, value, type } = e.target;
+        // if (type === 'file') {
+        //     const file = e.target.files[0];
+      
+        //     if (file) {
+        //       const formData = new FormData();
+        //       formData.append('thumbnail', file);
+        //       formData.append('upload_preset', 'cjg49jvk');
+      
+        //       // Upload file ke Cloudinary
+        //       CloudinaryContext.uploader.upload(formData, (error, result) => {
+        //         if (result) {
+        //           const imageUrl = result.secure_url;
+        //           setForm((prevForm) => ({
+        //             ...prevForm,
+        //             [name]: imageUrl,
+        //           }));
+        //         } else {
+        //           console.error('Error uploading file:', error);
+        //         }
+        //       });
+        //     } else {
+        //       setForm((prevForm) => ({
+        //         ...prevForm,
+        //         [name]: null,
+        //       }));
+        //     }
+        // } else {
+        //     const { value } = e.target;
+        //     setForm((prevForm) => ({
+        //       ...prevForm,
+        //       [name]: value,
+        //     }));
+        // }
     };
 
     // handle set discount book
@@ -257,7 +302,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                         {error.title && <Form.Text className="text-danger">{error.title}</Form.Text>}
 
                         <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="publication_date" type="date" placeholder='Publication Date' onChange={(e) => handleChange(e, 'publication_date')} value={form.publication_date} />
+                            <Form.Control className="form-input" name="publication_date" type="date" placeholder='Publication Date' onChange={handleChange} value={form.publication_date} />
                         </Form.Group>
                         {error.publication_date && <Form.Text className="text-danger">{error.publication_date}</Form.Text>}
 
@@ -312,6 +357,11 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                                 </label>
                                 <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={(e) => handleChange(e, 'thumbnail[0]')}/>
                             </div>
+                            {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
+                        </Form.Group>
+
+                        <Form.Group className="form-group">
+                            <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange} />
                             {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
                         </Form.Group>
 
