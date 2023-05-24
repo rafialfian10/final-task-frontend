@@ -2,8 +2,11 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Modal, FloatingLabel } from "react-bootstrap";
+import { Button, Form, Modal, FloatingLabel, FormLabel } from "react-bootstrap";
 import { Image, CloudinaryContext } from 'cloudinary-react';
+
+// api
+import { API } from "../../../config/api";
 
 // css
 import './ModalUpdateBook.scss'
@@ -12,9 +15,6 @@ import Swal from "sweetalert2";
 // image
 import addlistbook from '../../../assets/img/addlistbook.png'
 import attache from '../../../assets/img/attache.png'
-
-// api
-import { API } from "../../../config/api";
 
 const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAllBook}) => {
 
@@ -83,54 +83,53 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
 
     // handle change
     const handleChange = (e) => {
-        setForm({...form,
-        [e.target.name]:
-            e.target.type === 'file' ? e.target.files : e.target.value,
-        })
+        // setForm({...form,
+        // [e.target.name]:
+        //     e.target.type === 'file' ? e.target.files : e.target.value,
+        // })
 
-        if (e.target.type === 'file') {
-            let url = URL.createObjectURL(e.target.files[0]);
-            setPreview(url);
-        }
-
-        
-        // const { name, value, type } = e.target;
-        // if (type === 'file') {
-        //     const file = e.target.files[0];
-      
-        //     if (file) {
-        //       const formData = new FormData();
-        //       formData.append('thumbnail', file);
-        //       formData.append('upload_preset', 'cjg49jvk');
-      
-        //       // Upload file ke Cloudinary
-        //       CloudinaryContext.uploader.upload(formData, (error, result) => {
-        //         if (result) {
-        //           const imageUrl = result.secure_url;
-        //           setForm((prevForm) => ({
-        //             ...prevForm,
-        //             [name]: imageUrl,
-        //           }));
-        //         } else {
-        //           console.error('Error uploading file:', error);
-        //         }
-        //       });
-        //     } else {
-        //       setForm((prevForm) => ({
-        //         ...prevForm,
-        //         [name]: null,
-        //       }));
-        //     }
-        // } else {
-        //     const { value } = e.target;
-        //     setForm((prevForm) => ({
-        //       ...prevForm,
-        //       [name]: value,
-        //     }));
+        // if (e.target.type === 'file') {
+        //     let url = URL.createObjectURL(e.target.files[0]);
+        //     setPreview(url);
         // }
+
+        const { name, value, type } = e.target;
+        if (name === 'file') {
+            const file = e.target.files[0];
+      
+            if (file) {
+              const formData = new FormData();
+              formData.append('file', file);
+              formData.append('upload_preset', 'cjg49jvk');
+      
+              // Upload file ke Cloudinary
+              CloudinaryContext.uploader.upload(formData, (error, result) => {
+                if (result) {
+                    const imageUrl = result.secure_url;
+                    setForm((prevForm) => ({
+                        ...prevForm,
+                        [name]: imageUrl,
+                    }));
+                } else {
+                  console.error('Error uploading file:', error);
+                }
+              });
+            } else {
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    [name]: null,
+                }));
+            }
+        } else {
+            const { value } = e.target;
+            setForm((prevForm) => ({
+              ...prevForm,
+              [name]: value,
+            }));
+        }
     };
 
-    // handle set discount book
+    // handle update book
     const handleUpdateBook = useMutation( async (e) => {
         try {
             const config = {
@@ -254,32 +253,30 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                
                 const response = await API.patch(`/book/${bookId}`, formData, config);
                 // console.log("Response :", response);
-                if(response.code === 200) {
+                if(response.data.code === 200) {
                     refetchAllBook()
+                    setModalUpdate(false)
+                    
+                    Swal.fire({
+                        text: 'Book successfully updated',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    })
+
+                    setForm({
+                        title: '',
+                        publication_date: '',
+                        isbn: '',                   
+                        pages: '',
+                        author: '',
+                        price: '',
+                        description: '',
+                        book: '',
+                        thumbnail: '',
+                        quota: '',
+                    })
+                    navigate('/incom_book'); 
                 }
-
-                setModalUpdate(false)
-
-                Swal.fire({
-                    text: 'Book successfully updated',
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
-                })
-
-                setForm({
-                    title: '',
-                    publication_date: '',
-                    isbn: '',                   
-                    pages: '',
-                    author: '',
-                    price: '',
-                    description: '',
-                    book: '',
-                    thumbnail: '',
-                    quota: '',
-                })
-
-                navigate('/incom_book'); 
             } else {
                 setError(messageError)
             }
@@ -297,7 +294,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                         handleUpdateBook.mutate(e)}}>
 
                         <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="title" type="text" placeholder='Title' onChange={(e) => handleChange(e, 'title')} value={form.title} />
+                            <Form.Control className="form-input" name="title" type="text" placeholder='Title' onChange={handleChange} value={form.title} />
                         </Form.Group>
                         {error.title && <Form.Text className="text-danger">{error.title}</Form.Text>}
 
@@ -307,55 +304,55 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                         {error.publication_date && <Form.Text className="text-danger">{error.publication_date}</Form.Text>}
 
                         <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="isbn" type="text" placeholder='isbn' onChange={(e) => handleChange(e, 'isbn')}   value={form.isbn} />
+                            <Form.Control className="form-input" name="isbn" type="text" placeholder='isbn' onChange={handleChange} value={form.isbn} />
                         </Form.Group>
                         {error.isbn && <Form.Text className="text-danger">{error.isbn}</Form.Text>}
 
                         <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="pages" type="number" placeholder='Pages' onChange={(e) => handleChange(e, 'pages')}  value={form.pages} />
+                            <Form.Control className="form-input" name="pages" type="number" placeholder='Pages' onChange={handleChange} value={form.pages} />
                         </Form.Group>
                         {error.pages && <Form.Text className="text-danger">{error.pages}</Form.Text>}
 
                         <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={(e) => handleChange(e, 'author')}  value={form.author} />
+                            <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={handleChange} value={form.author} />
                         </Form.Group>
                         {error.author && <Form.Text className="text-danger">{error.author}</Form.Text>}
 
                         <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="price" type="number" placeholder='Price' onChange={(e) => handleChange(e, 'price')}  value={form.price} />
+                            <Form.Control className="form-input" name="price" type="number" placeholder='Price' onChange={handleChange} value={form.price} />
                         </Form.Group>
                         {error.price && <Form.Text className="text-danger">{error.price}</Form.Text>}
 
                         <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="quota" type="number" placeholder='Quota' onChange={(e) => handleChange(e, 'quota')}  value={form.quota} />
+                            <Form.Control className="form-input" name="quota" type="number" placeholder='Quota' onChange={handleChange} value={form.quota} />
                         </Form.Group>
                         {error.quota && <Form.Text className="text-danger">{error.quota}</Form.Text>}
 
                         <Form.Group className="form-group">
                             <FloatingLabel controlId="floatingTextarea2">
-                                <Form.Control as="textarea" className="form-input" name="description" placeholder='Add This Book' style={{ height: '100px' }} onChange={(e) => handleChange(e, 'description')}  value={form.description} />
+                                <Form.Control as="textarea" className="form-input" name="description" placeholder='Add This Book' style={{ height: '100px' }} onChange={handleChange}  value={form.description} />
                                 {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
                             </FloatingLabel>
                         </Form.Group>
 
                         <Form.Group className="form-group">
                             <div className="img-upload">
-                                <label htmlFor="book" className="form-input">
-                                    <p>Book</p>
-                                    <img src={attache} alt=""/>
-                                </label>
-                                <Form.Control className="form-input" name="book" type="file" id="book" onChange={(e) => handleChange(e, 'book[0]')}/>
+                                <FormLabel htmlFor="book" className="form-input">
+                                    <Form.Text className='text-file'>Book</Form.Text>
+                                    <Image className='img-file' src={attache} alt=""/>
+                                </FormLabel>
+                                <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange}/>
                             </div>
                             {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
                         </Form.Group>
 
                         <Form.Group className="form-group">
                             <div className="img-upload">
-                                <label htmlFor="thumbnail" className="form-input">
-                                    <p>Image</p>
-                                    <img src={attache} alt=""/>
-                                </label>
-                                <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={(e) => handleChange(e, 'thumbnail[0]')}/>
+                                <FormLabel htmlFor="thumbnail" className="form-input">
+                                    <Form.Text className='text-file'>Image</Form.Text>
+                                    <Image className='img-file' src={attache} alt=""/>
+                                </FormLabel>
+                                <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange}/>
                             </div>
                             {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
                         </Form.Group>

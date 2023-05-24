@@ -1,12 +1,11 @@
 // components react bootstrap
-import {Button, FloatingLabel, Form, Image} from 'react-bootstrap';
+import {Button, Form, Image, FormLabel} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 
 // API
 import { API } from '../../../config/api';
-
 
 // css
 import './AddBook.scss'
@@ -190,7 +189,7 @@ const AddBook = () => {
 
                 // Insert trip data
                 const response = await API.post('/book', formData, config);
-                console.log("Response :", response);
+                // console.log("Response :", response);
 
                 if(response.data.code === 200) {
                     Swal.fire({
@@ -223,7 +222,7 @@ const AddBook = () => {
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                        <Form.Control className="form-input" name="publicationDate" type="date" placeholder='Publication Date' onChange={handleChange}/>
+                        <Form.Control className="form-input text-secondary" name="publicationDate" type="date" placeholder='Publication Date' onChange={handleChange}/>
                         {error.publicationDate && <Form.Text className="text-danger">{error.publicationDate}</Form.Text>}
                     </Form.Group>
 
@@ -253,18 +252,16 @@ const AddBook = () => {
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                        {/* <FloatingLabel controlId="floatingTextarea2"> */}
-                            <Form.Control as="textarea" className="form-input text-dark" name="description" placeholder="Description" style={{ height: "100px" }} onChange={handleChange}/>
-                            {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
-                        {/* </FloatingLabel> */}
+                        <Form.Control as="textarea" className="form-input text-dark" name="description" placeholder="Description" style={{ height: "100px" }} onChange={handleChange}/>
+                        {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
                         <div className="img-upload">
-                            <label htmlFor="book" className="form-input">
-                                <p>Book</p>
-                                <img src={attache} alt=""/>
-                            </label>
+                            <FormLabel htmlFor="book" className="form-input">
+                                <Form.Text className='text-file'>Book</Form.Text>
+                                <Image className='img-file' src={attache} alt=""/>
+                            </FormLabel>
                             <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange}/>
                         </div>
                         {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
@@ -272,10 +269,10 @@ const AddBook = () => {
 
                     <Form.Group className="form-group">
                         <div className="img-upload">
-                            <label htmlFor="thumbnail" className="form-input">
-                                <p>Image</p>
-                                <img src={attache} alt=""/>
-                            </label>
+                            <FormLabel htmlFor="thumbnail" className="form-input">
+                                <Form.Text className='text-file'>Image</Form.Text>
+                                <Image className='img-file' src={attache} alt=""/>
+                            </FormLabel>
                             <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange}/>
                         </div>
                         {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
