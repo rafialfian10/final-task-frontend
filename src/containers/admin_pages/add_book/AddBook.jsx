@@ -258,7 +258,7 @@ const AddBook = () => {
 
                     <Form.Group className="form-group">
                         <div className="img-upload">
-                            <FormLabel htmlFor="book" className="form-input">
+                            <FormLabel htmlFor="book" className="form-input file-label">
                                 <Form.Text className='text-file'>Book</Form.Text>
                                 <Image className='img-file' src={attache} alt=""/>
                             </FormLabel>
@@ -269,7 +269,7 @@ const AddBook = () => {
 
                     <Form.Group className="form-group">
                         <div className="img-upload">
-                            <FormLabel htmlFor="thumbnail" className="form-input">
+                            <FormLabel htmlFor="thumbnail" className="form-input file-label">
                                 <Form.Text className='text-file'>Image</Form.Text>
                                 <Image className='img-file' src={attache} alt=""/>
                             </FormLabel>

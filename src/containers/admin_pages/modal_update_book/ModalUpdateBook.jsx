@@ -83,51 +83,49 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
 
     // handle change
     const handleChange = (e) => {
-        // setForm({...form,
-        // [e.target.name]:
-        //     e.target.type === 'file' ? e.target.files : e.target.value,
-        // })
+        setForm({...form,
+        [e.target.name]:
+            e.target.type === 'file' ? e.target.files : e.target.value,
+        })
 
-        // if (e.target.type === 'file') {
-        //     let url = URL.createObjectURL(e.target.files[0]);
-        //     setPreview(url);
-        // }
-
-        const { name, value, type } = e.target;
-        if (name === 'file') {
-            const file = e.target.files[0];
-      
-            if (file) {
-              const formData = new FormData();
-              formData.append('file', file);
-              formData.append('upload_preset', 'cjg49jvk');
-      
-              // Upload file ke Cloudinary
-              CloudinaryContext.uploader.upload(formData, (error, result) => {
-                if (result) {
-                    const imageUrl = result.secure_url;
-                    setForm((prevForm) => ({
-                        ...prevForm,
-                        [name]: imageUrl,
-                    }));
-                } else {
-                  console.error('Error uploading file:', error);
-                }
-              });
-            } else {
-                setForm((prevForm) => ({
-                    ...prevForm,
-                    [name]: null,
-                }));
-            }
-        } else {
-            const { value } = e.target;
-            setForm((prevForm) => ({
-              ...prevForm,
-              [name]: value,
-            }));
+        if (e.target.type === 'file') {
+            let url = URL.createObjectURL(e.target.files[0]);
+            setPreview(url);
         }
+        // cjg49jvk preset
+
+        // const { name, value, type } = e.target;
+        // if (name === 'book' || name === 'thumbnail') {
+        //   const file = e.target.files[0];
+      
+        //     if (file) {
+        //         let url = URL.createObjectURL(file);
+        //         setPreview(url);
+        //         setForm((prevForm) => ({
+        //         ...prevForm,
+        //         [name]: file,
+        //         }));
+        //     } else {
+        //         setPreview(null);
+        //         setForm((prevForm) => ({
+        //         ...prevForm,
+        //         [name]: null,
+        //         }));
+        //     }
+        // } else {
+        //     setForm((prevForm) => ({
+        //         ...prevForm,
+        //         [name]: value,
+        //     }));
+        // }
     };
+
+    const [filePath, setFilePath] = useState('');
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setFilePath(file.name);
+      };
 
     // handle update book
     const handleUpdateBook = useMutation( async (e) => {
@@ -336,31 +334,31 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                         </Form.Group>
 
                         <Form.Group className="form-group">
-                            <div className="img-upload">
-                                <FormLabel htmlFor="book" className="form-input">
-                                    <Form.Text className='text-file'>Book</Form.Text>
-                                    <Image className='img-file' src={attache} alt=""/>
+                            <div className="img-upload-update">
+                                <FormLabel htmlFor="book" className="form-input label-file-update">
+                                    <Form.Text className='text-file-update'>Book</Form.Text>
+                                    <Image className='img-file-update' src={attache} alt=""/>
                                 </FormLabel>
-                                <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange}/>
+                                <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange} />
                             </div>
                             {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
                         </Form.Group>
 
                         <Form.Group className="form-group">
-                            <div className="img-upload">
-                                <FormLabel htmlFor="thumbnail" className="form-input">
-                                    <Form.Text className='text-file'>Image</Form.Text>
-                                    <Image className='img-file' src={attache} alt=""/>
+                            <div className="img-upload-update">
+                                <FormLabel htmlFor="thumbnail" className="form-input label-file-update">
+                                    <Form.Text className='text-file-update'>Image</Form.Text>
+                                    <Image className='img-file-update' src={attache} alt=""/>
                                 </FormLabel>
                                 <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange}/>
                             </div>
                             {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
                         </Form.Group>
 
-                        <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange} />
+                        {/* <Form.Group className="form-group">
+                            <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleFileChange}/>
                             {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
-                        </Form.Group>
+                        </Form.Group> */}
 
                         <div className='btn-update-book-content'>
                             <Button type="submit" className='btn-update-book'>Update Book<Image src={addlistbook} className='img-update-book'/></Button>

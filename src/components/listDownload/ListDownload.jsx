@@ -29,11 +29,11 @@ const ListDownload = () => {
         })
         .then((response) => response.blob())
         .then((response) => {
-        
+        console.log("xxx",response)
         const url = window.URL.createObjectURL(new Blob([response]),);
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', `FileName.pdf`);
+        link.setAttribute('download', `file.pdf`);
 
         // Append to html link element page
         document.body.appendChild(link);
@@ -51,18 +51,18 @@ const ListDownload = () => {
             <Form.Text className='download-title'>My Books</Form.Text>
             <div className='container-download'>
                 {transactionBook?.map((transaction) => {
-                    {if(transaction.status === "approve") {
+                    {if(transaction?.status === "approve") {
                         return (
                             <>
                                 {transaction.book?.map((item, i) => {
                                     return (    
                                         <Card className='list-download' key={i}>
-                                            <Card.Img variant="top" src={item.thumbnail} className='img-list-download' />
+                                            <Card.Img variant="top" src={item?.thumbnail} className='img-list-download' />
                                             <Card.Body className='list-desc'>
-                                                <Card.Title className='list-title'>{item.title}</Card.Title>
-                                                <Form.Text className='list-artist'>By. {item.author}</Form.Text>
+                                                <Card.Title className='list-title'>{item?.title}</Card.Title>
+                                                <Form.Text className='list-artist'>By. {item?.author}</Form.Text>
                                                 <div className='container-btn-download'>
-                                                    <Button className='btn-download-book' onClick={() => handleDownloadFile(item.book)} >Download</Button>
+                                                    <Button className='btn-download-book' onClick={() => handleDownloadFile(item?.book)} >Download</Button>
                                                 </div>
                                             </Card.Body>
                                         </Card>
@@ -70,16 +70,16 @@ const ListDownload = () => {
                                 })}
                             </>
                         )
-                    } else if(transaction.status === "success") {
+                    } else if(transaction?.status === "success") {
                         return (
                             <>
                             {transaction.book?.map((item, i) => {
                                 return (    
                                     <Card className='list-download' key={i}>
-                                        <Card.Img variant="top" src={item.thumbnail} className='img-list-download' />
+                                        <Card.Img variant="top" src={item?.thumbnail} className='img-list-download' />
                                         <Card.Body className='list-desc'>
-                                            <Card.Title className='list-title'>{item.title}</Card.Title>
-                                            <Form.Text className='list-artist'>By. {item.author}</Form.Text>
+                                            <Card.Title className='list-title'>{item?.title}</Card.Title>
+                                            <Form.Text className='list-artist'>By. {item?.author}</Form.Text>
                                             <div className='container-waiting'>
                                                 <Form.Text className='waiting'>Waiting to be approved By Admin for download</Form.Text>
                                             </div>

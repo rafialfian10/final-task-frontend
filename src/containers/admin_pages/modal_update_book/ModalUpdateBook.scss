@@ -58,32 +58,33 @@ h2.title-update-book {
 }
 
 /* Input Upload Image */
-div.img-upload {
-  height: 30px;
+div.img-upload-update {
+  height: 40px !important;
   display: flex;
   align-items: center;
   border-radius: 5px;
-  margin-top: 40px !important;
+  margin-bottom: 10px !important;
 }
 
-.img-upload label {
-  width: 30%;
+.img-upload-update .label-file-update {
+  width: 100%;
   height: 40px;
+  margin: 0px !important;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 5px;
+  border-radius: 5px; 
 }
 
-.img-upload .form-input {
+.img-upload-update .form-input {
   border: 1px solid rgb(196, 186, 186);
 }
 
-.img-upload input {
+.img-upload-update input {
   display: none;
 }
 
-.img-upload .text-file {
+.img-upload-update .text-file-update {
   padding: 5px;
   padding-left: 10px;
   margin: 0px;
@@ -93,17 +94,17 @@ div.img-upload {
   border-radius: 5px;
 }
 
-.img-upload .text-file:hover {
+.img-upload-update .text-file-update:hover {
   cursor: pointer;
 }
 
-.img-upload label .img-file {
+.img-upload-update .img-file-update {
   margin-right: 10px;
   width: 16px;
   height: 18px;
 }
 
-.img-upload .img-file:hover {
+.img-upload-update .img-file-update:hover {
   cursor: pointer;
 }
 /* End input upload image */

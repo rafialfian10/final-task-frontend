@@ -35,24 +35,10 @@ const Cart = () => {
     image: ""
   })
 
-  const [carts, setCarts] = useState({title: ""});
-  const [trans, setTrans] = useState({title: ""});
-  // console.log(carts)
-  // console.log(trans)
-
-  // data cart & data transaction
-  let dataCart = ""
-  let dataTransaction = ""
-  
-  for(let i in trans) {
-    dataTransaction += trans[i]
-  }
-  // console.log(dataTransaction)
-  
-  for(let i in carts) {
-    dataCart += carts[i]
-  }
-  // console.log(dataCart)
+  const [carts, setCarts] = useState([]);
+  const [trans, setTrans] = useState([]);
+  console.log("cart :", carts)
+  console.log("Transaction :", trans)
 
   // handle change image
   const handleChange = (e) => {
@@ -70,7 +56,7 @@ const Cart = () => {
   };
 
   // get order cart user
-  let { data: orderCart, refetch: refetchOrder} = useQuery("orderCart", async () => {
+  let { data: orderCart, refetch: refetchOrder} = useQuery("orderCartsCache", async () => {
     const response = await API.get(`/carts`);
     return response.data.data;
   });
@@ -121,33 +107,31 @@ const Cart = () => {
   });
 
   // function delete cart
-  const handledeleteCart = async (id) => {
+  const handleDeleteCart = async (id) => {
     await API.delete(`/cart/${id}`);  
     Swal.fire({
           text: "Cart successfully deleted",
           icon: "success",
           confirmButtonText: "Ok"
     })
-    refetchOrder()       
+    refetchOrder()    
+    
+    // Update carts after deleting cart
+    const updatedCarts = carts.filter((cart) => cart.id !== id);
+    setCarts(updatedCarts);
   }
  
   // snap midtrans
   const handlePay = useMutation(async () => {
     try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      };
-
+  
       let books = [];
 
       orderCart.forEach((item) => {
         books.push({
-          id: item.id,
-          book_id: item.book.id,
-          orderQty: item.order_qty,
+          id: item?.id,
+          book_id: item?.book.id,
+          orderQty: item?.order_qty,
         });
       });
 
@@ -169,17 +153,19 @@ const Cart = () => {
         // image: formDataTrans,
       };
 
-      console.log(body)
+      let duplicateData = carts.filter(cart => trans.includes(cart));
+      console.log("duplicate data :", duplicateData)
       
       // check condition
-      if(dataTransaction?.includes(dataCart)) {
+      if(duplicateData.length > 0) {
         Swal.fire({
           text: "you already have this book",
           icon: "warning",
           confirmButtonText: "Ok"
         })
       } else {
-        const response = await API.post("/transaction", body, config);
+        const response = await API.post("/transaction", body);
+        console.log(response)
         if (response.data.code === 200) {
           window.snap.pay(response.data.data.midtrans_id, {
             // success
@@ -249,27 +235,23 @@ const Cart = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //    // set carts
-  //   const allCart = orderCart?.map(item => {
-  //     return item.book_title
-  //   })
-  //   setCarts({title: allCart})
+  useEffect(() => {
+    // orderCart?.map((item) => {
+    //   setCarts(prevState => [...prevState, item?.book.title]);
+    // });
 
-  //   // set transaction book
-  //   const allTransaction = transaction?.map((item) => {
-  //     return item.book?.map(item2 => (
-  //       item2
-  //     ))
-  //   })
+    if (orderCart) {
+      const updatedCarts = orderCart.map((item) => item?.book?.title);
+      setCarts(updatedCarts);
+    }
 
-  //   const objTransaction = allTransaction?.map(item => (
-  //     item?.map(item2 => (
-  //        item2?.title
-  //     ))
-  //   ));
-  //   setTrans({title: objTransaction})
-  // })
+    transaction?.map((item) => {
+      if (item?.book && item.book.length > 0) {
+        setTrans(prevState => [...prevState, item.book[0].title]);
+      }
+    });
+    
+  }, [orderCart, transaction])
 
   return (
     <>
@@ -304,7 +286,7 @@ const Cart = () => {
                             </Button>
                           </div>
                         </Card.Body>
-                        <Button className="btn-trash" onClick={() => { handledeleteCart(order?.id)}}>
+                        <Button className="btn-trash" onClick={() => { handleDeleteCart(order?.id)}}>
                           <Image src={trash} className="img-trash" />
                         </Button>
                       </Card>
