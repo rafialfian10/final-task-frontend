@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Modal, FloatingLabel, FormLabel } from "react-bootstrap";
-import { Image, CloudinaryContext } from 'cloudinary-react';
+import { Button, Form, Modal, FloatingLabel, FormLabel, Image } from "react-bootstrap";
 
 // api
 import { API } from "../../../config/api";
@@ -92,32 +91,6 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
             let url = URL.createObjectURL(e.target.files[0]);
             setPreview(url);
         }
-        // cjg49jvk preset
-
-        // const { name, value, type } = e.target;
-        // if (name === 'book' || name === 'thumbnail') {
-        //   const file = e.target.files[0];
-      
-        //     if (file) {
-        //         let url = URL.createObjectURL(file);
-        //         setPreview(url);
-        //         setForm((prevForm) => ({
-        //         ...prevForm,
-        //         [name]: file,
-        //         }));
-        //     } else {
-        //         setPreview(null);
-        //         setForm((prevForm) => ({
-        //         ...prevForm,
-        //         [name]: null,
-        //         }));
-        //     }
-        // } else {
-        //     setForm((prevForm) => ({
-        //         ...prevForm,
-        //         [name]: value,
-        //     }));
-        // }
     };
 
     const [filePath, setFilePath] = useState('');
@@ -294,42 +267,42 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                         <Form.Group className="form-group">
                             <Form.Control className="form-input" name="title" type="text" placeholder='Title' onChange={handleChange} value={form.title} />
                         </Form.Group>
-                        {error.title && <Form.Text className="text-danger">{error.title}</Form.Text>}
+                        {error.title && !form.title.trim() && <Form.Text className="text-danger">{error.title}</Form.Text>}
 
                         <Form.Group className="form-group">
                             <Form.Control className="form-input" name="publication_date" type="date" placeholder='Publication Date' onChange={handleChange} value={form.publication_date} />
                         </Form.Group>
-                        {error.publication_date && <Form.Text className="text-danger">{error.publication_date}</Form.Text>}
+                        {error.publication_date && !form.publication_date.trim() && <Form.Text className="text-danger">{error.publication_date}</Form.Text>}
 
                         <Form.Group className="form-group">
                             <Form.Control className="form-input" name="isbn" type="text" placeholder='isbn' onChange={handleChange} value={form.isbn} />
                         </Form.Group>
-                        {error.isbn && <Form.Text className="text-danger">{error.isbn}</Form.Text>}
+                        {error.isbn && !form.isbn.trim() && <Form.Text className="text-danger">{error.isbn}</Form.Text>}
 
                         <Form.Group className="form-group">
                             <Form.Control className="form-input" name="pages" type="number" placeholder='Pages' onChange={handleChange} value={form.pages} />
                         </Form.Group>
-                        {error.pages && <Form.Text className="text-danger">{error.pages}</Form.Text>}
+                        {error.pages && !form.pages.trim() && <Form.Text className="text-danger">{error.pages}</Form.Text>}
 
                         <Form.Group className="form-group">
                             <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={handleChange} value={form.author} />
                         </Form.Group>
-                        {error.author && <Form.Text className="text-danger">{error.author}</Form.Text>}
+                        {error.author && !form.author.trim() && <Form.Text className="text-danger">{error.author}</Form.Text>}
 
                         <Form.Group className="form-group">
                             <Form.Control className="form-input" name="price" type="number" placeholder='Price' onChange={handleChange} value={form.price} />
                         </Form.Group>
-                        {error.price && <Form.Text className="text-danger">{error.price}</Form.Text>}
+                        {error.price && !form.price.trim() && <Form.Text className="text-danger">{error.price}</Form.Text>}
 
                         <Form.Group className="form-group">
                             <Form.Control className="form-input" name="quota" type="number" placeholder='Quota' onChange={handleChange} value={form.quota} />
                         </Form.Group>
-                        {error.quota && <Form.Text className="text-danger">{error.quota}</Form.Text>}
+                        {error.quota && !form.quota.trim() && <Form.Text className="text-danger">{error.quota}</Form.Text>}
 
                         <Form.Group className="form-group">
                             <FloatingLabel controlId="floatingTextarea2">
                                 <Form.Control as="textarea" className="form-input" name="description" placeholder='Add This Book' style={{ height: '100px' }} onChange={handleChange}  value={form.description} />
-                                {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
+                                {error.description && !form.description.trim() && <Form.Text className="text-danger">{error.description}</Form.Text>}
                             </FloatingLabel>
                         </Form.Group>
 
@@ -341,7 +314,7 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                                 </FormLabel>
                                 <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange} />
                             </div>
-                            {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
+                            {error.book && (!form.book || (typeof form.book === 'string' && !form.book.trim())) && ( <Form.Text className="text-danger">{error.book}</Form.Text>)}
                         </Form.Group>
 
                         <Form.Group className="form-group">
@@ -352,13 +325,8 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
                                 </FormLabel>
                                 <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange}/>
                             </div>
-                            {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
+                            {error.thumbnail && (!form.thumbnail || (typeof form.thumbnail === 'string' && !form.thumbnail.trim())) && ( <Form.Text className="text-danger">{error.thumbnail}</Form.Text>)}
                         </Form.Group>
-
-                        {/* <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleFileChange}/>
-                            {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
-                        </Form.Group> */}
 
                         <div className='btn-update-book-content'>
                             <Button type="submit" className='btn-update-book'>Update Book<Image src={addlistbook} className='img-update-book'/></Button>

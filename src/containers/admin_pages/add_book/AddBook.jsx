@@ -218,42 +218,42 @@ const AddBook = () => {
                     handleSubmit.mutate(e)}}>
                     <Form.Group className="form-group">
                         <Form.Control className="form-input" name="title" type="text" placeholder='Title' onChange={handleChange}/>
-                        {error.title && <Form.Text className="text-danger">{error.title}</Form.Text>}
+                        {error.title && !form.title.trim() && <Form.Text className="text-danger">{error.title}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
                         <Form.Control className="form-input text-secondary" name="publicationDate" type="date" placeholder='Publication Date' onChange={handleChange}/>
-                        {error.publicationDate && <Form.Text className="text-danger">{error.publicationDate}</Form.Text>}
+                        {error.publicationDate && !form.publicationDate.trim() && <Form.Text className="text-danger">{error.publicationDate}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
                         <Form.Control className="form-input" name="author" type="text" placeholder='Author' onChange={handleChange}/>
-                        {error.author && <Form.Text className="text-danger">{error.author}</Form.Text>}
+                        {error.author && !form.author.trim() && <Form.Text className="text-danger">{error.author}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
                         <Form.Control className="form-input" name="pages" type="text" placeholder='Pages' onChange={handleChange}/>
-                        {error.pages && <Form.Text className="text-danger">{error.pages}</Form.Text>}
+                        {error.pages && !form.pages.trim() && <Form.Text className="text-danger">{error.pages}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
                         <Form.Control className="form-input" name="isbn" type="text" placeholder='ISBN' onChange={handleChange}/>
-                        {error.isbn && <Form.Text className="text-danger">{error.isbn}</Form.Text>}
+                        {error.isbn && !form.isbn.trim() && <Form.Text className="text-danger">{error.isbn}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
                         <Form.Control className="form-input" name="price" type="text" placeholder='Price' onChange={handleChange}/>
-                        {error.price && <Form.Text className="text-danger">{error.price}</Form.Text>}
+                        {error.price && !form.price.trim() && <Form.Text className="text-danger">{error.price}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
                         <Form.Control className="form-input" name="quota" type="number" placeholder="Quota" onChange={handleChange}/>
-                        {error.quota && <Form.Text className="text-danger">{error.quota}</Form.Text>}
+                        {error.quota && !form.quota.trim() && <Form.Text className="text-danger">{error.quota}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
                         <Form.Control as="textarea" className="form-input text-dark" name="description" placeholder="Description" style={{ height: "100px" }} onChange={handleChange}/>
-                        {error.description && <Form.Text className="text-danger">{error.description}</Form.Text>}
+                        {error.description && !form.description.trim() && <Form.Text className="text-danger">{error.description}</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="form-group">
@@ -264,7 +264,7 @@ const AddBook = () => {
                             </FormLabel>
                             <Form.Control className="form-input" name="book" type="file" id="book" onChange={handleChange}/>
                         </div>
-                        {error.book && <Form.Text className="text-danger">{error.book}</Form.Text>}
+                        {error.book && (!form.book || (typeof form.book === 'string' && !form.book.trim())) && ( <Form.Text className="text-danger">{error.book}</Form.Text>)}
                     </Form.Group>
 
                     <Form.Group className="form-group">
@@ -275,7 +275,7 @@ const AddBook = () => {
                             </FormLabel>
                             <Form.Control className="form-input" name="thumbnail" type="file" id="thumbnail" onChange={handleChange}/>
                         </div>
-                        {error.thumbnail && <Form.Text className="text-danger">{error.thumbnail}</Form.Text>}
+                        {error.thumbnail && (!form.thumbnail || (typeof form.thumbnail === 'string' && !form.thumbnail.trim())) && ( <Form.Text className="text-danger">{error.thumbnail}</Form.Text>)}
                     </Form.Group>
 
                     <div className='btn-add-book-content'>
