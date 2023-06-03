@@ -56,15 +56,18 @@ const AddBook = () => {
     // function handlechange data di form
       const handleChange = (e) => {
         setForm({
-        ...form,
-        [e.target.name]:
+            ...form,
+            [e.target.name]:
             e.target.type === 'file' ? e.target.files : e.target.value, 
         })
-
-        // buat url image
+        
         if (e.target.type === 'file') {
             let url = URL.createObjectURL(e.target.files[0]);
             setPreview(url);
+        } else if (e.target.name === "price" || e.target.name === "quota") {
+            setForm((prevState) => {
+                return { ...prevState, [e.target.name]: e.target.value.toString().trim() };
+            });
         }
     };
 
@@ -150,14 +153,14 @@ const AddBook = () => {
             }
 
             // validasi form book thumbnail
-            if (form.book === "") {
+            if (!form.book || form.book.length === 0) {
                 messageError.book = "Book attachment must be filled out";
             } else {
                 messageError.book = ""
             }
 
             // validasi form image thumbnail
-            if (form.thumbnail === "") {
+            if (!form.thumbnail || form.thumbnail.length === 0) {
                 messageError.thumbnail = "Image thumbnail must be filled out";
             } else {
                 messageError.thumbnail = ""

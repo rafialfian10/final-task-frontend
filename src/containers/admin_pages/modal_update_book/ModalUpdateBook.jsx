@@ -83,22 +83,21 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
     // handle change
     const handleChange = (e) => {
         setForm({...form,
-        [e.target.name]:
+            [e.target.name]:
             e.target.type === 'file' ? e.target.files : e.target.value,
         })
 
         if (e.target.type === 'file') {
             let url = URL.createObjectURL(e.target.files[0]);
             setPreview(url);
+        } 
+        
+        if (e.target.name === "price" || e.target.name === "quota") {
+            setForm((prevState) => {
+                return { ...prevState, [e.target.name]: e.target.value.toString().trim() };
+            });
         }
     };
-
-    const [filePath, setFilePath] = useState('');
-
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setFilePath(file.name);
-      };
 
     // handle update book
     const handleUpdateBook = useMutation( async (e) => {
@@ -163,19 +162,23 @@ const ModalUpdateBook = ({modalUpdate, setModalUpdate, value, bookId, refetchAll
             // price
             if (form.price === "") {
                 messageError.price = "Price must be filled out";
-            } else if (form.price < 0) {
-                messageError.price = "can't be less than 0"
+            } else if (isNaN(form.price)) {
+                messageError.price = "Price must be a number";
+            } else if (parseFloat(form.price) < 0) {
+                messageError.price = "Price can't be less than 0";
             } else {
-                messageError.price = ""
+                messageError.price = "";
             }
 
             // validasi quota
             if (form.quota === "") {
                 messageError.quota = "Quota must be filled out";
-            } else if (form.quota < 0) {
-                messageError.quota = "can't be less than 0"
+            } else if (isNaN(form.quota)) {
+                messageError.quota = "Quota must be a number";
+            } else if (parseFloat(form.quota) < 0) {
+                messageError.quota = "Quota can't be less than 0";
             } else {
-                messageError.quota = ""
+                messageError.quota = "";
             }
 
             // validasi description
