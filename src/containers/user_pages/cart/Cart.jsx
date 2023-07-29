@@ -37,8 +37,6 @@ const Cart = () => {
 
   const [carts, setCarts] = useState([]);
   const [trans, setTrans] = useState([]);
-  console.log("cart :", carts)
-  console.log("Transaction :", trans)
 
   // handle change image
   const handleChange = (e) => {
@@ -121,7 +119,7 @@ const Cart = () => {
     setCarts(updatedCarts);
   }
  
-  // snap midtrans
+  // function handle pay
   const handlePay = useMutation(async () => {
     try {
   
@@ -153,10 +151,8 @@ const Cart = () => {
         // image: formDataTrans,
       };
 
+      // filter data barang yang sudah pernah transaksi
       let duplicateData = carts.filter(cart => trans.includes(cart));
-      console.log("duplicate data :", duplicateData)
-      
-      // check condition
       if(duplicateData.length > 0) {
         Swal.fire({
           text: "you already have this book",
@@ -165,7 +161,6 @@ const Cart = () => {
         })
       } else {
         const response = await API.post("/transaction", body);
-        console.log(response)
         if (response.data.code === 200) {
           window.snap.pay(response.data.data.midtrans_id, {
             // success
