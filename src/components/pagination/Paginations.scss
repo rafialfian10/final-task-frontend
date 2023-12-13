@@ -23,11 +23,11 @@ li.page-item.active-page {
 
 // a:active {background-color: rgb(0, 255, 221);}
 
-.prev, .next {
+.prev,
+.next {
     width: 50px;
     height: 38px;
     &:hover {
         cursor: pointer;
     }
 }
-

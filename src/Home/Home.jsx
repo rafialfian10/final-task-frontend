@@ -13,29 +13,23 @@ import Cards from "../components/cards/Cards";
 import ListBook from "../components/listBook/ListBook";
 import { UserContext } from "../context/userContext";
 
-const Home = ({books, search}) => {
+const Home = ({ books, search }) => {
+  const [myContext] = useContext(UserContext);
 
-  const [myContext] = useContext(UserContext)
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // jika sewaktu halaman dirender pertama kali ada local storage isAdmin maka navigate
   useEffect(() => {
-    myContext.user.role === "admin" &&
-    navigate("/list_transaction");
+    myContext.user.role === "admin" && navigate("/list_transaction");
   });
-
-  
 
   return (
     <>
-      <Jumbotron/>
-      <Cards/>
-      <ListBook books={books} search={search}/>
+      <Jumbotron />
+      <Cards />
+      <ListBook books={books} search={search} />
     </>
   );
 };
 
 export default Home;
-
-

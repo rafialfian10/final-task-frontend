@@ -1,15 +1,14 @@
 // component
-import DetailImage from "../../../components/detailImage/DetailImage"
-import DescriptionIncrement from "../../../components/description_increment/DescriptionIncrement"
+import DetailImage from "../../../components/detailImage/DetailImage";
+import DescriptionIncrement from "../../../components/description_increment/DescriptionIncrement";
 
 const IncrementDetailBook = () => {
-    
-    return (
-        <>
-            <DetailImage/>
-            <DescriptionIncrement/>
-        </>
-    )
-}
+  return (
+    <>
+      <DetailImage />
+      <DescriptionIncrement />
+    </>
+  );
+};
 
-export default IncrementDetailBook
+export default IncrementDetailBook;

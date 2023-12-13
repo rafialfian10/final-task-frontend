@@ -1,10 +1,9 @@
 import { createContext, useReducer } from "react";
 
-
-//  userContext createContext berfungsi(menyimpan data sebagai global state) 
+//  userContext createContext berfungsi(menyimpan data sebagai global state)
 export const UserContext = createContext();
 
-const initialState = { 
+const initialState = {
   isLogin: false,
   user: {},
 };
@@ -33,7 +32,6 @@ const reducer = (state, action) => {
   }
 };
 
-
 // function userContextProvider berfungsi akses state secara global
 export const UserContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -44,4 +42,3 @@ export const UserContextProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
-

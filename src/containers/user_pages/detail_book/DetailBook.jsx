@@ -1,21 +1,19 @@
 // component
-import DescriptionDownload from "../../../components/description_download/DescriptionDownload"
-import DetailImage from "../../../components/detailImage/DetailImage"
-
-
+import DescriptionDownload from "../../../components/description_download/DescriptionDownload";
+import DetailImage from "../../../components/detailImage/DetailImage";
 
 // scss
-import './DetailBook.scss'
+import "./DetailBook.scss";
 
 const DetailBook = () => {
-    return (
-        <>  
-            <div className="container-detail-book">
-                <DetailImage/>
-                <DescriptionDownload/>
-            </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="container-detail-book">
+        <DetailImage />
+        <DescriptionDownload />
+      </div>
+    </>
+  );
+};
 
-export default DetailBook
+export default DetailBook;

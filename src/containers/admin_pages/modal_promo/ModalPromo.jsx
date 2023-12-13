@@ -8,114 +8,136 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 // css
-import "./ModalPromo.scss"
+import "./ModalPromo.scss";
 import Swal from "sweetalert2";
 
 // image
-import addlistbook from "../../../assets/img/addlistbook.png"
+import addlistbook from "../../../assets/img/addlistbook.png";
 
 // api
 import { API } from "../../../config/api";
 
-const ModalPromo = ({modalPromo, setModalPromo, value, bookId, refetchBook}) => {
+const ModalPromo = ({ modalPromo, setModalPromo, value, bookId }) => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  //state form
+  const [form, setForm] = useState({
+    discount: "",
+  });
 
-   //state form
-   const [form, setForm] = useState({
-        discount: "",
-    })
-
-    useEffect(() => {
-        setForm({
-            discount: value?.discount,
-        })
-    }, [value])
-
-    // state error
-    const [error, setError] = useState({
-        discount: "",
+  useEffect(() => {
+    setForm({
+      discount: value?.discount,
     });
+  }, [value]);
 
-    // handle change
-    const handleChange = (e) => {
-        setForm({
-        ...form,
-        [e.target.name]:
-            e.target.type === "file" ? e.target.files : e.target.value,
-        })
-    };
+  // state error
+  const [error, setError] = useState({
+    discount: "",
+  });
 
-    // handle set discount book
-    const handleUpdateBookPromo = useMutation( async () => {
-        try {
-            const config = {
-                headers: {
-                    "Content-type": "multipart/form-data",
-                    Authorization: "Bearer " + localStorage.getItem("token"),
-                },
-            };
+  // handle change
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]:
+        e.target.type === "file" ? e.target.files : e.target.value,
+    });
+  };
 
-            const messageError = {
-                discount: "",
-            };
+  // handle set discount book
+  const handleUpdateBookPromo = useMutation(async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      };
 
-            //validasi discount
-            if (form.discount === "") {
-                messageError.discount = "discount must be filled out";
-            } else if (parseInt(form.discount) < 0) {
-                messageError.discount = "can't be less than 0"
-            } else {
-                messageError.discount = ""
-            }
+      const messageError = {
+        discount: "",
+      };
 
-            if (messageError.discount === "" ) {
+      //validasi discount
+      if (form.discount === "") {
+        messageError.discount = "discount must be filled out";
+      } else if (parseInt(form.discount) < 0) {
+        messageError.discount = "can't be less than 0";
+      } else {
+        messageError.discount = "";
+      }
 
-                const formData = new FormData();
-                formData.append("discount", form.discount);
-               
-                const response = await API.patch(`/book-promo/${bookId}`, formData, config);
-                console.log("Response :", response);
-                if(response.data.code === 200) {
-                    Swal.fire({
-                        text: "Discount Book successfully added",
-                        icon: "success",
-                        confirmButtonText: "Ok"
-                    })
-                    setModalPromo(false)
-                    refetchBook()
-                }
+      if (messageError.discount === "") {
+        const formData = new FormData();
+        formData.append("discount", form.discount);
 
-                navigate("/incom_book"); 
-            } else {
-                setError(messageError)
-            }
-        } catch (err) {
-            console.log(err)
+        const response = await API.patch(
+          `/book-promo/${bookId}`,
+          formData,
+          config
+        );
+        // console.log("Response :", response);
+        if (response.data.code === 200) {
+          Swal.fire({
+            text: "Discount Book successfully added",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+          setModalPromo(false);
         }
-    })
 
-    return (
-        <>
-            <Modal show={modalPromo} onHide={() => setModalPromo(false)} className="modal-update-book" size="lg">
-                <Modal.Body className="modal-body-update-book">
-                    <h2 className="title-update-book">Set Discount Book</h2>
-                        <Form className="form-update-book" onSubmit={(e) => {e.preventDefault() 
-                        handleUpdateBookPromo.mutate(e)}}>
+        navigate("/incom_book");
+      } else {
+        setError(messageError);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
-                        <Form.Group className="form-group">
-                            <Form.Control className="form-input" name="discount" type="number" placeholder="Discount" value={form.discount} onChange={(e) => handleChange(e, "discount")}/>
-                        </Form.Group>
-                        {error.discount && <Form.Text className="text-danger">{error.discount}</Form.Text>}
+  return (
+    <>
+      <Modal
+        show={modalPromo}
+        onHide={() => setModalPromo(false)}
+        className="modal-update-book"
+        size="lg"
+      >
+        <Modal.Body className="modal-body-update-book">
+          <h2 className="title-update-book">Set Discount Book</h2>
+          <Form
+            className="form-update-book"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleUpdateBookPromo.mutate(e);
+            }}
+          >
+            <Form.Group className="form-group">
+              <Form.Control
+                className="form-input"
+                name="discount"
+                type="number"
+                placeholder="Discount"
+                value={form.discount}
+                onChange={(e) => handleChange(e, "discount")}
+              />
+            </Form.Group>
+            {error.discount && (
+              <Form.Text className="text-danger">{error.discount}</Form.Text>
+            )}
 
-                        <div className="btn-update-book-content">
-                            <Button type="submit" className="btn-update-book">Set Promo<Image src={addlistbook} className="img-update-book"/></Button>
-                        </div>
-                    </Form>
-                </Modal.Body>
-            </Modal>
-        </>
-    )
-}
+            <div className="btn-update-book-content">
+              <Button type="submit" className="btn-update-book">
+                Set Promo
+                <Image src={addlistbook} className="img-update-book" />
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+};
 
 export default ModalPromo;

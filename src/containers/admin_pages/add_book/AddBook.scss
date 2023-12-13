@@ -4,29 +4,29 @@
 }
 
 h2.title-add-book {
-    font-weight: bold;
-    text-align: left;
-    margin-top: 100px;
-    margin-bottom: 40px;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 100px;
+  margin-bottom: 40px;
 }
 
 .form-add-book {
-    margin: auto;
-    width: 60vw;
-    margin-bottom: 50px;
+  margin: auto;
+  width: 60vw;
+  margin-bottom: 50px;
 }
 
 .form-add-book .form-group {
-    margin-bottom: 35px !important;
+  margin-bottom: 35px !important;
 }
 
 .form-add-book .form-input {
-  background-color: #D2D2D2;
+  background-color: #d2d2d2;
   color: black;
 }
 
-.form-dropdown{
-    position: relative;
+.form-dropdown {
+  position: relative;
 }
 
 .form-input {
@@ -34,11 +34,11 @@ h2.title-add-book {
 }
 
 .form-add-book .dropdown {
-    width: 15px !important;
-    height: 10px !important;
-    position: absolute;
-    top: 47px !important;
-    right: 13px !important;
+  width: 15px !important;
+  height: 10px !important;
+  position: absolute;
+  top: 47px !important;
+  right: 13px !important;
 }
 
 .btn-add-book-content {
@@ -49,17 +49,17 @@ h2.title-add-book {
 }
 
 .btn-add-book {
-    display: flex;
-    margin-right: 10px;
-    padding: 10px 20px;
+  display: flex;
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #393939;
+  color: white;
+  font-weight: bold;
+  border: none;
+  &:hover {
     background-color: #393939;
-    color: white;
-    font-weight: bold;
-    border: none;
-    &:hover {
-      background-color: #393939;
-      opacity: 0.8;
-    }
+    opacity: 0.8;
+  }
 }
 
 .img-add-book {
@@ -68,48 +68,48 @@ h2.title-add-book {
 
 /* Input Upload Image */
 div.img-upload {
-    height: 40px !important;
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    margin-bottom: 10px !important;
-  }
-  
-  .img-upload .file-label {
-    width: 30%;
-    height: 40px;
-    margin: 0px !important;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 5px; 
-  }
-  
-  .img-upload input {
-    display: none;
-  }
-  
-  .img-upload .text-file {
-    padding: 5px;
-    padding-left: 10px;
-    margin: 0px;
-    color: rgb(113, 112, 112) !important;
-    font-size: 16px;
-    font-weight: normal !important;
-    border-radius: 5px;
-  }
-  
-  .img-upload .text-file:hover {
-    cursor: pointer;
-  }
-  
-  .img-upload label .img-file {
-    margin-right: 10px;
-    width: 16px;
-    height: 18px;
-  }
-  
-  .img-upload .img-file:hover {
-    cursor: pointer;
-  }
-  /* End input upload image */
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 10px !important;
+}
+
+.img-upload .file-label {
+  width: 30%;
+  height: 40px;
+  margin: 0px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+}
+
+.img-upload input {
+  display: none;
+}
+
+.img-upload .text-file {
+  padding: 5px;
+  padding-left: 10px;
+  margin: 0px;
+  color: rgb(113, 112, 112) !important;
+  font-size: 16px;
+  font-weight: normal !important;
+  border-radius: 5px;
+}
+
+.img-upload .text-file:hover {
+  cursor: pointer;
+}
+
+.img-upload label .img-file {
+  margin-right: 10px;
+  width: 16px;
+  height: 18px;
+}
+
+.img-upload .img-file:hover {
+  cursor: pointer;
+}
+/* End input upload image */
