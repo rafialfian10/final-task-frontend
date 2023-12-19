@@ -47,7 +47,7 @@ const ListDownload = () => {
 
   return (
     <>
-      <Form.Text className="download-title">My Books</Form.Text>
+      <h3 className="download-title">My Books</h3>
       <div className="container-download">
         {transactionBook?.map((transaction) => {
           {

@@ -19,7 +19,7 @@ const ComplainUser = () => {
       <Image src={flower1} alt="flower1" className="flower1" />
       <Image src={flower2} alt="flower2" className="flower2" />
       <Container className="container-complain-user">
-        <h3>Customer Complain</h3>
+        <h4>Customer Complain</h4>
         <div className="content-complain-user">
           <div className="message-complain">
             <div className="navbar-message">

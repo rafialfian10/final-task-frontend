@@ -72,7 +72,7 @@ const DescriptionIncrement = () => {
     <>
       <Popup popup={popup} setPopup={setPopup} />
       <div className="desc-container">
-        <h2 className="detail-title-desc">About This Book</h2>
+        <h4 className="detail-title-desc">About This Book</h4>
         <div className="detail-desc">
           <p className="detail-desc-info">
             {detailBookDescription?.description}

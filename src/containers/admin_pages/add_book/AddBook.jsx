@@ -216,7 +216,7 @@ const AddBook = () => {
       <Image src={flower1} alt="flower1" className="flower1" />
       <Image src={flower2} alt="flower2" className="flower2" />
       <div className="add-book-container">
-        <h2 className="title-add-book">Add Book</h2>
+        <h4 className="title-add-book">Add Book</h4>
         <Form
           className="form-add-book"
           onSubmit={(e) => {

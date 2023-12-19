@@ -1,8 +1,6 @@
 .incom-title {
     margin-left: 70px !important;
     position: relative;
-    top: 50px;
-    font-size: 30px;
     font-weight: bold;
     color: black;
 }
@@ -10,14 +8,13 @@
 .container-list {
     width: 100vw;
     padding: 5%;
+    padding-top: 0px;;
     margin: auto;
     background-color: transparent !important;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap !important;
     justify-content: flex-start;
-    margin-top: -150px;
-    padding-top: 200px !important;
     padding-bottom: 100px !important;
 }
 

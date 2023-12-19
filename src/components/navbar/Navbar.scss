@@ -1,6 +1,9 @@
 .background-navbar {
     height: 100px;
-    background-color: transparent !important;
+    background-color: whitesmoke !important;
+    position: fixed !important;
+    inset: 0;
+    z-index: 99999999999999 !important;
 }
 
 .sub-navbar {
