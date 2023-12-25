@@ -13,17 +13,22 @@ h4 {
 }
 
 .table th {
+    margin: auto;
     color: red;
     border: none !important;
+    text-align: center;
+}
+
+.table td {
+   margin: auto;
+   vertical-align: middle;
 }
 
 img.search {
     width: 20px !important;
     height: 20px !important;
-    margin: auto !important;
-    margin-left: 25px !important;
-}
-
-.search:hover {
-    cursor: pointer;
+    border: none !important;
+    &:hover {
+        cursor: pointer;
+    }
 }

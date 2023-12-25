@@ -1,28 +1,72 @@
 .background-navbar {
-    height: 100px;
-    background-color: whitesmoke !important;
     position: fixed !important;
-    inset: 0;
+    top: 0;
+    width: 100%;
+    background-color: whitesmoke !important;
     z-index: 99999999999999 !important;
+    padding: 0 !important;
 }
 
-.sub-navbar {
-    position: relative;
-    width: 75vw !important;
+.container {
+    max-width: 100vw !important;
     display: flex;
-    justify-content: flex-end;
-    align-items: center !important;
+    flex-direction: row;
+}
+
+.container-navbar {
+    width: 100%;
+    display: flex;
+    flex-direction: column !important;
+}
+
+.container-sub-navbar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end !important;
+    margin: 0 !important;
 }
 
 .logo {
-    width: 100%;
-    height: 60px;
+    margin-right: 10px 0px;
+}
+
+.col {
+    display: flex;
+    align-items: center;
+    padding: 0 !important; 
+}
+
+.col-profile {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 !important;
+}
+
+.search {
+    width: 100% !important;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.btn-search {
+    background-color: #393939 !important;
+    border: none !important;
+    border-radius: 5px !important;
+    font-weight: bold;
+    color: white !important;
+    &:hover {
+        cursor: pointer;
+        background-color: #393939 !important;
+        border: none !important;
+    }
 }
 
 .login {
     width: 100px;
-    margin: auto 10px !important;
-    margin-left: 3em !important;
+    height: 50px;
+    margin-right: 10px;
     text-align: center;
     font-weight: bold !important;
     background-color: white;
@@ -34,13 +78,13 @@
 
 .register {
     width: 100px;
-    margin: auto 10px !important;
+    height: 50px;
     text-align: center;
     font-weight: bold !important;
     background-color: #393939 !important;
     color: white;
     border-radius: 5px;
-    border: none !important;
+    border: 1px solid #393939 !important;;
     z-index: 1;
     &:hover {
         opacity: 0.8;
@@ -125,21 +169,4 @@
     z-index: 1;
 }
 
-.search {
-    width: 20em !important;
-    height: 45px;
-    border-radius: 5px;
-}
 
-.btn-search {
-    background-color: #393939 !important;
-    border: none !important;
-    border-radius: 5px !important;
-    font-weight: bold;
-    color: white !important;
-    &:hover {
-        cursor: pointer;
-        background-color: #393939 !important;
-        border: none !important;
-    }
-}

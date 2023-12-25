@@ -108,8 +108,7 @@ const ModalApproved = ({
         size="xl"
       >
         <Modal.Body className="body-approved-container">
-          <>
-            <div className="modal-approved-container">
+            <div className="table-modal-approved">
               <div className="content-approved">
                 <Image src={logo} className="img-logo" alt="logo" />
                 <p className="status-payment-approved">
@@ -190,7 +189,7 @@ const ModalApproved = ({
                         return (
                           <tr key={i}>
                             <td>{i++ + 1}</td>
-                            <td>{item?.title}</td>
+                            <td className="text-start">{item?.title}</td>
                             <td>{item?.author}</td>
                             <td>{item?.pages}</td>
                             <td>{item?.publication_date}</td>
@@ -207,7 +206,7 @@ const ModalApproved = ({
                   </Table>
                 </div>
               </div>
-              <Table striped bordered hover className="tables">
+              <Table striped bordered hover className="tables-order-book2">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -221,7 +220,7 @@ const ModalApproved = ({
                 <tbody>
                   <tr>
                     <td>{no++}</td>
-                    <td>{order?.user.name}</td>
+                    <td className="text-start">{order?.user.name}</td>
                     <td>{order?.user.gender}</td>
                     <td>{order?.user.phone}</td>
                     <td>
@@ -281,7 +280,6 @@ const ModalApproved = ({
                 Approve
               </button>
             </div>
-          </>
         </Modal.Body>
       </Modal>
     </>

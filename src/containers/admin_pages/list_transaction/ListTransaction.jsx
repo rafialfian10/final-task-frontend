@@ -99,10 +99,10 @@ function Admin({ search }) {
               .map((transaction, i) => {
                 return (
                   <tr key={i}>
-                    <td>{no++ + indexFirstPost}</td>
-                    <td>{transaction?.user.name}</td>
-                    <td>bca.png</td>
-                    <td>
+                    <td className="text-center">{no++ + indexFirstPost}</td>
+                    <td className="text-start">{transaction?.user.name}</td>
+                    <td className="text-center">bca.png</td>
+                    <td className="text-start">
                       {transaction?.book?.map((item, i) => (
                         <ul key={i}>
                           <li>{item?.title}</li>
@@ -113,33 +113,33 @@ function Admin({ search }) {
                     {/* transaction total */}
                     {transaction?.status === "success" ||
                     transaction?.status === "approve" ? (
-                      <td className="text-success">
+                      <td className="text-center text-success">
                         IDR. {transaction?.total}
                       </td>
                     ) : (
-                      <td className="text-danger">IDR. {transaction?.total}</td>
+                      <td className="text-center text-danger">IDR. {transaction?.total}</td>
                     )}
 
                     {/* transaction status */}
                     {transaction?.status === "pending" && (
-                      <td className="text-warning">{transaction?.status}</td>
+                      <td className="text-center text-warning">{transaction?.status}</td>
                     )}
                     {transaction?.status === "cancel" && (
-                      <td className="text-danger">{transaction?.status}</td>
+                      <td className="text-center text-danger">{transaction?.status}</td>
                     )}
                     {transaction?.status === "reject" && (
-                      <td className="text-danger">{transaction?.status}</td>
+                      <td className="text-center text-danger">{transaction?.status}</td>
                     )}
                     {transaction?.status === "failed" && (
-                      <td className="text-danger">{transaction?.status}</td>
+                      <td className="text-center text-danger">{transaction?.status}</td>
                     )}
                     {transaction?.status === "success" && (
-                      <td className="text-success">{transaction?.status}</td>
+                      <td className="text-center text-success">{transaction?.status}</td>
                     )}
                     {transaction?.status === "approve" && (
-                      <td className="text-success">{transaction?.status}</td>
+                      <td className="text-center text-success">{transaction?.status}</td>
                     )}
-                    <td>
+                    <td className="text-center">
                       <Image
                         src={action}
                         alt="action"
