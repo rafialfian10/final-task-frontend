@@ -62,108 +62,126 @@ function Admin({ search }) {
   const paginate = (pageNumber) => setHalamanAktif(pageNumber);
 
   return (
-    <>
-      <ModalApproved
-        modalApproved={modalApproved}
-        setModalApproved={setModalApproved}
-        order={order}
-        refetchAllTransactionsAdmin={refetchAllTransactionsAdmin}
-      />
-      <h4>Incoming Transaction</h4>
-      <Image src={flower1} alt="flower1" className="flower1" />
-      <Image src={flower2} alt="flower2" className="flower2" />
-      <Table striped bordered hover className="list-transaction">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Users</th>
-            <th>Evidence of Transfer</th>
-            <th>Product Purchased</th>
-            <th>Total Payment</th>
-            <th>Status Payment</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <>
-            {currentPost
-              ?.filter((item) => {
-                if (search === "") {
-                  return item;
-                } else if (
-                  item?.user.name.toLowerCase().includes(search.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((transaction, i) => {
-                return (
-                  <tr key={i}>
-                    <td className="text-center">{no++ + indexFirstPost}</td>
-                    <td className="text-start">{transaction?.user.name}</td>
-                    <td className="text-center">bca.png</td>
-                    <td className="text-start">
-                      {transaction?.book?.map((item, i) => (
-                        <ul key={i}>
-                          <li>{item?.title}</li>
-                        </ul>
-                      ))}
-                    </td>
+    <></>
+    // <>
+    //   <ModalApproved
+    //     modalApproved={modalApproved}
+    //     setModalApproved={setModalApproved}
+    //     order={order}
+    //     refetchAllTransactionsAdmin={refetchAllTransactionsAdmin}
+    //   />
+    //   <h4>Incoming Transaction</h4>
+    //   <Image src={flower1} alt="flower1" className="flower1" />
+    //   <Image src={flower2} alt="flower2" className="flower2" />
+    //   <Table striped bordered hover className="list-transaction">
+    //     <thead>
+    //       <tr>
+    //         <th>No</th>
+    //         <th>Users</th>
+    //         <th>Evidence of Transfer</th>
+    //         <th>Product Purchased</th>
+    //         <th>Total Payment</th>
+    //         <th>Status Payment</th>
+    //         <th>Action</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       <>
+    //         {currentPost
+    //           ?.filter((item) => {
+    //             if (search === "") {
+    //               return item;
+    //             } else if (
+    //               item?.user.name
+    //                 .toLowerCase()
+    //                 .includes(search.toLowerCase()) ||
+    //               item?.status.toLowerCase().includes(search.toLowerCase())
+    //             ) {
+    //               return item;
+    //             }
+    //           })
+    //           .map((transaction, i) => {
+    //             return (
+    //               <tr key={i}>
+    //                 <td className="text-center">{no++ + indexFirstPost}</td>
+    //                 <td className="text-start">{transaction?.user.name}</td>
+    //                 <td className="text-center">bca.png</td>
+    //                 <td className="text-start">
+    //                   {transaction?.book?.map((item, i) => (
+    //                     <ul key={i}>
+    //                       <li>{item?.title}</li>
+    //                     </ul>
+    //                   ))}
+    //                 </td>
 
-                    {/* transaction total */}
-                    {transaction?.status === "success" ||
-                    transaction?.status === "approve" ? (
-                      <td className="text-center text-success">
-                        IDR. {transaction?.total}
-                      </td>
-                    ) : (
-                      <td className="text-center text-danger">IDR. {transaction?.total}</td>
-                    )}
+    //                 {/* transaction total */}
+    //                 {transaction?.status === "success" ||
+    //                 transaction?.status === "approve" ? (
+    //                   <td className="text-center text-success">
+    //                     IDR. {transaction?.total}
+    //                   </td>
+    //                 ) : (
+    //                   <td className="text-center text-danger">
+    //                     IDR. {transaction?.total}
+    //                   </td>
+    //                 )}
 
-                    {/* transaction status */}
-                    {transaction?.status === "pending" && (
-                      <td className="text-center text-warning">{transaction?.status}</td>
-                    )}
-                    {transaction?.status === "cancel" && (
-                      <td className="text-center text-danger">{transaction?.status}</td>
-                    )}
-                    {transaction?.status === "reject" && (
-                      <td className="text-center text-danger">{transaction?.status}</td>
-                    )}
-                    {transaction?.status === "failed" && (
-                      <td className="text-center text-danger">{transaction?.status}</td>
-                    )}
-                    {transaction?.status === "success" && (
-                      <td className="text-center text-success">{transaction?.status}</td>
-                    )}
-                    {transaction?.status === "approve" && (
-                      <td className="text-center text-success">{transaction?.status}</td>
-                    )}
-                    <td className="text-center">
-                      <Image
-                        src={action}
-                        alt="action"
-                        className="search"
-                        onClick={() => {
-                          setModalApproved(true);
-                          setOrder(transaction);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-          </>
-        </tbody>
-      </Table>
-      <Paginations
-        dataPerHalaman={dataPerHalaman}
-        halamanAktif={halamanAktif}
-        setHalamanAktif={setHalamanAktif}
-        totalData={dataTransaction?.length}
-        paginate={paginate}
-      />
-    </>
+    //                 {/* transaction status */}
+    //                 {transaction?.status === "pending" && (
+    //                   <td className="text-center text-warning">
+    //                     {transaction?.status}
+    //                   </td>
+    //                 )}
+    //                 {transaction?.status === "cancel" && (
+    //                   <td className="text-center text-danger">
+    //                     {transaction?.status}
+    //                   </td>
+    //                 )}
+    //                 {transaction?.status === "reject" && (
+    //                   <td className="text-center text-danger">
+    //                     {transaction?.status}
+    //                   </td>
+    //                 )}
+    //                 {transaction?.status === "failed" && (
+    //                   <td className="text-center text-danger">
+    //                     {transaction?.status}
+    //                   </td>
+    //                 )}
+    //                 {transaction?.status === "success" && (
+    //                   <td className="text-center text-success">
+    //                     {transaction?.status}
+    //                   </td>
+    //                 )}
+    //                 {transaction?.status === "approve" && (
+    //                   <td className="text-center text-success">
+    //                     {transaction?.status}
+    //                   </td>
+    //                 )}
+    //                 <td className="text-center">
+    //                   <Image
+    //                     src={action}
+    //                     alt="action"
+    //                     className="search"
+    //                     onClick={() => {
+    //                       setModalApproved(true);
+    //                       setOrder(transaction);
+    //                     }}
+    //                   />
+    //                 </td>
+    //               </tr>
+    //             );
+    //           })}
+    //       </>
+    //     </tbody>
+    //   </Table>
+    //   <Paginations
+    //     dataPerHalaman={dataPerHalaman}
+    //     halamanAktif={halamanAktif}
+    //     setHalamanAktif={setHalamanAktif}
+    //     totalData={dataTransaction?.length}
+    //     paginate={paginate}
+    //   />
+    // </>
   );
 }
 

@@ -11,6 +11,7 @@ import {
   Button,
   Row,
   Col,
+  NavDropdown,
 } from "react-bootstrap";
 import Swal from "sweetalert2";
 
@@ -103,11 +104,12 @@ const Navbars = ({ search, handleSearch }) => {
 
   return (
     <>
-      <Navbar
-        expand="lg"
-        className="background-navbar"
-      >
-        <Container className={`container ${window.innerWidth <= 768 ? " flex-row-reverse" : ""}`}>
+      <Navbar expand="lg" className="background-navbar">
+        <Container
+          className={`container ${
+            window.innerWidth <= 768 ? " flex-row-reverse" : ""
+          }`}
+        >
           <Row className="m-0">
             <Col xs={12} md={3}>
               <Navbar.Brand href="/" className="logo">
@@ -117,8 +119,19 @@ const Navbars = ({ search, handleSearch }) => {
           </Row>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={`container-navbar ${window.innerWidth <= 768 ? "mt-3" : ""}`}>
-              <Row className={`container-sub-navbar ${window.innerWidth <= 768 ? "flex-start flex-column-reverse gap-2" : ""}`}>
+            <Nav
+              navbarScroll
+              className={`container-navbar ${
+                window.innerWidth <= 768 ? "mt-3" : ""
+              }`}
+            >
+              <Row
+                className={`container-sub-navbar ${
+                  window.innerWidth <= 768
+                    ? "flex-start flex-column-reverse gap-2"
+                    : ""
+                }`}
+              >
                 <Col xs={12} md={5} className="col">
                   {/* search */}
                   <Navbar.Brand className="w-100">
@@ -135,13 +148,18 @@ const Navbars = ({ search, handleSearch }) => {
                   </Navbar.Brand>
                 </Col>
 
-                <Col xs={12} md={4} className={`col-profile ${window.innerWidth <= 768 ? "justify-content-start" : ""}`}>
+                <Col
+                  xs={12}
+                  md={4}
+                  className={`col-profile ${
+                    window.innerWidth <= 768 ? "justify-content-start" : ""
+                  }`}
+                >
                   {state.isLogin === true ? (
                     <>
                       {state.user.role === "admin" ? (
                         // profile navbar admin
                         <Navbar.Brand>
-                          {/* image */}
                           {user !== undefined && user.thumbnail !== "" ? (
                             <Image
                               src={user.thumbnail}
@@ -155,46 +173,41 @@ const Navbars = ({ search, handleSearch }) => {
                               alt="photo-profile"
                             />
                           )}
-                          <Dropdown as={ButtonGroup} className="dropdown">
-                            <Dropdown.Toggle
-                              split
-                              variant="success"
-                              id="dropdown-split-basic"
-                              className="toggle-navbar"
-                            />
-                            <Dropdown.Menu className="menu-dropdown">
-                              <Dropdown.Item
-                                onClick={() => navigate(`/add_book`)}
-                              >
-                                <p className="text-dropdown">
-                                  <Image src={addbook} alt="add-book" />
-                                  Add Book
-                                </p>
-                              </Dropdown.Item>
-                              <Dropdown.Item
-                                onClick={() => navigate(`/incom_book`)}
-                              >
-                                <p className="text-dropdown">
-                                  <Image src={addbook} alt="add-book" />
-                                  Incom Book
-                                </p>
-                              </Dropdown.Item>
-                              <Dropdown.Item
-                                onClick={() => navigate(`/complain_admin`)}
-                              >
-                                <p className="text-dropdown">
-                                  <Image src={complain} alt="complain" />
-                                  Complain
-                                </p>
-                              </Dropdown.Item>
-                              <Dropdown.Item onClick={HandleLogout}>
-                                <p className="text-dropdown">
-                                  <Image src={logout} alt="logout" />
-                                  Logout
-                                </p>
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
+                          <NavDropdown
+                            id="navbarScrollingDropdown"
+                            className="dropdown"
+                          >
+                            <NavDropdown.Item
+                              onClick={() => navigate(`/add_book`)}
+                            >
+                              <Navbar.Text className="text-dropdown">
+                                <Image src={addbook} alt="add-book" className="icon" />
+                                Add Book
+                              </Navbar.Text>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item
+                              onClick={() => navigate(`/incom_book`)}
+                            >
+                              <Navbar.Text className="text-dropdown">
+                                <Image src={addbook} alt="add-book" className="icon" />
+                                Incom Book
+                              </Navbar.Text>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item
+                              onClick={() => navigate(`/complain_admin`)}
+                            >
+                              <Navbar.Text className="text-dropdown">
+                                <Image src={complain} alt="complain" className="icon" />
+                                Complain
+                              </Navbar.Text>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item onClick={HandleLogout}>
+                              <Navbar.Text className="text-dropdown">
+                                <Image src={logout} alt="logout" className="icon" />
+                                Logout
+                              </Navbar.Text>
+                            </NavDropdown.Item>
+                          </NavDropdown>
                         </Navbar.Brand>
                       ) : (
                         // profile navbar user
@@ -202,16 +215,20 @@ const Navbars = ({ search, handleSearch }) => {
                           <>
                             {/* bracket */}
                             {orderCart === null ? null : (
-                              <div className="qty">{orderCart?.length}</div>
+                              <div className="container-bracket">
+                                <span className="qty">{orderCart?.length}</span>
+                                <Image
+                                  src={bracket}
+                                  alt="bracket"
+                                  className="bracket-img"
+                                  onClick={() =>
+                                    navigate(`cart/${state?.user.id}`)
+                                  }
+                                />
+                              </div>
                             )}
-                            <Image
-                              src={bracket}
-                              alt="bracket"
-                              className="bracket"
-                              onClick={() => navigate(`cart/${state?.user.id}`)}
-                            />
 
-                            {/* image */}
+                            {/* profile */}
                             {user !== undefined && user.thumbnail !== "" ? (
                               <Image
                                 src={user.thumbnail}
@@ -226,39 +243,31 @@ const Navbars = ({ search, handleSearch }) => {
                               />
                             )}
 
-                            <Dropdown as={ButtonGroup} className="dropdown">
-                              <Dropdown.Toggle
-                                split
-                                variant="success"
-                                id="dropdown-split-basic"
-                                className="toggle-navbar"
-                              />
-                              <Dropdown.Menu className="menu-dropdown">
-                                <Dropdown.Item
-                                  onClick={() =>
-                                    navigate(`/profile/${user?.id}`)
-                                  }
-                                >
-                                  <Form.Text className="text-dropdown">
-                                    <Image src={profile} alt="profile" />{" "}
-                                    Profile
-                                  </Form.Text>
-                                </Dropdown.Item>
-                                <Dropdown.Item
-                                  onClick={() => navigate(`/complain_user`)}
-                                >
-                                  <Form.Text className="text-dropdown">
-                                    <Image src={complain} alt="complain" />{" "}
-                                    Complain
-                                  </Form.Text>
-                                </Dropdown.Item>
-                                <Dropdown.Item onClick={HandleLogout}>
-                                  <Form.Text className="text-dropdown">
-                                    <Image src={logout} alt="logout" /> Logout
-                                  </Form.Text>
-                                </Dropdown.Item>
-                              </Dropdown.Menu>
-                            </Dropdown>
+                            <NavDropdown
+                              id="navbarScrollingDropdown"
+                              className="dropdown"
+                            >
+                              <NavDropdown.Item
+                                onClick={() => navigate(`/profile/${user?.id}`)}
+                              >
+                                <Navbar.Text className="text-dropdown">
+                                  <Image src={profile} alt="profile" className="icon" /> Profile
+                                </Navbar.Text>
+                              </NavDropdown.Item>
+                              <NavDropdown.Item
+                                onClick={() => navigate(`/complain_user`)}
+                              >
+                                <Navbar.Text className="text-dropdown">
+                                  <Image src={complain} alt="complain" className="icon" />{" "}
+                                  Complain
+                                </Navbar.Text>
+                              </NavDropdown.Item>
+                              <NavDropdown.Item onClick={HandleLogout}>
+                                <Navbar.Text className="text-dropdown">
+                                  <Image src={logout} alt="logout" className="icon" /> Logout
+                                </Navbar.Text>
+                              </NavDropdown.Item>
+                            </NavDropdown>
                           </>
                         </Navbar.Brand>
                       )}
