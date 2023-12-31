@@ -1,32 +1,28 @@
-.listbook-title {
-    margin-left: 70px !important;
-    font-weight: bold;
-    color: black;
-}
-
 .container-list-book {
-    width: 100vw;
-    padding: 5%;
+    width: 100%;
+    padding: 2% 5%;
     margin: auto;
     background-color: #E5E5E5 !important;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap !important;
-    justify-content: flex-start;
-    margin-top: -220px;
-    padding-top: 220px !important;
-    padding-bottom: 100px !important;
+}
+
+.listbook-title {
+    width: 100%;
+    margin: 0px !important;
+    margin-bottom: 20px !important;
+    font-weight: bold;
+    color: black;
 }
 
 .list-book {
-    width: 18%;
+    width: 95%;
+    margin: auto !important;
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
-    margin-right: 23px;
-    border: 1px solid black;
     background-color: transparent !important;
-    box-shadow: 1.5px 1.5px 1.5px 1.5px rgb(128,128,128,0.5)
+    box-shadow: 1.5px 1.5px 1.5px 1.5px rgb(128,128,128,0.5);
 }
 
 .list-image {

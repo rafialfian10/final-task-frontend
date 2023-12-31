@@ -3,8 +3,6 @@ import {
   Container,
   Nav,
   Navbar,
-  ButtonGroup,
-  Dropdown,
   Image,
   Form,
   InputGroup,
@@ -98,22 +96,22 @@ const Navbars = ({ search, handleSearch }) => {
   refetchUser();
 
   // useEffect(() => {
-  //   orderCart && refetchCart();
-  //   user && refetchUser()
-  // });
+  //   refetchCart();
+  //   refetchUser()
+  // }, [user, orderCart]);
 
   return (
     <>
       <Navbar expand="lg" className="background-navbar">
         <Container
           className={`container ${
-            window.innerWidth <= 768 ? " flex-row-reverse" : ""
+            window.innerWidth <= 900 ? " flex-row-reverse" : ""
           }`}
         >
           <Row className="m-0">
-            <Col xs={12} md={3}>
+            <Col xs={12} >
               <Navbar.Brand href="/" className="logo">
-                <Image src={logo} alt="logo" />
+                <Image src={logo} alt="logo" width={100} />
               </Navbar.Brand>
             </Col>
           </Row>
@@ -122,13 +120,13 @@ const Navbars = ({ search, handleSearch }) => {
             <Nav
               navbarScroll
               className={`container-navbar ${
-                window.innerWidth <= 768 ? "mt-3" : ""
+                window.innerWidth <= 900 ? "mt-3" : ""
               }`}
             >
               <Row
                 className={`container-sub-navbar ${
-                  window.innerWidth <= 768
-                    ? "flex-start flex-column-reverse gap-2"
+                  window.innerWidth <= 900
+                    ? "flex-start flex-column gap-2"
                     : ""
                 }`}
               >
@@ -152,7 +150,7 @@ const Navbars = ({ search, handleSearch }) => {
                   xs={12}
                   md={4}
                   className={`col-profile ${
-                    window.innerWidth <= 768 ? "justify-content-start" : ""
+                    window.innerWidth <= 900 ? "justify-content-start" : ""
                   }`}
                 >
                   {state.isLogin === true ? (

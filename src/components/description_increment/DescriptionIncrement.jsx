@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Popup from "../popup/Popup";
 
 // components react bootstrap
-import { Button, Image } from "react-bootstrap";
+import { Button, Image, Row, Col } from "react-bootstrap";
 
 // api
 import { API } from "../../config/api";
@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 
 // image
 import bracket from "../../assets/img/white-bracket.png";
+// ---------------------------------------------------------
 
 const DescriptionIncrement = () => {
   const navigate = useNavigate();
@@ -71,13 +72,16 @@ const DescriptionIncrement = () => {
   return (
     <>
       <Popup popup={popup} setPopup={setPopup} />
-      <div className="desc-container">
-        <h4 className="detail-title-desc">About This Book</h4>
-        <div className="detail-desc">
-          <p className="detail-desc-info">
+      <Row
+        className={`desc-increment-container ${
+          window.innerWidth <= 480 ? "w-100" : ""
+        }`}
+      >
+        <h4 className="detail-title-desc-increment">About This Book</h4>
+        <Col xs={12} md={12} xl={12}>
+          <p className="detail-info-desc-increment">
             {detailBookDescription?.description}
           </p>
-          <br />
           <div className="btn-cart">
             <Button
               type="submit"
@@ -89,8 +93,8 @@ const DescriptionIncrement = () => {
               <Image src={bracket} className="img-bracket" /> Add cart
             </Button>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </>
   );
 };

@@ -5,20 +5,16 @@
 }
 
 .detail-img-container {
-    width: 65vw;
-    height: 550px;
-    margin-top: 120px !important;
+    width: 70vw;
     margin: auto;
-    margin-bottom: 60px;
-}
-
-.thumbnail {
+    margin-top: 100px !important;
+    margin-bottom: 50px;
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
 }
 
 .content-thumbnail {
-    width: 50% !important;
+    height: 600px;
 }
 
 .img-thumbnail {
@@ -27,7 +23,8 @@
 }
 
 .detail-book-info {
-    margin-left: 30px;
+    height: 100%;
+    margin: 0 !important;
     display: flex;
     flex-direction: column;
 }
@@ -42,7 +39,7 @@
     font-size: 18px;
     font-style: italic;
     color: #929292;
-    margin-bottom: 45px;
+    margin-bottom: 20px;
 }
 
 .detail-publication-date {
@@ -54,7 +51,7 @@
 .detail-date {
     font-size: 16px;
     color: #929292;
-    margin-bottom: 45px;
+    margin-bottom: 20px;
 }
 
 .detail-pages {
@@ -66,7 +63,7 @@
 .pages {
     font-size: 16px;
     color: #929292;
-    margin-bottom: 45px;
+    margin-bottom: 20px;
 }
 
 .detail-isbn {
@@ -78,7 +75,7 @@
 .isbn {
     font-size: 16px;
     color: #929292;
-    margin-bottom: 45px;
+    margin-bottom: 20px;
 }
 
 .detail-price {

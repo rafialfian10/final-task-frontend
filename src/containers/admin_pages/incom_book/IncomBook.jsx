@@ -111,7 +111,7 @@ const IncomBook = ({ books, search, refetchAllBooks }) => {
           })
           .map((book, i) => {
             return (
-              <Card className="list-book" key={i}>
+              <Card className="list-book2" key={i}>
                 <Dropdown className="d-inline mx-2 dropdown-trip">
                   <Image src={titik3} alt="titik3" className="titik3" />
                   <Dropdown.Toggle

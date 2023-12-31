@@ -36,8 +36,8 @@ const Cards = () => {
       return response.data.data;
     }
   );
-  // console.log(booksPromo)
 
+  // handle book promo
   const handleBookPromo = async (id) => {
     try {
       let token = localStorage.getItem("token");
@@ -75,7 +75,26 @@ const Cards = () => {
         spaceBetween={50}
         pagination={{ clickable: true }}
         modules={[Pagination]}
+        loop={true}
         className="mySwiper container-card-slider"
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          992: {
+            slidesPerView: 3,
+            spaceBetween: 50,
+          },
+        }}
       >
         {booksPromo?.map((book, i) => {
           return (

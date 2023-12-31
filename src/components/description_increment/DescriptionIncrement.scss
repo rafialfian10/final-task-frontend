@@ -1,21 +1,18 @@
-.desc-container {
-    width: 65vw;
+.desc-increment-container {
+    width: 70vw;
     margin: auto;
-}
-
-.detail-desc {
-    width: 100% !important;
     margin-bottom: 50px;
-    margin-top: 20px !important;
 }
 
-.detail-title-desc {
-    margin-bottom: 0px !important;
+.detail-title-desc-increment {
+    margin: 0 !important;
+    margin-bottom: 20px !important;
     font-weight: bold;
     color: black;
 }
 
-.detail-desc-info {
+.detail-info-desc-increment {
+    margin: 0 !important;
     color: black;
     font-size: 15px;
     text-align: justify;
@@ -31,7 +28,7 @@
 .btn-cart Button {
     text-align: left;
     position: relative;
-    width: 13% !important;
+    width: 12%;
     padding: 5px 10px !important;
     background-color: #393939;
     border: none !important;
@@ -46,4 +43,25 @@
     right: 10px;
     width: 22px;
     height: 22px;
+}
+
+@media screen and (max-width: 768px) {
+    .btn-cart Button {
+        width: 22%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .btn-cart {
+        justify-content: center;
+    }
+
+    .btn-cart Button {
+        width: 80%;
+        text-align: center;
+    }
+
+    .img-bracket {
+        position: static !important;
+    }
 }
