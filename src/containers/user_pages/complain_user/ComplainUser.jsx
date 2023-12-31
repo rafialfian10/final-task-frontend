@@ -1,32 +1,42 @@
-// component
+// components react
 import React from "react";
 
 // component react-bootstrap
-import { Container, Image, Form } from "react-bootstrap";
+import { Image, Form, Row, Col } from "react-bootstrap";
 
-// image
+// css
+import "./ComplainUser.scss";
+
+// images
 import send from "../../../assets/img/send.png";
 import defaultPhoto from "../../../assets/img/default-photo.png";
 import flower1 from "../../../assets/img/flower1.png";
 import flower2 from "../../../assets/img/flower2.png";
-
-// css
-import "./ComplainUser.scss";
+//----------------------------------------------------------
 
 const ComplainUser = () => {
   return (
     <>
       <Image src={flower1} alt="flower1" className="flower1" />
       <Image src={flower2} alt="flower2" className="flower2" />
-      <Container className="container-complain-user">
-        <h4>Customer Complain</h4>
-        <div className="content-complain-user">
-          <div className="message-complain">
-            <div className="navbar-message">
-              <Image src={defaultPhoto} className="photo-profile-user"></Image>
-              <div className="status">
-                <Form.Text className="user">Admin Si paling Cepat</Form.Text>
-                <Form.Text className="on">
+      <Row className="container-complain-user">
+        <Col xs={12} md={2} lg={2} xl={2} className="container-list-user">
+          <h4 className="title-complain-user">Customer Complain</h4>
+          <div className="dropdown-list-user">
+            <Image src={defaultPhoto} className="photo-list-user"></Image>
+            <Form.Text className="name-list-user">Rafi Alfian</Form.Text>
+          </div>
+          <div className="dropdown-list-user">
+            <Image src={defaultPhoto} className="photo-list-user"></Image>
+            <Form.Text className="name-list-user">Alfian Rafi</Form.Text>
+          </div>
+        </Col>
+        <Col xs={12} md={9} lg={9} xl={9} className="container-message-user">
+            <div className="navbar-message-user">
+              <Image src={defaultPhoto} className="navbar-photo-profile-user"></Image>
+              <div className="navbar-status">
+                <Form.Text className="navbar-username">Rafi Alfian</Form.Text>
+                <Form.Text className="navbar-on">
                   <div></div> Online
                 </Form.Text>
               </div>
@@ -65,9 +75,8 @@ const ComplainUser = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </Container>
+        </Col>
+      </Row>
     </>
   );
 };

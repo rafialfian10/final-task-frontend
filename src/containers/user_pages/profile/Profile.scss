@@ -1,9 +1,9 @@
 .profile-container {
     width: 70vw;
-    display: flex;
-    margin: auto !important;
-    margin-top: 120px !important;
+    margin: auto;
+    margin-top: 100px !important;
     margin-bottom: 50px !important;
+    display: flex;
     border-radius: 5px;
     padding: 30px;
     box-sizing: border-box;
@@ -13,10 +13,18 @@
         -1px -1px 1px 1px rgb(248, 175, 175);
 }
 
+.title-profile {
+    width: 100%;
+    margin: 0px !important;
+    margin-bottom: 20px !important;
+    font-weight: bold;
+    color: black;
+}
+
 .content-profile1 {
-    width: 70%;
     display: flex;
     flex-direction: column;
+    padding: 0;
     background-color: #ffd9d9 !important;
 }
 
@@ -63,28 +71,26 @@
 }
 
 .content-profile2 {
-    position: relative;
-    width: 30%;
+    gap: 10px 0px;
     display: flex;
     flex-direction: column;
+    padding: 0;
     background-color: #ffd9d9 !important;
 }
 
 .content-profile2 img {
     width: 100%;
-    margin-bottom: 60px;
+    // height: 350px;
+    border-radius: 5px;
 }
 
 .content-profile2 button {
     width: 100%;
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
     height: 50px;
-    border-radius: 5px;
-    background-color: #d60000;
-    border: none;
     color: white;
+    border-radius: 5px;
+    border: none;
+    background-color: #d60000;
     font-weight: bold;
     &:hover {
         background-color: #d60000;
@@ -97,43 +103,8 @@
     position: absolute;
 }
 
-// History Trip
-.history-container {
-    margin: 30px auto !important;
-    width: 90vw;
-    border-radius: 5px;
-    padding: 30px;
-    box-sizing: border-box;
-    box-shadow:
-        1px 1px 1px 1px rgb(209, 209, 209),
-        -1px -1px 1px 1px rgb(209, 209, 209);
-}
-
-.title-history-trip {
-    width: 90vw;
-    text-align: left;
-    margin: auto;
-    margin-top: 100px !important;
-    margin-bottom: 0px !important;
-}
-
-.content1 {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.sub-content1 .status {
-    font-weight: bold !important;
-    text-align: right;
-}
-
-.sub-content1 .date {
-    font-weight: bold;
-}
-
-.content2 {
-    width: 100%;
-    margin-bottom: 50px;
-    display: flex;
+@media screen and (max-width: 768px) {
+    .profile-container {
+       width: 90vw;
+    }
 }

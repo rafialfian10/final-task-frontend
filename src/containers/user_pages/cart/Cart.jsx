@@ -1,13 +1,18 @@
-// components react bootstrap
-import { Form, Card, Button, Image } from "react-bootstrap";
-
-// components
+// components react
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 
+// components react bootstrap
+import { Form, Card, Button, Image, Row, Col } from "react-bootstrap";
+
+// api
 import { API } from "../../../config/api";
+
+// css
+import "./Cart.scss";
+import Swal from "sweetalert2";
 
 // images
 import trash from "../../../assets/img/delete.png";
@@ -16,10 +21,7 @@ import flower2 from "../../../assets/img/flower2.png";
 import plus from "../../../assets/img/plus.png";
 import minus from "../../../assets/img/minus.png";
 // import proof from "../../../assets/img/transaction.png"
-
-// scss
-import "./Cart.scss";
-import Swal from "sweetalert2";
+// ----------------------------------------------------------------
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -255,66 +257,63 @@ const Cart = () => {
       {!orderCart ? (
         <h1 className="order-empty">Order is Empty</h1>
       ) : (
-        <div className="payment-container">
-          <div className="content-satu">
+        <Row className="payment-container">
+          <Col xs={12} md={12} lg={8} xl={8} className="content-satu">
             <h3 className="review">Review your order</h3>
-            <>
-              {orderCart?.map((order, i) => {
-                return (
-                  <Card className="container-cart" key={i}>
-                    <Card.Img src={order.book.thumbnail} className="img-card" />
-                    <Card.Body className="review-book-desc">
-                      <Card.Title className="review-book-title">
-                        {order.book.title}
-                      </Card.Title>
-                      <Form.Text className="review-artist">
-                        By. {order.book.author}
-                      </Form.Text>
-                      <Form.Text className="review-price">
-                        IDR. {order.book.price.toLocaleString()}
-                      </Form.Text>
-                      <div className="content-cart">
-                        <Button
-                          onClick={() => {
-                            order.order_qty > 1 &&
-                              handleLessQty.mutate(order.id);
-                          }}
-                          className="minus"
-                        >
-                          <Image src={minus} alt="minus" />
-                        </Button>
-                        <h5 className="value">{order.order_qty}</h5>
-                        <Button
-                          onClick={() => {
-                            order.order_qty < order.book.quota
-                              ? handleAddQty.mutate(order.id)
-                              : Swal.fire({
-                                  icon: "error",
-                                  title: "Out of stock",
-                                });
-                          }}
-                          className="plus"
-                        >
-                          {" "}
-                          <Image src={plus} alt="plus" />
-                        </Button>
-                      </div>
-                    </Card.Body>
-                    <Button
-                      className="btn-trash"
-                      onClick={() => {
-                        handleDeleteCart(order?.id);
-                      }}
-                    >
-                      <Image src={trash} className="img-trash" />
-                    </Button>
-                  </Card>
-                );
-              })}
-            </>
-          </div>
+            {orderCart?.map((order, i) => {
+              return (
+                <Card className="container-cart" key={i}>
+                  <Card.Img src={order.book.thumbnail} className="img-card" />
+                  <Card.Body className="review-book-desc">
+                    <Card.Title className="review-book-title">
+                      {order.book.title}
+                    </Card.Title>
+                    <Form.Text className="review-artist">
+                      By. {order.book.author}
+                    </Form.Text>
+                    <Form.Text className="review-price">
+                      IDR. {order.book.price.toLocaleString()}
+                    </Form.Text>
+                    <div className="content-cart">
+                      <Button
+                        onClick={() => {
+                          order.order_qty > 1 && handleLessQty.mutate(order.id);
+                        }}
+                        className="minus"
+                      >
+                        <Image src={minus} alt="minus" />
+                      </Button>
+                      <h5 className="value">{order.order_qty}</h5>
+                      <Button
+                        onClick={() => {
+                          order.order_qty < order.book.quota
+                            ? handleAddQty.mutate(order.id)
+                            : Swal.fire({
+                                icon: "error",
+                                title: "Out of stock",
+                              });
+                        }}
+                        className="plus"
+                      >
+                        {" "}
+                        <Image src={plus} alt="plus" />
+                      </Button>
+                    </div>
+                  </Card.Body>
+                  <Button
+                    className="btn-trash"
+                    onClick={() => {
+                      handleDeleteCart(order?.id);
+                    }}
+                  >
+                    <Image src={trash} className="img-trash" />
+                  </Button>
+                </Card>
+              );
+            })}
+          </Col>
 
-          <div className="content-dua">
+          <Col xs={12} md={12} lg={4} xl={4} className="content-dua">
             {orderCart?.map((order, j) => {
               return (
                 <>
@@ -359,8 +358,8 @@ const Cart = () => {
                 Pay
               </Button>
             </div>
-          </div>
-        </div>
+          </Col>
+        </Row>
       )}
     </>
   );

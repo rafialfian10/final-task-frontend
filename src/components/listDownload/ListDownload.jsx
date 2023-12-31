@@ -1,16 +1,18 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-lone-blocks */
-// components react bootstrap
-import { Button, Card, Form } from "react-bootstrap";
 
-// component
+// components react
 import { useQuery } from "react-query";
+
+// components react bootstrap
+import { Button, Card, Form, Row, Col } from "react-bootstrap";
 
 // api
 import { API } from "../../config/api";
 
 // css
 import "./ListDownload.scss";
+// ---------------------------------------------------------------
 
 const ListDownload = () => {
   // get transaction user book
@@ -46,77 +48,71 @@ const ListDownload = () => {
   };
 
   return (
-    <>
-      <h3 className="download-title">My Books</h3>
-      <div className="container-download">
+    <div className="container-list-download">
+      <h4 className="listdownload-title">My Books</h4>
+      <Row xs={1} md={2} xl={5} className="w-100 m-0 g-3">
         {transactionBook?.map((transaction) => {
-          {
-            if (transaction?.status === "approve") {
+          if (transaction?.status === "approve") {
+            return transaction.book?.map((item, i) => {
               return (
-                <>
-                  {transaction.book?.map((item, i) => {
-                    return (
-                      <Card className="list-download" key={i}>
-                        <Card.Img
-                          variant="top"
-                          src={item?.thumbnail}
-                          className="img-list-download"
-                        />
-                        <Card.Body className="list-desc">
-                          <Card.Title className="list-title">
-                            {item?.title}
-                          </Card.Title>
-                          <Form.Text className="list-artist">
-                            By. {item?.author}
-                          </Form.Text>
-                          <div className="container-btn-download">
-                            <Button
-                              className="btn-download-book"
-                              onClick={() => handleDownloadFile(item)}
-                            >
-                              Download
-                            </Button>
-                          </div>
-                        </Card.Body>
-                      </Card>
-                    );
-                  })}
-                </>
+                <Col key={i}>
+                  <Card className="list-download">
+                    <Card.Img
+                      variant="top"
+                      src={item?.thumbnail}
+                      className="list-thumbnail-download"
+                    />
+                    <Card.Body className="list-desc-download">
+                      <Card.Title className="list-title-download">
+                        {item?.title}
+                      </Card.Title>
+                      <Form.Text className="list-artist-download">
+                        By. {item?.author}
+                      </Form.Text>
+                      <div className="container-btn-download">
+                        <Button
+                          className="btn-download-book"
+                          onClick={() => handleDownloadFile(item)}
+                        >
+                          Download
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
               );
-            } else if (transaction?.status === "success") {
+            });
+          } else if (transaction?.status === "success") {
+            return transaction.book?.map((item, i) => {
               return (
-                <>
-                  {transaction.book?.map((item, i) => {
-                    return (
-                      <Card className="list-download" key={i}>
-                        <Card.Img
-                          variant="top"
-                          src={item?.thumbnail}
-                          className="img-list-download"
-                        />
-                        <Card.Body className="list-desc">
-                          <Card.Title className="list-title">
-                            {item?.title}
-                          </Card.Title>
-                          <Form.Text className="list-artist">
-                            By. {item?.author}
-                          </Form.Text>
-                          <div className="container-waiting">
-                            <Form.Text className="waiting">
-                              Waiting to be approved By Admin for download
-                            </Form.Text>
-                          </div>
-                        </Card.Body>
-                      </Card>
-                    );
-                  })}
-                </>
+                <Col key={i}>
+                  <Card className="list-download">
+                    <Card.Img
+                      variant="top"
+                      src={item?.thumbnail}
+                      className="list-thumbnail-download"
+                    />
+                    <Card.Body className="list-desc-download">
+                      <Card.Title className="list-title-download">
+                        {item?.title}
+                      </Card.Title>
+                      <Form.Text className="list-artist-download">
+                        By. {item?.author}
+                      </Form.Text>
+                      <div className="container-waiting">
+                        <Form.Text className="waiting">
+                          Waiting to be approved By Admin for download
+                        </Form.Text>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
               );
-            }
+            });
           }
         })}
-      </div>
-    </>
+      </Row>
+    </div>
   );
 };
 

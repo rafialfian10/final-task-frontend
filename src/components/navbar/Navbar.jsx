@@ -1,3 +1,8 @@
+// components react
+import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useQuery } from "react-query";
+
 // components react bootstrap
 import {
   Container,
@@ -11,19 +16,16 @@ import {
   Col,
   NavDropdown,
 } from "react-bootstrap";
-import Swal from "sweetalert2";
 
 // components
-import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { useQuery } from "react-query";
 import { UserContext } from "../../context/userContext";
-
-// css
-import "./Navbar.scss";
 
 // api
 import { API } from "../../config/api";
+
+// css
+import "./Navbar.scss";
+import Swal from "sweetalert2";
 
 // images
 import logo from "../../assets/img/logo.png";
@@ -36,6 +38,7 @@ import admin from "../../assets/img/admin.png";
 import defaultPhoto from "../../assets/img/default-photo.png";
 import Login from "../login/Login";
 import Register from "../register/Register";
+// -------------------------------------------------------------
 
 const Navbars = ({ search, handleSearch }) => {
   const navigate = useNavigate();

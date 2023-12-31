@@ -1,14 +1,23 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-lone-blocks */
-// components react bootstrap
-import { Button, Form, Image } from "react-bootstrap";
 
-// components
-import ListDownload from "../../../components/listDownload/ListDownload";
+// components react
 import { useQuery, useMutation } from "react-query";
 import { useParams } from "react-router-dom";
 
-// image
+// components react bootstrap
+import { Button, Form, Image, Row, Col } from "react-bootstrap";
+
+// components
+import ListDownload from "../../../components/listDownload/ListDownload";
+
+// api
+import { API } from "../../../config/api";
+
+// css
+import "./Profile.scss";
+
+// images
 import flower1 from "../../../assets/img/flower1.png";
 import flower2 from "../../../assets/img/flower2.png";
 import message from "../../../assets/img/message.png";
@@ -16,12 +25,7 @@ import address from "../../../assets/img/address.png";
 import phone from "../../../assets/img/phone.png";
 import gender from "../../../assets/img/gender.png";
 import defaultPhoto from "../../../assets/img/default-photo.png";
-
-// api
-import { API } from "../../../config/api";
-
-// css
-import "./Profile.scss";
+// ----------------------------------------------------------------------
 
 const Profile = () => {
   let { id } = useParams();
@@ -67,10 +71,15 @@ const Profile = () => {
         {
           if (user.id === id) {
             return (
-              <div className="profile-container" key={i}>
-                <div className="content-profile1">
-                  <h2>Personal Info</h2>
-
+              <Row className="profile-container" key={i}>
+                <h4 className="title-profile">Personal Info</h4>
+                <Col
+                  xs={12}
+                  md={12}
+                  lg={6}
+                  xl={8}
+                  className="content-profile1"
+                >
                   <div className="email">
                     <Image src={message} alt="message" />
                     <div className="sub-email">
@@ -101,9 +110,15 @@ const Profile = () => {
                       <p className="info2">Address</p>
                     </div>
                   </div>
-                </div>
+                </Col>
 
-                <div className="content-profile2">
+                <Col
+                  xs={12}
+                  md={12}
+                  lg={6}
+                  xl={4}
+                  className="content-profile2"
+                >
                   {user.thumbnail !== "" ? (
                     <Image src={user.thumbnail} alt="thumbnail" />
                   ) : (
@@ -124,8 +139,8 @@ const Profile = () => {
                   >
                     Change Photo Profile
                   </Button>
-                </div>
-              </div>
+                </Col>
+              </Row>
             );
           }
         }
