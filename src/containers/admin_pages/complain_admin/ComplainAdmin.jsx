@@ -1,46 +1,42 @@
-// component
+// components react
 import React from "react";
 
 // component react-bootstrap
-import { Container, Image, Form } from "react-bootstrap";
-
-// image
-import send from "../../../assets/img/send.png";
-import saitama from "../../../assets/img/saitama.png";
-import defaultPhoto from "../../../assets/img/default-photo.png";
+import { Image, Form, Row, Col } from "react-bootstrap";
 
 // css
 import "./ComplainAdmin.scss";
 
-// image
+// images
+import send from "../../../assets/img/send.png";
+import defaultPhoto from "../../../assets/img/default-photo.png";
 import flower1 from "../../../assets/img/flower1.png";
 import flower2 from "../../../assets/img/flower2.png";
+//----------------------------------------------------------
 
 const ComplainAdmin = () => {
   return (
     <>
       <Image src={flower1} alt="flower1" className="flower1" />
       <Image src={flower2} alt="flower2" className="flower2" />
-      <Container className="container-complain-admin">
-        <h4>Customer Complain</h4>
-        <div className="content-complain">
-          <div className="dropdown-complain">
-            <div className="dropdown-complain-user">
-              <Image src={saitama} className="photo-profile-user"></Image>
-              <Form.Text className="username">Rafi Alfian</Form.Text>
-            </div>
-            <div className="dropdown-complain-user">
-              <Image src={saitama} className="photo-profile-user"></Image>
-              <Form.Text className="username">Ervin Alfianto</Form.Text>
-            </div>
+      <Row className="container-complain-admin">
+        <Col xs={12} md={2} lg={2} xl={2} className="container-list-admin">
+          <h4 className="title-complain-admin">Customer Complain</h4>
+          <div className="dropdown-list-admin">
+            <Image src={defaultPhoto} className="photo-list-admin"></Image>
+            <Form.Text className="name-list-admin">Rafi Alfian</Form.Text>
           </div>
-
-          <div className="message-complain">
-            <div className="navbar-message">
-              <Image src={defaultPhoto} className="photo-profile-user"></Image>
-              <div className="status">
-                <Form.Text className="user">Rafi Alfian</Form.Text>
-                <Form.Text className="on">
+          <div className="dropdown-list-admin">
+            <Image src={defaultPhoto} className="photo-list-admin"></Image>
+            <Form.Text className="name-list-admin">Alfian Rafi</Form.Text>
+          </div>
+        </Col>
+        <Col xs={12} md={9} lg={9} xl={9} className="container-message-admin">
+            <div className="navbar-message-admin">
+              <Image src={defaultPhoto} className="navbar-photo-profile-admin"></Image>
+              <div className="navbar-status">
+                <Form.Text className="navbar-username">Rafi Alfian</Form.Text>
+                <Form.Text className="navbar-on">
                   <div></div> Online
                 </Form.Text>
               </div>
@@ -79,9 +75,8 @@ const ComplainAdmin = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </Container>
+        </Col>
+      </Row>
     </>
   );
 };

@@ -1,8 +1,9 @@
-// components
+// components react bootstrap
 import Modal from "react-bootstrap/Modal";
 
 // css
 import "./Popup.scss";
+// --------------------------------------------
 
 const Popup = ({ popup, setPopup }) => {
   return (

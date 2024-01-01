@@ -1,19 +1,26 @@
-h2.title-update-book {
+.modal-update-promo {
+  margin-top: 70px;
+  padding-bottom: 50px;
+}
+
+.title-update-promo {
+  width: 80%;
+  margin: auto;
+  margin-top: 0 !important;
+  margin-bottom: 20px !important;
   font-weight: bold;
-  text-align: center;
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 80%;
-  text-align: left;
+  color: black;
 }
 
-.form-update-book {
+.form-update-promo {
   margin: auto;
   width: 80%;
 }
 
-.form-update-book .form-input {
+.form-update-promo .form-input {
+  border: none;
+  box-shadow: none;
+  outline: none;
   background-color: rgb(217, 219, 219) !important;
 }
 
@@ -29,7 +36,7 @@ h2.title-update-book {
   right: 10px !important;
 }
 
-.btn-update-book-content {
+.btn-update-promo-content {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -37,7 +44,7 @@ h2.title-update-book {
   margin-top: 30px !important;
 }
 
-.btn-update-book {
+.btn-update-promo {
   display: flex;
   margin-right: 10px;
   padding: 10px 20px;
@@ -52,56 +59,58 @@ h2.title-update-book {
   }
 }
 
-.img-update-book {
+.img-update-promo {
   margin-left: 15px;
 }
 
 /* Input Upload Image */
-.img-upload {
-  height: 30px;
+div.img-upload-update {
+  height: 40px !important;
   display: flex;
   align-items: center;
   border-radius: 5px;
-  margin-top: 40px !important;
+  margin-bottom: 10px !important;
 }
 
-.img-upload label {
-  width: 30%;
+.img-upload-update .label-file-update {
+  width: 100%;
   height: 40px;
+  margin: 0px !important;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 5px;
 }
 
-.img-upload .form-input {
+.img-upload-update .form-input {
   border: 1px solid rgb(196, 186, 186);
 }
 
-.img-upload input {
+.img-upload-update input {
   display: none;
 }
 
-.img-upload p {
+.img-upload-update .text-file-update {
   padding: 5px;
   padding-left: 10px;
-  text-align: left;
-  color: orange;
-  font-weight: bold;
+  margin: 0px;
+  color: rgb(113, 112, 112) !important;
+  font-size: 16px;
+  font-weight: normal !important;
   border-radius: 5px;
 }
 
-.img-upload p:hover {
+.img-upload-update .text-file-update:hover {
   cursor: pointer;
 }
 
-.img-upload label img {
+.img-upload-update .img-file-update {
   margin-right: 10px;
-  width: 18px;
+  width: 16px;
   height: 18px;
 }
 
-.img-upload label img:hover {
+.img-upload-update .img-file-update:hover {
   cursor: pointer;
 }
 /* End input upload image */

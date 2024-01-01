@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// components
+// components react
 import { useState, useEffect } from "react";
 
 // css
 import "./Paginations.scss";
+// --------------------------------------------------
 
 const Paginations = ({
   dataPerHalaman,
@@ -61,49 +62,47 @@ const Paginations = ({
   }, [halamanAktif, totalData]);
 
   return (
-    <>
-      <nav>
-        <ul className="pagination">
-          {/* handle prev */}
-          {halamanAktif > 1 && (
-            <p
-              className="page-link prev"
-              onClick={() => paginate(halamanAktif - 1)}
-            >
-              &laquo;
-            </p>
-          )}
+    <nav>
+      <ul className="pagination">
+        {/* handle prev */}
+        {halamanAktif > 1 && (
+          <p
+            className="page-link prev"
+            onClick={() => paginate(halamanAktif - 1)}
+          >
+            &laquo;
+          </p>
+        )}
 
-          {arrOfCurrButtons?.map((number) => (
-            <li
-              key={number}
-              className={
-                number === halamanAktif ? "page-item active" : "page-item"
-              }
-            >
-              <p
-                onClick={() => {
-                  paginate(number);
-                }}
-                className="page-link"
-              >
-                {number}
-              </p>
-            </li>
-          ))}
-
-          {/* handle next */}
-          {halamanAktif < pageNumbers.length && (
+        {arrOfCurrButtons?.map((number) => (
+          <li
+            key={number}
+            className={
+              number === halamanAktif ? "page-item active" : "page-item"
+            }
+          >
             <p
-              className="page-link next"
-              onClick={() => paginate(halamanAktif + 1)}
+              onClick={() => {
+                paginate(number);
+              }}
+              className="page-link"
             >
-              &raquo;
+              {number}
             </p>
-          )}
-        </ul>
-      </nav>
-    </>
+          </li>
+        ))}
+
+        {/* handle next */}
+        {halamanAktif < pageNumbers.length && (
+          <p
+            className="page-link next"
+            onClick={() => paginate(halamanAktif + 1)}
+          >
+            &raquo;
+          </p>
+        )}
+      </ul>
+    </nav>
   );
 };
 

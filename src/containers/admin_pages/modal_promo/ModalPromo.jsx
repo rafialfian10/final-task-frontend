@@ -1,21 +1,22 @@
 /* eslint-disable no-unused-vars */
-// components react bootstrap
-import { Button, Image, Form, Modal } from "react-bootstrap";
-
-// componets
+// components react
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+
+// components react bootstrap
+import { Button, Image, Form, Modal } from "react-bootstrap";
+
+// api
+import { API } from "../../../config/api";
 
 // css
 import "./ModalPromo.scss";
 import Swal from "sweetalert2";
 
-// image
+// images
 import addlistbook from "../../../assets/img/addlistbook.png";
-
-// api
-import { API } from "../../../config/api";
+// ------------------------------------------------------------------------
 
 const ModalPromo = ({ modalPromo, setModalPromo, value, bookId }) => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const ModalPromo = ({ modalPromo, setModalPromo, value, bookId }) => {
 
   useEffect(() => {
     setForm({
-      discount: value?.discount,
+      discount: value?.discount || "",
     });
   }, [value]);
 
@@ -101,11 +102,11 @@ const ModalPromo = ({ modalPromo, setModalPromo, value, bookId }) => {
       <Modal
         show={modalPromo}
         onHide={() => setModalPromo(false)}
-        className="modal-update-book"
+        className="modal-update-promo"
         size="lg"
       >
-        <Modal.Body className="modal-body-update-book">
-          <h2 className="title-update-book">Set Discount Book</h2>
+        <Modal.Body className="modal-body-update-promo">
+          <h4 className="title-update-book">Set Discount Book</h4>
           <Form
             className="form-update-book"
             onSubmit={(e) => {
@@ -119,7 +120,7 @@ const ModalPromo = ({ modalPromo, setModalPromo, value, bookId }) => {
                 name="discount"
                 type="number"
                 placeholder="Discount"
-                value={form.discount}
+                value={form?.discount}
                 onChange={(e) => handleChange(e, "discount")}
               />
             </Form.Group>
@@ -127,10 +128,10 @@ const ModalPromo = ({ modalPromo, setModalPromo, value, bookId }) => {
               <Form.Text className="text-danger">{error.discount}</Form.Text>
             )}
 
-            <div className="btn-update-book-content">
-              <Button type="submit" className="btn-update-book">
+            <div className="btn-update-promo-content">
+              <Button type="submit" className="btn-update-promo">
                 Set Promo
-                <Image src={addlistbook} className="img-update-book" />
+                <Image src={addlistbook} className="img-update-promo" />
               </Button>
             </div>
           </Form>

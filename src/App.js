@@ -1,15 +1,12 @@
 /* eslint-disable no-unused-vars */
-// components
 // eslint-disable-next-line no-unused-vars
+// components react
 import { Route, Routes } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
-import { UserContext } from "./context/userContext";
 import { useQuery } from "react-query";
 
-// api
-import { API, setAuthToken } from "./config/api";
-
-// pages
+// components
+import { UserContext } from "./context/userContext";
 import Navbars from "./components/navbar/Navbar";
 import Home from "./Home/Home";
 import IncrementDetailBook from "./containers/user_pages/increment_detail_book/IncrementDetailBook";
@@ -26,6 +23,10 @@ import IncomBook from "./containers/admin_pages/incom_book/IncomBook";
 import Profile from "./containers/user_pages/profile/Profile";
 import ComplainAdmin from "./containers/admin_pages/complain_admin/ComplainAdmin";
 import ComplainUser from "./containers/user_pages/complain_user/ComplainUser";
+
+// api
+import { API, setAuthToken } from "./config/api";
+// ----------------------------------------------------------
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);

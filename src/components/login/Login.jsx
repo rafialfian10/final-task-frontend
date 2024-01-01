@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
-// component react bootstrap
-import { Nav, Button, Form, Modal } from "react-bootstrap";
-import Swal from "sweetalert2";
-
-// components
+// components react
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useMutation } from "react-query";
+
+// components react bootstrap
+import { Nav, Button, Form, Modal } from "react-bootstrap";
+
+// components
 import { UserContext } from "../../context/userContext";
 
 // api
@@ -14,6 +15,8 @@ import { API } from "../../config/api";
 
 // css
 import "./Login.scss";
+import Swal from "sweetalert2";
+// ----------------------------------------------------------------
 
 const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog }) => {
   const navigate = useNavigate();

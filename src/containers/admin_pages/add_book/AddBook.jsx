@@ -1,21 +1,24 @@
-// components react bootstrap
-import { Button, Form, Image, FormLabel } from "react-bootstrap";
+// components react
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMutation } from "react-query";
 
-// API
+// components react bootstrap
+import { Button, Form, Image, FormLabel, Row, Col } from "react-bootstrap";
+
+// api
 import { API } from "../../../config/api";
 
 // css
 import "./AddBook.scss";
 import Swal from "sweetalert2";
 
-// image
+// images
 import attache from "../../../assets/img/attache.png";
 import addlistbook from "../../../assets/img/addlistbook.png";
 import flower1 from "../../../assets/img/flower1.png";
 import flower2 from "../../../assets/img/flower2.png";
+// --------------------------------------------------------------------------------
 
 const AddBook = () => {
   const navigate = useNavigate();
@@ -212,10 +215,10 @@ const AddBook = () => {
     }
   });
   return (
-    <>
+    <Row className="add-book-container">
       <Image src={flower1} alt="flower1" className="flower1" />
       <Image src={flower2} alt="flower2" className="flower2" />
-      <div className="add-book-container">
+      <Col xs={12} md={12} lg={12} xl={12}>
         <h4 className="title-add-book">Add Book</h4>
         <Form
           className="form-add-book"
@@ -383,8 +386,8 @@ const AddBook = () => {
             </Button>
           </div>
         </Form>
-      </div>
-    </>
+      </Col>
+    </Row>
   );
 };
 

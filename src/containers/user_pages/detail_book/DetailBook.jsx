@@ -2,8 +2,9 @@
 import DescriptionDownload from "../../../components/description_download/DescriptionDownload";
 import DetailImage from "../../../components/detailImage/DetailImage";
 
-// scss
+// css
 import "./DetailBook.scss";
+// --------------------------------------------
 
 const DetailBook = () => {
   return (

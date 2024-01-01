@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // components react bootstrap
-import { Table, Modal, Alert, Image } from "react-bootstrap";
+import { Table, Modal, Alert, Image, Row, Col, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import Moment from "react-moment";
 
@@ -14,9 +14,10 @@ import { API } from "../../../config/api";
 // css
 import "./ModalApproved.scss";
 
-// image
+// images
 import logo from "../../../assets/img/logo.png";
 import transaction from "../../../assets/img/transaction.png";
+// -----------------------------------------------------------
 
 const ModalApproved = ({
   modalApproved,
@@ -108,105 +109,105 @@ const ModalApproved = ({
         size="xl"
       >
         <Modal.Body className="body-approved-container">
-            <div className="table-modal-approved">
-              <div className="content-approved">
-                <Image src={logo} className="img-logo" alt="logo" />
-                <p className="status-payment-approved">
-                  <h3 className="status-approved">Status Transaction</h3>
-                  {order?.status === "pending" && (
-                    <Alert
-                      variant="warning"
-                      style={{ width: "200px", height: "40px" }}
-                      className="d-inline-block p-1 px-3 fw-bold text-light bg-warning"
-                    >
-                      Waiting Payment
-                    </Alert>
-                  )}
-                  {order?.status === "failed" && (
-                    <Alert
-                      variant="danger"
-                      style={{ width: "200px", height: "40px" }}
-                      className="d-inline-block p-1 px-3 fw-bold text-light bg-danger"
-                    >
-                      Payment Failed
-                    </Alert>
-                  )}
-                  {order?.status === "reject" && (
-                    <Alert
-                      variant="danger"
-                      style={{ width: "200px", height: "40px" }}
-                      className="d-inline-block p-1 px-3 fw-bold text-light bg-danger"
-                    >
-                      Transaction Rejected
-                    </Alert>
-                  )}
-                  {order?.status === "success" && (
-                    <Alert
-                      variant="warning"
-                      style={{ width: "200px", height: "40px" }}
-                      className="d-inline-block p-1 px-3 fw-bold text-light bg-success"
-                    >
-                      Waiting Approved
-                    </Alert>
-                  )}
-                  {order?.status === "approve" && (
-                    <Alert
-                      variant="success"
-                      style={{ width: "200px", height: "40px" }}
-                      className="d-inline-block p-1 px-3 fw-bold text-light bg-success"
-                    >
-                      Transaction Approved
-                    </Alert>
-                  )}
-                </p>
-              </div>
-              <div className="content-img-payment-approved">
-                <Image
-                  className="img-payment-approved"
-                  src={transaction}
-                  alt="transaction"
-                />
-                <p className="text-payment-approved">Upload Payment Proof</p>
-              </div>
-
-              <div className="content2-approved">
-                <div className="info-payment-approved">
-                  <Table striped bordered hover className="tables-order-book">
-                    <thead>
-                      <tr>
-                        <th>No</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Pages</th>
-                        <th>Publication Date</th>
-                        <th>Price</th>
-                        <th>Order Quantity</th>
-                        <th>Subtotal</th>
+          <Row className="content-approved">
+            <Col xs={4} md={4} lg={2} xl={2} className="">
+              <Image src={logo} className="img-logo" alt="logo" width={130} />
+            </Col>
+            <Col
+              xs={8}
+              md={8}
+              lg={10}
+              xl={10}
+              className="status-payment-approved"
+            >
+              <h4 className="status-approved">Status Transaction</h4>
+              {order?.status === "pending" && (
+                <Alert variant="warning" className="alert-content bg-warning">
+                  Waiting Payment
+                </Alert>
+              )}
+              {order?.status === "failed" && (
+                <Alert variant="danger" className="alert-content bg-danger">
+                  Payment Failed
+                </Alert>
+              )}
+              {order?.status === "reject" && (
+                <Alert variant="danger" className="alert-content bg-danger">
+                  Transaction Rejected
+                </Alert>
+              )}
+              {order?.status === "success" && (
+                <Alert variant="warning" className="alert-content bg-success">
+                  Waiting Approved
+                </Alert>
+              )}
+              {order?.status === "approve" && (
+                <Alert variant="success" className="alert-content bg-success">
+                  Transaction Approved
+                </Alert>
+              )}
+            </Col>
+          </Row>
+          <Row className="content-img-payment-approved">
+            <Col xs={12} md={6} lg={3} xl={3} className="p-0">
+              <Image
+                className="img-payment-approved"
+                src={transaction}
+                alt="transaction"
+              />
+            </Col>
+            <p className="text-payment-approved">Upload Payment Proof</p>
+          </Row>
+          <Row className="table-container-approved">
+            <Col
+              xs={12}
+              md={12}
+              lg={12}
+              xl={12}
+              className="info-payment-approved"
+            >
+              <Table striped bordered hover className="table-order-book">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Pages</th>
+                    <th>Publication Date</th>
+                    <th>Price</th>
+                    <th>Order Quantity</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {order?.book.map((item, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{i++ + 1}</td>
+                        <td className="text-start">{item?.title}</td>
+                        <td>{item?.author}</td>
+                        <td>{item?.pages}</td>
+                        <td>{item?.publication_date}</td>
+                        <td>IDR. {item?.price.toLocaleString()}</td>
+                        <td>{item?.order_qty} pcs</td>
+                        <td>
+                          IDR.{" "}
+                          {(item?.order_qty * item?.price).toLocaleString()}
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {order?.book.map((item, i) => {
-                        return (
-                          <tr key={i}>
-                            <td>{i++ + 1}</td>
-                            <td className="text-start">{item?.title}</td>
-                            <td>{item?.author}</td>
-                            <td>{item?.pages}</td>
-                            <td>{item?.publication_date}</td>
-                            <td>IDR. {item?.price.toLocaleString()}</td>
-                            <td>{item?.order_qty} pcs</td>
-                            <td>
-                              IDR.{" "}
-                              {(item?.order_qty * item?.price).toLocaleString()}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
-                </div>
-              </div>
-              <Table striped bordered hover className="tables-order-book2">
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </Col>
+            <Col
+              xs={12}
+              md={12}
+              lg={12}
+              xl={12}
+              className="info-payment-approved"
+            >
+              <Table striped bordered hover className="table-order-book">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -229,7 +230,7 @@ const ModalApproved = ({
                       </Moment>
                     </td>
                     <td className="fw-bold">Total Quantity</td>
-                    <td className="fw-bold">: {orderQty} pcs</td>
+                    <td className="fw-bold text-start">: {orderQty} pcs</td>
                   </tr>
                   <tr>
                     <td></td>
@@ -238,15 +239,17 @@ const ModalApproved = ({
                     <td></td>
                     <td></td>
                     <td className="fw-bold">Total</td>
-                    <td className="fw-bold text-danger">
+                    <td className="fw-bold text-danger text-start">
                       : IDR. {order?.total.toLocaleString()}{" "}
                     </td>
                   </tr>
                 </tbody>
               </Table>
-            </div>
-            <div className="btn-modal-approved">
-              <button
+            </Col>
+          </Row>
+          <Row className="btn-modal-container">
+            <Col xs={12} md={12} lg={12} xl={12} className="btn-modal-content">
+              <Button
                 type="submit"
                 className="cancel"
                 onClick={() => {
@@ -271,15 +274,16 @@ const ModalApproved = ({
                 }}
               >
                 Reject
-              </button>
-              <button
+              </Button>
+              <Button
                 type="submit"
                 className="approve"
                 onClick={handleApproveOrder.mutate}
               >
                 Approve
-              </button>
-            </div>
+              </Button>
+            </Col>
+          </Row>
         </Modal.Body>
       </Modal>
     </>

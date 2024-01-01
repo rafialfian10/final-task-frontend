@@ -1,14 +1,14 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable array-callback-return */
-
-// components
+// components react
 import { useNavigate } from "react-router-dom";
 
 // components react bootstrap
 import { Form, Card, Row, Col } from "react-bootstrap";
 
-// scss
+// css
 import "./ListBook.scss";
+// ------------------------------------------------------
 
 const ListBook = ({ books, search }) => {
   const navigate = useNavigate();

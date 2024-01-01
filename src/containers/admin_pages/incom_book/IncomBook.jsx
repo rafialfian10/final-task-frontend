@@ -1,24 +1,27 @@
-// components
+// components react
 import { useMutation } from "react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+// component react bootstrap
+import { Form, Card, Dropdown, Image, Row, Col } from "react-bootstrap";
+
+// components
 import ModalPromo from "../modal_promo/ModalPromo";
 import ModalUpdateBook from "../modal_update_book/ModalUpdateBook";
 
 // api
 import { API } from "../../../config/api";
 
-// component react bootstrap
-import { Form, Card, Dropdown, Image } from "react-bootstrap";
+// css
+import "./IncomBook.scss";
+import Swal from "sweetalert2";
 
-// image
+// images
 import titik3 from "../../../assets/img/titik3.png";
 import flower1 from "../../../assets/img/flower1.png";
 import flower2 from "../../../assets/img/flower2.png";
-
-// scss
-import "./IncomBook.scss";
-import Swal from "sweetalert2";
+// -----------------------------------------------------------------
 
 const IncomBook = ({ books, search, refetchAllBooks }) => {
   const navigate = useNavigate();
@@ -83,7 +86,6 @@ const IncomBook = ({ books, search, refetchAllBooks }) => {
     <>
       <Image src={flower1} alt="flower1" className="flower1" />
       <Image src={flower2} alt="flower2" className="flower2" />
-      <h4 className="incom-title">Incom Book</h4>
       <ModalUpdateBook
         modalUpdate={modalUpdate}
         setModalUpdate={setModalUpdate}
@@ -96,76 +98,81 @@ const IncomBook = ({ books, search, refetchAllBooks }) => {
         value={value}
         bookId={bookId}
       />
-      <div className="container-list">
-        {books
-          ?.filter((book) => {
-            if (search === "") {
-              return book;
-            } else if (
-              book?.title.toLowerCase().includes(search.toLowerCase()) ||
-              book?.author.toLowerCase().includes(search.toLowerCase())
-            ) {
-              return book;
-            }
-            return false;
-          })
-          .map((book, i) => {
-            return (
-              <Card className="list-book2" key={i}>
-                <Dropdown className="d-inline mx-2 dropdown-trip">
-                  <Image src={titik3} alt="titik3" className="titik3" />
-                  <Dropdown.Toggle
-                    id="dropdown-autoclose-true"
-                    className="toggle-trip"
-                  ></Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-menu-trip">
-                    <Dropdown.Item
-                      onClick={() => {
-                        setBookId(book.id);
-                        setModalUpdate(true);
-                        setValue(book);
-                      }}
-                    >
-                      Update Book
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => {
-                        setBookId(book.id);
-                        setModalPromo(true);
-                        setValue(book);
-                      }}
-                    >
-                      Set Discount
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => {
-                        setBookId(book.id);
-                        handleDeleteBook.mutate(book.id);
-                      }}
-                    >
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                <Card.Img
-                  variant="top"
-                  src={book.thumbnail}
-                  className="list-image"
-                />
-                <Card.Body className="list-desc">
-                  <Card.Title className="list-title2">{book.title}</Card.Title>
-                  <Form.Text className="list-artist">
-                    By. {book.author}
-                  </Form.Text>
-                  <div className="container-list-price">
-                    <Form.Text className="list-price">
-                      IDR. {book.price.toLocaleString()}
-                    </Form.Text>
-                  </div>
-                </Card.Body>
-              </Card>
-            );
-          })}
+      <div className="container-incom-book">
+        <h4 className="incom-book-title">Incom Book</h4>
+        <Row xs={1} md={2} xl={5} className="w-100 m-0 g-3">
+          {books
+            ?.filter((book) => {
+              if (search === "") {
+                return book;
+              } else if (
+                book?.title.toLowerCase().includes(search.toLowerCase()) ||
+                book?.author.toLowerCase().includes(search.toLowerCase())
+              ) {
+                return book;
+              }
+              return false;
+            })
+            .map((book, i) => {
+              return (
+                <Col key={i}>
+                  <Card className="list-incom-book">
+                    <Dropdown className="dropdown-incom-book">
+                      <Image src={titik3} alt="titik3" className="titik3" />
+                      <Dropdown.Toggle
+                        id="dropdown-autoclose-true"
+                        className="toggle-incom-book"
+                      ></Dropdown.Toggle>
+                      <Dropdown.Menu className="dropdown-menu-incom-book">
+                        <Dropdown.Item
+                          onClick={() => {
+                            setBookId(book.id);
+                            setModalUpdate(true);
+                            setValue(book);
+                          }}
+                        >
+                          Update Book
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => {
+                            setBookId(book.id);
+                            setModalPromo(true);
+                            setValue(book);
+                          }}
+                        >
+                          Set Discount
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => {
+                            setBookId(book.id);
+                            handleDeleteBook.mutate(book.id);
+                          }}
+                        >
+                          Delete
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                    <Card.Img
+                      variant="top"
+                      src={book.thumbnail}
+                      className="incom-bbok-image"
+                    />
+                    <Card.Body className="incom-book-desc">
+                      <Card.Title className="incom-book-title">
+                        {book.title}
+                      </Card.Title>
+                      <Form.Text className="incom-book-artist">
+                        By. {book.author}
+                      </Form.Text>
+                      <Form.Text className="incom-book-price">
+                        IDR. {book.price.toLocaleString()}
+                      </Form.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })}
+        </Row>
       </div>
     </>
   );

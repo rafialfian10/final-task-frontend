@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-vars */
+// components react
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+
+// components react bootstrap
 import {
   Button,
   Form,
@@ -18,10 +21,11 @@ import { API } from "../../../config/api";
 import "./ModalUpdateBook.scss";
 import Swal from "sweetalert2";
 
-// image
+// images
 import addlistbook from "../../../assets/img/addlistbook.png";
 import attache from "../../../assets/img/attache.png";
 import iconPdf from "../../../assets/img/icon-pdf.png";
+// ------------------------------------------------------------------------
 
 const ModalUpdateBook = ({ modalUpdate, setModalUpdate, value, bookId }) => {
   const navigate = useNavigate();
@@ -375,20 +379,20 @@ const ModalUpdateBook = ({ modalUpdate, setModalUpdate, value, bookId }) => {
     try {
       const response = await fetch(value?.thumbnail);
       const blob = await response.blob();
-  
+
       const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', `${value?.title}.jpg`);
+      link.setAttribute("download", `${value?.title}.jpg`);
       document.body.appendChild(link);
-  
+
       // Start download
       link.click();
-  
+
       // Clean up and remove the link
       document.body.removeChild(link);
     } catch (error) {
-      console.error('Error downloading image:', error);
+      console.error("Error downloading image:", error);
     }
   };
 
@@ -401,7 +405,7 @@ const ModalUpdateBook = ({ modalUpdate, setModalUpdate, value, bookId }) => {
         size="lg"
       >
         <Modal.Body className="modal-body-update-book">
-          <h2 className="title-update-book">Update Book</h2>
+          <h4 className="title-update-book">Update Book</h4>
           <Form
             className="form-update-book"
             onSubmit={(e) => {

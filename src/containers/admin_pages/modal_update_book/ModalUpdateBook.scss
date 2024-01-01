@@ -1,16 +1,15 @@
 .modal-update-book {
-  margin-top: 50px;
+  margin-top: 70px;
   padding-bottom: 50px;
 }
 
-h2.title-update-book {
-  font-weight: bold;
-  text-align: center;
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.title-update-book {
   width: 80%;
-  text-align: left;
+  margin: auto;
+  margin-top: 0 !important;
+  margin-bottom: 20px !important;
+  font-weight: bold;
+  color: black;
 }
 
 .form-update-book {
@@ -19,6 +18,9 @@ h2.title-update-book {
 }
 
 .form-update-book .form-input {
+  border: none;
+  box-shadow: none;
+  outline: none;
   background-color: rgb(217, 219, 219) !important;
 }
 

@@ -1,6 +1,5 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-lone-blocks */
-
 // components react
 import { useQuery } from "react-query";
 

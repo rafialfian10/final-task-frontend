@@ -1,15 +1,19 @@
-h4 {
-    width: 80vw;
+.list-transaction-container {
+    max-width: 80vw;
     margin: auto;
-    font-weight: bold !important;
-    margin-top: 120px !important;
-    margin-bottom: 40px !important;
-    color: black;
+    margin-top: 100px;
 }
 
-.list-transaction {
-    margin: auto;
-    width: 80vw !important;
+.table-list-transaction {
+    width: 100% !important;
+}
+
+.title-list-transaction {
+    width: 100%;
+    margin: 0px;
+    margin-bottom: 20px !important;
+    font-weight: bold;
+    color: black;
 }
 
 .table th {
@@ -20,8 +24,8 @@ h4 {
 }
 
 .table td {
-   margin: auto;
-   vertical-align: middle;
+    margin: auto;
+    vertical-align: middle;
 }
 
 img.search {
@@ -30,5 +34,11 @@ img.search {
     border: none !important;
     &:hover {
         cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .list-transaction-container {
+        max-width: 95% !important;
     }
 }

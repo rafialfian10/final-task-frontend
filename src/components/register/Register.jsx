@@ -1,16 +1,18 @@
-import { Nav, Button, Form, Modal } from "react-bootstrap";
-import Swal from "sweetalert2";
-
-// components
+// components react
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import { useState } from "react";
+
+// components react bootstrap
+import { Nav, Button, Form, Modal } from "react-bootstrap";
 
 // api
 import { API } from "../../config/api";
 
 // css
 import "./Register.scss";
+import Swal from "sweetalert2";
+// -------------------------------------------
 
 const Register = ({ showReg, setShowReg, setShowLog, handleShowReg }) => {
   const navigate = useNavigate();

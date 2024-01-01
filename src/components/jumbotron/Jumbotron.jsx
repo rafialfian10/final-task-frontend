@@ -1,12 +1,13 @@
-// react bootstrap
+// components react bootstrap
 import { Form, Image, Row, Col } from "react-bootstrap";
 
-// scss
+// css
 import "./Jumbotron.scss";
 
 // images
 import flower1 from "../../assets/img/flower1.png";
 import flower2 from "../../assets/img/flower2.png";
+// -----------------------------------------------------------
 
 const Jumbotron = () => {
   return (

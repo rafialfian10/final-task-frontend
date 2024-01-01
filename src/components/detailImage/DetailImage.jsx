@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import moment from "moment";
 
-// react bootstrap
+// components react bootstrap
 import { Form, Image, Row, Col } from "react-bootstrap";
 
 // api
@@ -12,7 +12,7 @@ import { API } from "../../config/api.js";
 // css
 import "./DetailImage.scss";
 
-// image
+// images
 import flower1 from "../../assets/img/flower1.png";
 import flower2 from "../../assets/img/flower2.png";
 // -----------------------------------------------------------------------

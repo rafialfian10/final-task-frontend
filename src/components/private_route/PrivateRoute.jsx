@@ -1,7 +1,13 @@
+// components react
 import { useContext } from "react";
 import { Navigate, Outlet, useParams } from "react-router-dom";
+
+// components
 import { UserContext } from "../../context/userContext";
+
+// css
 import "./PrivateRoute.scss";
+// ----------------------------------------
 
 export const PrivateRouteAdmin = () => {
   const [myContext] = useContext(UserContext);

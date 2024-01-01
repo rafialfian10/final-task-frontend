@@ -100,7 +100,7 @@ const Navbars = ({ search, handleSearch }) => {
 
   // useEffect(() => {
   //   refetchCart();
-  //   refetchUser()
+  //   refetchUser();
   // }, [user, orderCart]);
 
   return (
@@ -112,7 +112,7 @@ const Navbars = ({ search, handleSearch }) => {
           }`}
         >
           <Row className="m-0">
-            <Col xs={12} >
+            <Col xs={12}>
               <Navbar.Brand href="/" className="logo">
                 <Image src={logo} alt="logo" width={100} />
               </Navbar.Brand>
@@ -128,9 +128,7 @@ const Navbars = ({ search, handleSearch }) => {
             >
               <Row
                 className={`container-sub-navbar ${
-                  window.innerWidth <= 900
-                    ? "flex-start flex-column gap-2"
-                    : ""
+                  window.innerWidth <= 900 ? "flex-start flex-column gap-2" : ""
                 }`}
               >
                 <Col xs={12} md={5} className="col">
@@ -182,7 +180,11 @@ const Navbars = ({ search, handleSearch }) => {
                               onClick={() => navigate(`/add_book`)}
                             >
                               <Navbar.Text className="text-dropdown">
-                                <Image src={addbook} alt="add-book" className="icon" />
+                                <Image
+                                  src={addbook}
+                                  alt="add-book"
+                                  className="icon"
+                                />
                                 Add Book
                               </Navbar.Text>
                             </NavDropdown.Item>
@@ -190,7 +192,11 @@ const Navbars = ({ search, handleSearch }) => {
                               onClick={() => navigate(`/incom_book`)}
                             >
                               <Navbar.Text className="text-dropdown">
-                                <Image src={addbook} alt="add-book" className="icon" />
+                                <Image
+                                  src={addbook}
+                                  alt="add-book"
+                                  className="icon"
+                                />
                                 Incom Book
                               </Navbar.Text>
                             </NavDropdown.Item>
@@ -198,13 +204,21 @@ const Navbars = ({ search, handleSearch }) => {
                               onClick={() => navigate(`/complain_admin`)}
                             >
                               <Navbar.Text className="text-dropdown">
-                                <Image src={complain} alt="complain" className="icon" />
+                                <Image
+                                  src={complain}
+                                  alt="complain"
+                                  className="icon"
+                                />
                                 Complain
                               </Navbar.Text>
                             </NavDropdown.Item>
                             <NavDropdown.Item onClick={HandleLogout}>
                               <Navbar.Text className="text-dropdown">
-                                <Image src={logout} alt="logout" className="icon" />
+                                <Image
+                                  src={logout}
+                                  alt="logout"
+                                  className="icon"
+                                />
                                 Logout
                               </Navbar.Text>
                             </NavDropdown.Item>
@@ -252,20 +266,34 @@ const Navbars = ({ search, handleSearch }) => {
                                 onClick={() => navigate(`/profile/${user?.id}`)}
                               >
                                 <Navbar.Text className="text-dropdown">
-                                  <Image src={profile} alt="profile" className="icon" /> Profile
+                                  <Image
+                                    src={profile}
+                                    alt="profile"
+                                    className="icon"
+                                  />{" "}
+                                  Profile
                                 </Navbar.Text>
                               </NavDropdown.Item>
                               <NavDropdown.Item
                                 onClick={() => navigate(`/complain_user`)}
                               >
                                 <Navbar.Text className="text-dropdown">
-                                  <Image src={complain} alt="complain" className="icon" />{" "}
+                                  <Image
+                                    src={complain}
+                                    alt="complain"
+                                    className="icon"
+                                  />{" "}
                                   Complain
                                 </Navbar.Text>
                               </NavDropdown.Item>
                               <NavDropdown.Item onClick={HandleLogout}>
                                 <Navbar.Text className="text-dropdown">
-                                  <Image src={logout} alt="logout" className="icon" /> Logout
+                                  <Image
+                                    src={logout}
+                                    alt="logout"
+                                    className="icon"
+                                  />{" "}
+                                  Logout
                                 </Navbar.Text>
                               </NavDropdown.Item>
                             </NavDropdown>

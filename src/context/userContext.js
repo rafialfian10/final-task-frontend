@@ -1,7 +1,8 @@
+// components react
 import { createContext, useReducer } from "react";
+// -------------------------------------------------
 
-//  userContext createContext berfungsi(menyimpan data sebagai global state)
-export const UserContext = createContext();
+export const UserContext = createContext(); //  userContext createContext berfungsi(menyimpan data sebagai global state)
 
 const initialState = {
   isLogin: false,

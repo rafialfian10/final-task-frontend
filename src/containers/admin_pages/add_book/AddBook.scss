@@ -1,18 +1,22 @@
 .add-book-container {
-  width: 60vw;
+  max-width: 60vw;
   margin: auto;
+  margin-top: 100px !important;
+  margin-bottom: 20px !important;
+  padding: 0px;
 }
 
-h2.title-add-book {
+.title-add-book {
+  width: 100% !important;
+  margin: 0px !important;
+  margin-bottom: 20px !important;
   font-weight: bold;
-  text-align: left;
-  margin-top: 120px;
-  margin-bottom: 40px;
+  color: black;
 }
 
 .form-add-book {
-  margin: auto;
-  width: 60vw;
+  width: 100%;
+  margin: 0 !important;
   margin-bottom: 50px;
 }
 
@@ -21,16 +25,16 @@ h2.title-add-book {
 }
 
 .form-add-book .form-input {
-  background-color: #d2d2d2;
+  margin-bottom: 10px !important;
   color: black;
+  background-color: #d2d2d2;
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 .form-dropdown {
   position: relative;
-}
-
-.form-input {
-  margin-bottom: 10px !important;
 }
 
 .form-add-book .dropdown {
@@ -113,3 +117,9 @@ div.img-upload {
   cursor: pointer;
 }
 /* End input upload image */
+
+@media screen and (max-width: 768px) {
+  .add-book-container {
+    max-width: 95vw;
+  }
+}

@@ -1,92 +1,91 @@
-.incom-title {
-    margin-left: 70px !important;
-    position: relative;
-    font-weight: bold;
-    color: black;
-}
-
-.container-list {
-    width: 100vw;
-    padding: 5%;
-    padding-top: 0px;;
+.container-incom-book {
+    width: 100%;
+    padding: 2% 5%;
     margin: auto;
     background-color: transparent !important;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap !important;
-    justify-content: flex-start;
-    padding-bottom: 100px !important;
 }
 
-.list-book2 {
-    width: 18%;
+.incom-book-title {
+    width: 100%;
+    margin: 0px !important;
+    margin-bottom: 20px !important;
+    font-weight: bold;
+    color: black;
+}
+
+.list-incom-book {
+    width: 95%;
+    margin: auto !important;
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
-    margin-right: 22px;
-    border: none;
     background-color: transparent !important;
     box-shadow: 1.5px 1.5px 1.5px 1.5px rgb(128, 128, 128, 0.5);
 }
 
-.list-image {
+.incom-book-image {
     width: 100% !important;
     height: 270px;
 }
 
-.list-desc {
+.incom-book-desc {
     display: flex;
     flex-direction: column;
 }
 
-.list-title2 {
+.incom-book-title {
     color: black;
     font-weight: bold;
 }
 
-.list-artist {
+.incom-book-artist {
     color: #929292;
     font-size: 12px;
 }
 
-.list-price {
+.incom-book-price {
     font-size: 16px;
     color: #44b200;
     font-weight: bold;
 }
 
-.container-list-price {
-    height: 100%;
-    display: flex;
-    align-items: flex-end;
-}
-
-.dropdown-trip {
+.dropdown-incom-book {
     position: absolute !important;
-    margin-top: 10px;
-    top: 10px !important;
-    left: 10px !important;
+    top: 5px !important;
+    left: 5px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.toggle-trip {
-    position: absolute;
+.toggle-incom-book {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     background-color: transparent;
-    border: none;
-    top: 0px;
-    left: 0px;
     opacity: 0;
-}
-
-.toggle-trip:hover {
-    background-color: transparent;
-}
-
-.dropdown-menu-trip {
-    transition: all 1s !important;
-    color: black !important;
+    &:hover {
+        background-color: transparent !important;
+    }
 }
 
 .titik3 {
-    width: 25px;
-    height: 25px !important;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    z-index: -10 !important;
+}
+
+.dropdown-menu-incom-book {
+    position: absolute;
+    top: -10px !important;
+    left: 100px !important;
+}
+
+@media screen and (max-width: 768px) {
+    .dropdown-menu-incom-book {
+        left: 0 !important;
+    }
 }

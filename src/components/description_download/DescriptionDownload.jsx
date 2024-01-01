@@ -1,8 +1,9 @@
 // components react bootstrap
 import { Button } from "react-bootstrap";
 
-// scss
+// css
 import "./DescriptionDownload.scss";
+// ----------------------------------------------------------------
 
 const DescriptionDownload = () => {
   return (
