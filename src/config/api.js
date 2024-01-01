@@ -3,7 +3,6 @@ import axios from "axios";
 // ------------------------------------
 
 export const API = axios.create({
-  // baseURL: 'https://waysbook-backend-prod uction.up.railway.app/api/v1'
   baseURL: process.env.REACT_APP_BASE_URL,
 });
 
