@@ -49,7 +49,6 @@ const DescriptionIncrement = () => {
       book_id: detailBookDescription.id,
     };
 
-    console.log(dataBook);
     const body = JSON.stringify(dataBook);
 
     let token = localStorage.getItem("token");
