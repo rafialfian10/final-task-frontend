@@ -217,11 +217,9 @@ const Cart = () => {
     }
   });
 
-  console.log(process.env);
-
   useEffect(() => {
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js"; // panngil snap middtrans
-    const myMidtransClientKey = process.env.CLIENT_KEY;
+    const myMidtransClientKey = process.env.REACT_APP_CLIENT_KEY;
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransScriptUrl;
