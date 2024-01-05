@@ -32,11 +32,9 @@ function Admin({ search }) {
   // state order
   const [order, setOrder] = useState(null);
 
-  // modal pagination
+  // state data transaction
   const [dataTransaction, setDataTransaction] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [halamanAktif, setHalamanAktif] = useState(1);
-  const [dataPerHalaman] = useState(2);
 
   const { data, refetch: refetchAllTransactionsAdmin } = useQuery(
     "allTransactionsAdminCache",
@@ -52,17 +50,28 @@ function Admin({ search }) {
     }
   );
 
-  // get current post data
-  const indexLastPost = halamanAktif * dataPerHalaman;
-  const indexFirstPost = indexLastPost - dataPerHalaman;
-  const currentPost = dataTransaction?.slice(indexFirstPost, indexLastPost);
+  const [currentPage, setcurrentPage] = useState(1);
+  const [dataPerPage, setitemsPerPage] = useState(2);
+
+  const indexLastData = currentPage * dataPerPage;
+  const indexFirstData = indexLastData - dataPerPage;
+  const currentItems = dataTransaction.slice(indexFirstData, indexLastData);
+
+  const handlePageClick = (pageNumber) => {
+    setcurrentPage(pageNumber);
+  };
+
+  const handleNextPage = () => {
+    setcurrentPage(currentPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setcurrentPage(currentPage - 1);
+  };
 
   if (loading) {
     return <h4>Loading...</h4>;
   }
-
-  // function handle pagination
-  const paginate = (pageNumber) => setHalamanAktif(pageNumber);
 
   return (
     <>
@@ -97,7 +106,7 @@ function Admin({ search }) {
             </thead>
             <tbody>
               <>
-                {currentPost
+                {currentItems
                   ?.filter((item) => {
                     if (search === "") {
                       return item;
@@ -113,7 +122,7 @@ function Admin({ search }) {
                   .map((transaction, i) => {
                     return (
                       <tr key={i}>
-                        <td className="text-center">{no++ + indexFirstPost}</td>
+                        <td className="text-center">{no++ + indexFirstData}</td>
                         <td className="text-start">{transaction?.user.name}</td>
                         <td className="text-center">bca.png</td>
                         <td className="text-start">
@@ -181,11 +190,12 @@ function Admin({ search }) {
             </tbody>
           </Table>
           <Paginations
-            dataPerHalaman={dataPerHalaman}
-            halamanAktif={halamanAktif}
-            setHalamanAktif={setHalamanAktif}
-            totalData={dataTransaction?.length}
-            paginate={paginate}
+            dataTransaction={dataTransaction}
+            currentPage={currentPage}
+            dataPerPage={dataPerPage}
+            handlePageClick={handlePageClick}
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage}
           />
         </Col>
       </Row>

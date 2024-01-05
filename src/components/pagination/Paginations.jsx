@@ -1,109 +1,80 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 // components react
-import { useState, useEffect } from "react";
+import React from "react";
 
-// css
+// components react boorstrap
+import { Button } from "react-bootstrap";
+
+// scss
 import "./Paginations.scss";
-// --------------------------------------------------
+// -----------------------------------
 
-const Paginations = ({
-  dataPerHalaman,
-  halamanAktif,
-  setHalamanAktif,
-  totalData,
-  paginate,
-}) => {
-  const pageNumbers = [];
+function Paginations({
+  dataTransaction,
+  currentPage,
+  dataPerPage,
+  handlePageClick,
+  handleNextPage,
+  handlePrevPage,
+}) {
+  const pageNumberLimit = 3;
+  const maxPageNumberLimit = currentPage + Math.floor(pageNumberLimit / 2);
+  const minPageNumberLimit = maxPageNumberLimit - pageNumberLimit + 1;
 
-  const [arrOfCurrButtons, setArrOfCurrButtons] = useState([]);
-
-  for (let i = 1; i <= Math.ceil(totalData / dataPerHalaman); i++) {
-    pageNumbers.push(i);
+  const pages = [];
+  for (let i = 1; i <= Math.ceil(dataTransaction.length / dataPerPage); i++) {
+    pages.push(i);
   }
 
-  useEffect(() => {
-    let tempNumberOfPages = [...arrOfCurrButtons];
-
-    let dotsInitial = "...";
-    let dotsLeft = "... ";
-    let dotsRight = " ...";
-
-    if (pageNumbers.length < 2) {
-      tempNumberOfPages = pageNumbers;
-    } else if (halamanAktif >= 1 && halamanAktif <= 2) {
-      tempNumberOfPages = [1, 2, 3, dotsInitial, pageNumbers.length];
-    } else if (halamanAktif === 3) {
-      const sliced = pageNumbers.slice(0, 3);
-      tempNumberOfPages = [...sliced, dotsInitial, pageNumbers.length];
-    } else if (halamanAktif > 4 && halamanAktif < pageNumbers.length - 2) {
-      const sliced1 = pageNumbers.slice(halamanAktif - 2, halamanAktif);
-      const sliced2 = pageNumbers.slice(halamanAktif, halamanAktif + 1);
-      tempNumberOfPages = [
-        1,
-        dotsLeft,
-        ...sliced1,
-        ...sliced2,
-        dotsRight,
-        pageNumbers.length,
-      ];
-    } else if (halamanAktif > pageNumbers.length - 3) {
-      const sliced = pageNumbers.slice(pageNumbers.length - 3);
-      tempNumberOfPages = [1, dotsLeft, ...sliced];
-    } else if (halamanAktif === dotsInitial) {
-      setHalamanAktif(arrOfCurrButtons[arrOfCurrButtons.length - 3] + 1);
-    } else if (halamanAktif === dotsRight) {
-      setHalamanAktif(arrOfCurrButtons[3] + 2);
-    } else if (halamanAktif === dotsLeft) {
-      setHalamanAktif(arrOfCurrButtons[3] - 2);
+  const renderPageNumbers = pages.map((number) => {
+    if (number <= maxPageNumberLimit && number >= minPageNumberLimit) {
+      return (
+        <li
+          key={number}
+          id={number}
+          onClick={() => handlePageClick(number)}
+          className={
+            currentPage === number ? "active page-link" : "page-link"
+          }
+        >
+          {number}
+        </li>
+      );
+    } else if (
+      (number === minPageNumberLimit - 1 && number !== 1) ||
+      (number === maxPageNumberLimit + 1 && number !== pages.length)
+    ) {
+      return (
+        <li key={number} className="inactive page-link">
+          ...
+        </li>
+      );
+    } else {
+      return null;
     }
-
-    setArrOfCurrButtons(tempNumberOfPages);
-    setHalamanAktif(halamanAktif);
-  }, [halamanAktif, totalData]);
+  });
 
   return (
-    <nav>
-      <ul className="pagination">
-        {/* handle prev */}
-        {halamanAktif > 1 && (
-          <p
-            className="page-link prev"
-            onClick={() => paginate(halamanAktif - 1)}
-          >
-            &laquo;
-          </p>
-        )}
+    <nav className="pagination">
+      <ul>
+        <li className="btn-prev">
+          <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+            Prev
+          </Button>
+        </li>
 
-        {arrOfCurrButtons?.map((number) => (
-          <li
-            key={number}
-            className={
-              number === halamanAktif ? "page-item active" : "page-item"
-            }
-          >
-            <p
-              onClick={() => {
-                paginate(number);
-              }}
-              className="page-link"
-            >
-              {number}
-            </p>
-          </li>
-        ))}
+        {renderPageNumbers}
 
-        {/* handle next */}
-        {halamanAktif < pageNumbers.length && (
-          <p
-            className="page-link next"
-            onClick={() => paginate(halamanAktif + 1)}
+        <li className="btn-next">
+          <Button
+            onClick={handleNextPage}
+            disabled={currentPage === pages.length}
           >
-            &raquo;
-          </p>
-        )}
+            Next
+          </Button>
+        </li>
       </ul>
     </nav>
   );
-};
+}
 
 export default Paginations;
