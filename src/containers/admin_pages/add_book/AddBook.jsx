@@ -1,14 +1,26 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // components react
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMutation } from "react-query";
 
 // components react bootstrap
-import { Button, Form, Image, FormLabel, Row, Col } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  Image,
+  FormLabel,
+  Row,
+  Col,
+  Spinner,
+} from "react-bootstrap";
 
 // components redux
-import { useDispatch } from "react-redux";
-import { FunctionCreateBook } from "../../../redux/features/BookSlice";
+import { connect, useDispatch } from "react-redux";
+import {
+  FunctionCreateBook,
+  FunctionGetBooks,
+} from "../../../redux/features/BookSlice";
 
 // css
 import "./AddBook.scss";
@@ -21,7 +33,7 @@ import flower1 from "../../../assets/img/flower1.png";
 import flower2 from "../../../assets/img/flower2.png";
 // --------------------------------------------------------------------------------
 
-const AddBook = () => {
+const AddBook = (props) => {
   // dispatch
   const dispatch = useDispatch();
 
@@ -214,6 +226,16 @@ const AddBook = () => {
       <Image src={flower2} alt="flower2" className="flower2" />
       <Col xs={12} md={12} lg={12} xl={12}>
         <h4 className="title-add-book">Add Book</h4>
+        {props.books.loading && (
+          <div
+            className="position-fixed top-50 start-50 translate-middle"
+            style={{ zIndex: 999999999 }}
+          >
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        )}
         <Form
           className="form-add-book"
           onSubmit={(e) => {
@@ -385,4 +407,16 @@ const AddBook = () => {
   );
 };
 
-export default AddBook;
+const mapStateToProps = (state) => {
+  return {
+    books: state.book,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadBook: () => dispatch(FunctionGetBooks()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddBook);

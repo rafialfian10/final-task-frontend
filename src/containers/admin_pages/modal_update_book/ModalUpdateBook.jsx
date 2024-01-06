@@ -60,7 +60,6 @@ const ModalUpdateBook = ({
     book: "",
     thumbnail: "",
   });
-  console.log(form);
 
   useEffect(() => {
     setForm((prevForm) => ({
