@@ -173,7 +173,7 @@ const Navbars = ({ search, handleSearch }) => {
                             />
                           )}
                           <NavDropdown
-                            id="navbarScrollingDropdown"
+                            id="basic-nav-dropdown"
                             className="dropdown"
                           >
                             <NavDropdown.Item
@@ -212,6 +212,7 @@ const Navbars = ({ search, handleSearch }) => {
                                 Complain
                               </Navbar.Text>
                             </NavDropdown.Item>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item onClick={HandleLogout}>
                               <Navbar.Text className="text-dropdown">
                                 <Image
@@ -259,7 +260,7 @@ const Navbars = ({ search, handleSearch }) => {
                             )}
 
                             <NavDropdown
-                              id="navbarScrollingDropdown"
+                              id="basic-nav-dropdown"
                               className="dropdown"
                             >
                               <NavDropdown.Item
@@ -286,6 +287,7 @@ const Navbars = ({ search, handleSearch }) => {
                                   Complain
                                 </Navbar.Text>
                               </NavDropdown.Item>
+                              <NavDropdown.Divider />
                               <NavDropdown.Item onClick={HandleLogout}>
                                 <Navbar.Text className="text-dropdown">
                                   <Image

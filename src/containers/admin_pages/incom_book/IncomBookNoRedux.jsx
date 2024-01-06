@@ -1,16 +1,7 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 // components react
 import { useMutation } from "react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-// components redux
-import { connect } from "react-redux";
-import {
-  FunctionGetBooks,
-  FunctionDeleteBook,
-} from "../../../redux/features/BookSlice";
 
 // component react bootstrap
 import {
@@ -27,6 +18,9 @@ import {
 import ModalPromo from "../modal_promo/ModalPromo";
 import ModalUpdateBook from "../modal_update_book/ModalUpdateBook";
 
+// api
+import { API } from "../../../config/api";
+
 // css
 import "./IncomBook.scss";
 import Swal from "sweetalert2";
@@ -37,10 +31,7 @@ import flower1 from "../../../assets/img/flower1.png";
 import flower2 from "../../../assets/img/flower2.png";
 // -----------------------------------------------------------------
 
-const IncomBook = (props) => {
-  const { books, deleteBook, loadBook, search } = props;
-  const { bookData, booksData, loading, errorMessage } = books;
-
+const IncomBook = ({ books, search, refetchAllBooks, isLoading }) => {
   const navigate = useNavigate();
 
   // state value
@@ -55,7 +46,7 @@ const IncomBook = (props) => {
   // state id trip
   const [bookId, setBookId] = useState();
 
-  // handle delete book
+  // handle delete trip
   const handleDeleteBook = useMutation(async (id) => {
     try {
       Swal.fire({
@@ -67,16 +58,27 @@ const IncomBook = (props) => {
         confirmButtonText: "Yes!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await deleteBook(id);
-          if (response && response.data.code === 200) {
-            Swal.fire({
-              text: "Book successfully deleted",
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
-            loadBook();
-            navigate("/incom_book");
+          // konfigurasi file
+          const config = {
+            headers: {
+              "Content-type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          };
+
+          // delete trip data
+          const response = await API.delete(`/book/${id}`, config);
+          if (response.status === 200) {
+            refetchAllBooks();
           }
+
+          Swal.fire({
+            text: "Book successfully deleted",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+
+          navigate("/incom_book");
         }
       });
     } catch (err) {
@@ -85,8 +87,8 @@ const IncomBook = (props) => {
   });
 
   useEffect(() => {
-    loadBook();
-  }, []);
+      refetchAllBooks();
+  }, [books, refetchAllBooks]);
 
   return (
     <>
@@ -97,18 +99,16 @@ const IncomBook = (props) => {
         setModalUpdate={setModalUpdate}
         value={value}
         bookId={bookId}
-        loadBook={loadBook}
       />
       <ModalPromo
         modalPromo={modalPromo}
         setModalPromo={setModalPromo}
         value={value}
         bookId={bookId}
-        loadBook={loadBook}
       />
       <div className="container-incom-book">
         <h4 className="incom-book-title">Incom Book</h4>
-        {loading ? (
+        {isLoading ? (
           <div
             className="position-fixed top-50 start-50 translate-middle"
             style={{ zIndex: 9999 }}
@@ -119,7 +119,7 @@ const IncomBook = (props) => {
           </div>
         ) : (
           <Row xs={1} md={2} xl={5} className="w-100 m-0 g-3">
-            {booksData
+            {books
               ?.filter((book) => {
                 if (search === "") {
                   return book;
@@ -197,17 +197,4 @@ const IncomBook = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    books: state.book,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadBook: () => dispatch(FunctionGetBooks()),
-    deleteBook: (id) => dispatch(FunctionDeleteBook(id)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(IncomBook);
+export default IncomBook;

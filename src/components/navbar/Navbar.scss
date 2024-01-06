@@ -97,7 +97,6 @@
 .dropdown {
     position: absolute;
     width: 50px !important;
-    height: 50px !important;
     border-radius: 50%;
     border: none;
     background-color: transparent !important;
@@ -169,9 +168,9 @@
 }
 
 @media screen and (max-width: 900px) {
-    .container-navbar {
-       min-height: 100vh;
-    }
+    // .container-navbar {
+    //    min-height: 100vh;
+    // }
 
     .logo {
         margin-right: 0px !important;

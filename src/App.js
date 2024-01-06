@@ -77,17 +77,16 @@ function App() {
   // state data books
   const [books, setBooks] = useState();
 
-  const config = {
-    headers: {
-      "Content-type": "multipart/form-data",
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  };
-
   // get books
-  let { data, refetch: refetchAllBooks } = useQuery(
-    "allBooksCache",
+  let { data, refetch: refetchAllBooks, isLoading } = useQuery( "allBooksCache",
     async () => {
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      };
+
       const response = await API.get(`/books`, config);
       setBooks(response.data.data);
     }
@@ -127,9 +126,7 @@ function App() {
             path="/incom_book"
             element={
               <IncomBook
-                books={books}
                 search={search}
-                refetchAllBooks={refetchAllBooks}
               />
             }
           />

@@ -6,9 +6,8 @@ import { useMutation } from "react-query";
 // components react bootstrap
 import { Button, Form, Image, FormLabel, Row, Col } from "react-bootstrap";
 
-// components redux
-import { useDispatch } from "react-redux";
-import { FunctionCreateBook } from "../../../redux/features/BookSlice";
+// api
+import { API } from "../../../config/api";
 
 // css
 import "./AddBook.scss";
@@ -22,9 +21,6 @@ import flower2 from "../../../assets/img/flower2.png";
 // --------------------------------------------------------------------------------
 
 const AddBook = () => {
-  // dispatch
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   // eslint-disable-next-line no-unused-vars
@@ -33,7 +29,7 @@ const AddBook = () => {
   // buat usestate untuk menampung data sementara
   const [form, setForm] = useState({
     title: "",
-    publication_date: "",
+    publicationDate: "",
     author: "",
     pages: "",
     isbn: "",
@@ -47,7 +43,7 @@ const AddBook = () => {
   // state error
   const [error, setError] = useState({
     title: "",
-    publication_date: "",
+    publicationDate: "",
     author: "",
     pages: "",
     isbn: "",
@@ -58,7 +54,7 @@ const AddBook = () => {
     thumbnail: "",
   });
 
-  // handle change
+  // function handlechange data di form
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -82,9 +78,16 @@ const AddBook = () => {
   // handle submit
   const handleSubmit = useMutation(async () => {
     try {
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      };
+
       const messageError = {
         title: "",
-        publication_date: "",
+        publicationDate: "",
         author: "",
         pages: "",
         isbn: "",
@@ -103,10 +106,10 @@ const AddBook = () => {
       }
 
       // validasi form publication date
-      if (form.publication_date === "") {
-        messageError.publication_date = "Publication date must be filled out";
+      if (form.publicationDate === "") {
+        messageError.publicationDate = "Publication date must be filled out";
       } else {
-        messageError.publication_date = "";
+        messageError.publicationDate = "";
       }
 
       // validasi form author
@@ -169,7 +172,7 @@ const AddBook = () => {
 
       if (
         messageError.title === "" &&
-        messageError.publication_date === "" &&
+        messageError.publicationDate === "" &&
         messageError.author === "" &&
         messageError.pages === "" &&
         messageError.isbn === "" &&
@@ -181,7 +184,7 @@ const AddBook = () => {
       ) {
         const formData = new FormData();
         formData.append("title", form.title);
-        formData.append("publication_date", form.publication_date);
+        formData.append("publicationdate", form.publicationDate);
         formData.append("author", form.author);
         formData.append("pages", form.pages);
         formData.append("isbn", form.isbn);
@@ -191,13 +194,17 @@ const AddBook = () => {
         formData.append("book", form.book[0]);
         formData.append("thumbnail", form.thumbnail[0]);
 
-        const response = await dispatch(FunctionCreateBook(formData));
-        if (response && response.data.code === 200) {
+        // Insert trip data
+        const response = await API.post("/book", formData, config);
+        // console.log("Response :", response);
+
+        if (response.data.code === 200) {
           Swal.fire({
             text: "Book successfully added",
             icon: "success",
             confirmButtonText: "Ok",
           });
+
           navigate("/incom_book");
         }
       } else {
@@ -207,7 +214,6 @@ const AddBook = () => {
       console.log(err);
     }
   });
-
   return (
     <Row className="add-book-container">
       <Image src={flower1} alt="flower1" className="flower1" />
@@ -237,14 +243,14 @@ const AddBook = () => {
           <Form.Group className="form-group">
             <Form.Control
               className="form-input text-secondary"
-              name="publication_date"
+              name="publicationDate"
               type="date"
               placeholder="Publication Date"
               onChange={handleChange}
             />
-            {error.publication_date && !form.publication_date.trim() && (
+            {error.publicationDate && !form.publicationDate.trim() && (
               <Form.Text className="text-danger">
-                {error.publication_date}
+                {error.publicationDate}
               </Form.Text>
             )}
           </Form.Group>

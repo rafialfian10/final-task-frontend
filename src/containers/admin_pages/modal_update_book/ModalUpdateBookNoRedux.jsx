@@ -4,14 +4,6 @@ import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 
-// components redux
-import { useDispatch } from "react-redux";
-import {
-  FunctionDeletePdf,
-  FunctionUpdateBook,
-  FunctionDeleteThumbnail,
-} from "../../../redux/features/BookSlice";
-
 // components react bootstrap
 import {
   Button,
@@ -21,6 +13,9 @@ import {
   FormLabel,
   Image,
 } from "react-bootstrap";
+
+// api
+import { API } from "../../../config/api";
 
 // css
 import "./ModalUpdateBook.scss";
@@ -32,19 +27,9 @@ import attache from "../../../assets/img/attache.png";
 import iconPdf from "../../../assets/img/icon-pdf.png";
 // ------------------------------------------------------------------------
 
-const ModalUpdateBook = ({
-  modalUpdate,
-  setModalUpdate,
-  value,
-  bookId,
-  loadBook,
-}) => {
-  // dispatch
-  const dispatch = useDispatch();
-
+const ModalUpdateBook = ({ modalUpdate, setModalUpdate, value, bookId }) => {
   const navigate = useNavigate();
 
-  // state preview
   const [preview, setPreview] = useState(null);
 
   //state form
@@ -60,7 +45,6 @@ const ModalUpdateBook = ({
     book: "",
     thumbnail: "",
   });
-  console.log(form);
 
   useEffect(() => {
     setForm((prevForm) => ({
@@ -254,15 +238,16 @@ const ModalUpdateBook = ({
         formData.append("book", form.book[0]);
         formData.append("thumbnail", form.thumbnail[0]);
 
-        const response = await dispatch(FunctionUpdateBook(formData, bookId));
-        if (response && response.data.code === 200) {
+        const response = await API.patch(`/book/${bookId}`, formData, config);
+        if (response.data.code === 200) {
+          setModalUpdate(false);
+
           Swal.fire({
             text: "Book successfully updated",
             icon: "success",
             confirmButtonText: "Ok",
           });
-          loadBook();
-          setModalUpdate(false);
+
           setForm({
             title: "",
             publication_date: "",
@@ -285,8 +270,8 @@ const ModalUpdateBook = ({
     }
   });
 
-  // handle delete pdf
-  const handleDeletePdf = useMutation(async (id) => {
+  // handle delete book
+  const handleDeleteBook = useMutation(async (id) => {
     try {
       Swal.fire({
         title: "Are you sure?",
@@ -297,17 +282,26 @@ const ModalUpdateBook = ({
         confirmButtonText: "Yes!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await dispatch(FunctionDeletePdf(id));
-          if (response && response.data.code === 200) {
+          const config = {
+            headers: {
+              "Content-type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          };
+
+          // delete trip data
+          const response = await API.delete(`/book/${id}/book`, config);
+          if (response.data.code === 200) {
+            // refetchAllBook();
+            setModalUpdate(false);
+
             Swal.fire({
               text: "Book successfully deleted",
               icon: "success",
               confirmButtonText: "Ok",
             });
-            loadBook();
-            setModalUpdate(false);
-            navigate("/incom_book");
           }
+          navigate("/incom_book");
         }
       });
     } catch (err) {
@@ -327,17 +321,26 @@ const ModalUpdateBook = ({
         confirmButtonText: "Yes!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await dispatch(FunctionDeleteThumbnail(id));
-          if (response && response.data.code === 200) {
+          const config = {
+            headers: {
+              "Content-type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          };
+
+          const response = await API.delete(`/book/${id}/thumbnail`, config);
+          console.log(response);
+          if (response.data.code === 200) {
+            // refetchAllBook();
+            setModalUpdate(false);
+
             Swal.fire({
               text: "Thumbnail successfully deleted",
               icon: "success",
               confirmButtonText: "Ok",
             });
-            loadBook();
-            setModalUpdate(false);
-            navigate("/incom_book");
           }
+          navigate("/incom_book");
         }
       });
     } catch (err) {
@@ -443,20 +446,6 @@ const ModalUpdateBook = ({
             <Form.Group className="form-group">
               <Form.Control
                 className="form-input"
-                name="author"
-                type="text"
-                placeholder="Author"
-                onChange={handleChange}
-                value={form.author}
-              />
-            </Form.Group>
-            {error.author && !form.author.trim() && (
-              <Form.Text className="text-danger">{error.author}</Form.Text>
-            )}
-
-            <Form.Group className="form-group">
-              <Form.Control
-                className="form-input"
                 name="isbn"
                 type="text"
                 placeholder="isbn"
@@ -480,6 +469,20 @@ const ModalUpdateBook = ({
             </Form.Group>
             {error.pages && !form.pages.trim() && (
               <Form.Text className="text-danger">{error.pages}</Form.Text>
+            )}
+
+            <Form.Group className="form-group">
+              <Form.Control
+                className="form-input"
+                name="author"
+                type="text"
+                placeholder="Author"
+                onChange={handleChange}
+                value={form.author}
+              />
+            </Form.Group>
+            {error.author && !form.author.trim() && (
+              <Form.Text className="text-danger">{error.author}</Form.Text>
             )}
 
             <Form.Group className="form-group">
@@ -550,7 +553,7 @@ const ModalUpdateBook = ({
                     <Button
                       type="button"
                       className="btn btn-danger"
-                      onClick={() => handleDeletePdf.mutate(bookId)}
+                      onClick={() => handleDeleteBook.mutate(bookId)}
                     >
                       Delete
                     </Button>

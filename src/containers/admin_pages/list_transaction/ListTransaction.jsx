@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 // components react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 
 //components react bootstrap
@@ -23,7 +23,7 @@ import flower2 from "../../../assets/img/flower2.png";
 import action from "../../../assets/img/search.png";
 // ----------------------------------------------------------------
 
-function Admin({ search }) {
+function ListTransaction({ search }) {
   let no = 1;
 
   // state modal
@@ -68,6 +68,10 @@ function Admin({ search }) {
   const handlePrevPage = () => {
     setcurrentPage(currentPage - 1);
   };
+
+  useEffect(() => {
+    refetchAllTransactionsAdmin();
+}, [dataTransaction, refetchAllTransactionsAdmin]);
 
   if (loading) {
     return <h4>Loading...</h4>;
@@ -203,4 +207,4 @@ function Admin({ search }) {
   );
 }
 
-export default Admin;
+export default ListTransaction;

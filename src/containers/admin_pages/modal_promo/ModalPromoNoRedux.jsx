@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 
-// components redux
-import { useDispatch } from "react-redux";
-import { FunctionUpdatePromo } from "../../../redux/features/BookSlice";
-
 // components react bootstrap
 import { Button, Image, Form, Modal } from "react-bootstrap";
 
@@ -22,10 +18,7 @@ import Swal from "sweetalert2";
 import addlistbook from "../../../assets/img/addlistbook.png";
 // ------------------------------------------------------------------------
 
-const ModalPromo = ({ modalPromo, setModalPromo, value, bookId, loadBook }) => {
-  // dispatch
-  const dispatch = useDispatch();
-
+const ModalPromo = ({ modalPromo, setModalPromo, value, bookId }) => {
   const navigate = useNavigate();
 
   //state form
@@ -56,6 +49,13 @@ const ModalPromo = ({ modalPromo, setModalPromo, value, bookId, loadBook }) => {
   // handle set discount book
   const handleUpdateBookPromo = useMutation(async () => {
     try {
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      };
+
       const messageError = {
         discount: "",
       };
@@ -73,17 +73,22 @@ const ModalPromo = ({ modalPromo, setModalPromo, value, bookId, loadBook }) => {
         const formData = new FormData();
         formData.append("discount", form.discount);
 
-        const response = await dispatch(FunctionUpdatePromo(formData, bookId));
-        if (response && response.data.code === 200) {
+        const response = await API.patch(
+          `/book-promo/${bookId}`,
+          formData,
+          config
+        );
+        // console.log("Response :", response);
+        if (response.data.code === 200) {
           Swal.fire({
             text: "Discount Book successfully added",
             icon: "success",
             confirmButtonText: "Ok",
           });
-          loadBook();
           setModalPromo(false);
-          navigate("/incom_book");
         }
+
+        navigate("/incom_book");
       } else {
         setError(messageError);
       }
