@@ -1,24 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-lone-blocks */
 // components react
-import { useQuery } from "react-query";
+import { useEffect } from "react";
+
+// components redux
+import { FunctionGetTransactionsUser } from "../../redux/features/TransactionSlice";
+import { connect } from "react-redux";
 
 // components react bootstrap
-import { Button, Card, Form, Row, Col } from "react-bootstrap";
-
-// api
-import { API } from "../../config/api";
+import { Button, Card, Form, Row, Col, Spinner } from "react-bootstrap";
 
 // css
 import "./ListDownload.scss";
 // ---------------------------------------------------------------
 
-const ListDownload = () => {
-  // get transaction user book
-  let { data: transactionBook } = useQuery("transactionBookCache", async () => {
-    const response = await API.get(`/transactions`);
-    return response.data.data;
-  });
+const ListDownload = (props) => {
+  const { transactionsUser, loadTransactionUser } = props;
+  const { TransactionData, TransactionsData, loading, errorMessage } = transactionsUser;
 
   // handle download file pdf
   const handleDownloadFile = (value) => {
@@ -46,73 +46,100 @@ const ListDownload = () => {
       });
   };
 
+  useEffect(() => {
+    loadTransactionUser();
+  }, []);
+
   return (
     <div className="container-list-download">
       <h4 className="listdownload-title">My Books</h4>
-      <Row xs={1} md={2} xl={5} className="w-100 m-0 g-3">
-        {transactionBook?.map((transaction) => {
-          if (transaction?.status === "approve") {
-            return transaction.book?.map((item, i) => {
-              return (
-                <Col key={i}>
-                  <Card className="list-download">
-                    <Card.Img
-                      variant="top"
-                      src={item?.thumbnail}
-                      className="list-thumbnail-download"
-                    />
-                    <Card.Body className="list-desc-download">
-                      <Card.Title className="list-title-download">
-                        {item?.title}
-                      </Card.Title>
-                      <Form.Text className="list-artist-download">
-                        By. {item?.author}
-                      </Form.Text>
-                      <div className="container-btn-download">
-                        <Button
-                          className="btn-download-book"
-                          onClick={() => handleDownloadFile(item)}
-                        >
-                          Download
-                        </Button>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              );
-            });
-          } else if (transaction?.status === "success") {
-            return transaction.book?.map((item, i) => {
-              return (
-                <Col key={i}>
-                  <Card className="list-download">
-                    <Card.Img
-                      variant="top"
-                      src={item?.thumbnail}
-                      className="list-thumbnail-download"
-                    />
-                    <Card.Body className="list-desc-download">
-                      <Card.Title className="list-title-download">
-                        {item?.title}
-                      </Card.Title>
-                      <Form.Text className="list-artist-download">
-                        By. {item?.author}
-                      </Form.Text>
-                      <div className="container-waiting">
-                        <Form.Text className="waiting">
-                          Waiting to be approved By Admin for download
+      {loading ? (
+        <div
+          className="position-fixed top-50 start-50 translate-middle"
+          style={{ zIndex: 9999 }}
+        >
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
+        <Row xs={1} md={2} xl={5} className="w-100 m-0 g-3">
+          {TransactionsData?.map((transaction) => {
+            if (transaction?.status === "approve") {
+              return transaction.book?.map((item, i) => {
+                return (
+                  <Col key={i}>
+                    <Card className="list-download">
+                      <Card.Img
+                        variant="top"
+                        src={item?.thumbnail}
+                        className="list-thumbnail-download"
+                      />
+                      <Card.Body className="list-desc-download">
+                        <Card.Title className="list-title-download">
+                          {item?.title}
+                        </Card.Title>
+                        <Form.Text className="list-artist-download">
+                          By. {item?.author}
                         </Form.Text>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              );
-            });
-          }
-        })}
-      </Row>
+                        <div className="container-btn-download">
+                          <Button
+                            className="btn-download-book"
+                            onClick={() => handleDownloadFile(item)}
+                          >
+                            Download
+                          </Button>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              });
+            } else if (transaction?.status === "success") {
+              return transaction.book?.map((item, i) => {
+                return (
+                  <Col key={i}>
+                    <Card className="list-download">
+                      <Card.Img
+                        variant="top"
+                        src={item?.thumbnail}
+                        className="list-thumbnail-download"
+                      />
+                      <Card.Body className="list-desc-download">
+                        <Card.Title className="list-title-download">
+                          {item?.title}
+                        </Card.Title>
+                        <Form.Text className="list-artist-download">
+                          By. {item?.author}
+                        </Form.Text>
+                        <div className="container-waiting">
+                          <Form.Text className="waiting">
+                            Waiting to be approved By Admin for download
+                          </Form.Text>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              });
+            }
+          })}
+        </Row>
+      )}
     </div>
   );
 };
 
-export default ListDownload;
+const mapStateToProps = (state) => {
+  return {
+    transactionsUser: state.transaction,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadTransactionUser: () => dispatch(FunctionGetTransactionsUser()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListDownload);

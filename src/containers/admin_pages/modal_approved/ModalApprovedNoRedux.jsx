@@ -4,13 +4,12 @@ import { Table, Modal, Alert, Image, Row, Col, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import Moment from "react-moment";
 
-// components redux
-import { useDispatch } from "react-redux";
-import { FunctionUpdateTransactionAdmin } from "../../../redux/features/TransactionSlice";
-
 // components
 import { useMutation } from "react-query";
 import { useState, useEffect } from "react";
+
+// api
+import { API } from "../../../config/api";
 
 // css
 import "./ModalApproved.scss";
@@ -24,11 +23,8 @@ const ModalApproved = ({
   modalApproved,
   setModalApproved,
   order,
-  loadTransactionAdmin,
+  refetchAllTransactionsAdmin,
 }) => {
-  // dispatch
-  const dispatch = useDispatch();
-
   let no = 1;
 
   // state total order
@@ -54,15 +50,17 @@ const ModalApproved = ({
         status: "approve",
       };
 
-      const response = await dispatch(
-        FunctionUpdateTransactionAdmin(payload, order?.id)
+      const response = await API.patch(
+        `/transaction-admin/${order?.id}`,
+        payload
       );
-      if (response && response.data.code === 200) {
+      console.log(response.data);
+      if (response.data.code === 200) {
         Swal.fire({
           title: "Transaction approved",
           icon: "success",
         });
-        loadTransactionAdmin();
+        refetchAllTransactionsAdmin();
         setModalApproved(false);
       }
     } catch (e) {
@@ -77,16 +75,15 @@ const ModalApproved = ({
         status: "reject",
       };
 
-      const response = await dispatch(
-        FunctionUpdateTransactionAdmin(payload, order?.id)
+      const response = await API.patch(
+        `/transaction-admin/${order?.id}`,
+        payload
       );
-      if (response && response.data.code === 200) {
-        Swal.fire({
-          title: "Transaction has been rejected",
-          icon: "success",
-        });
+      console.log(response.data);
+      if (response.data.code === 200) {
+        Swal.fire("Transaction has been rejected");
         setModalApproved(false);
-        loadTransactionAdmin();
+        refetchAllTransactionsAdmin();
       }
     } catch (e) {
       console.log(e);

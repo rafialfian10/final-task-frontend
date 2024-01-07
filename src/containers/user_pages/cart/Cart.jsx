@@ -4,8 +4,12 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 
+// components redux
+import { connect, useDispatch } from "react-redux";
+import { FunctionGetTransactionsUser } from "../../../redux/features/TransactionSlice";
+
 // components react bootstrap
-import { Form, Card, Button, Image, Row, Col } from "react-bootstrap";
+import { Form, Card, Button, Image, Row, Col, Spinner } from "react-bootstrap";
 
 // api
 import { API } from "../../../config/api";
@@ -24,6 +28,9 @@ import minus from "../../../assets/img/minus.png";
 // ----------------------------------------------------------------
 
 const Cart = () => {
+  // dispatch
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   let { id } = useParams();
@@ -365,4 +372,16 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    transactionsUser: state.transaction,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadTransactionUser: () => dispatch(FunctionGetTransactionsUser()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

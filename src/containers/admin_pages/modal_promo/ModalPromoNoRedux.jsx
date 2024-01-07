@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
 import addlistbook from "../../../assets/img/addlistbook.png";
 // ------------------------------------------------------------------------
 
-const ModalPromo = ({ modalPromo, setModalPromo, value, bookId }) => {
+const ModalPromoNoRedux = ({ modalPromo, setModalPromo, value, bookId }) => {
   const navigate = useNavigate();
 
   //state form
@@ -141,4 +141,4 @@ const ModalPromo = ({ modalPromo, setModalPromo, value, bookId }) => {
   );
 };
 
-export default ModalPromo;
+export default ModalPromoNoRedux;

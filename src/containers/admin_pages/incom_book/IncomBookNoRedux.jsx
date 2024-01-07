@@ -31,7 +31,7 @@ import flower1 from "../../../assets/img/flower1.png";
 import flower2 from "../../../assets/img/flower2.png";
 // -----------------------------------------------------------------
 
-const IncomBook = ({ books, search, refetchAllBooks, isLoading }) => {
+const IncomBookNoRedux = ({ books, search, refetchAllBooks, isLoading }) => {
   const navigate = useNavigate();
 
   // state value
@@ -197,4 +197,4 @@ const IncomBook = ({ books, search, refetchAllBooks, isLoading }) => {
   );
 };
 
-export default IncomBook;
+export default IncomBookNoRedux;

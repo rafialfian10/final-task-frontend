@@ -27,7 +27,7 @@ import attache from "../../../assets/img/attache.png";
 import iconPdf from "../../../assets/img/icon-pdf.png";
 // ------------------------------------------------------------------------
 
-const ModalUpdateBook = ({ modalUpdate, setModalUpdate, value, bookId }) => {
+const ModalUpdateBookNoRedux = ({ modalUpdate, setModalUpdate, value, bookId }) => {
   const navigate = useNavigate();
 
   const [preview, setPreview] = useState(null);
@@ -666,4 +666,4 @@ const ModalUpdateBook = ({ modalUpdate, setModalUpdate, value, bookId }) => {
   );
 };
 
-export default ModalUpdateBook;
+export default ModalUpdateBookNoRedux;

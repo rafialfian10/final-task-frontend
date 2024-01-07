@@ -108,12 +108,12 @@ const IncomBook = (props) => {
       />
       <div className="container-incom-book">
         <h4 className="incom-book-title">Incom Book</h4>
-        {loading ? (
+        {!loading ? (
           <div
-            className="position-fixed top-50 start-50 translate-middle"
+            className="position-fixed top-50 start-50 translate-middle border border-dark"
             style={{ zIndex: 9999 }}
           >
-            <Spinner animation="border" role="status">
+            <Spinner animation="border" role="status" className="border border-danger">
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           </div>

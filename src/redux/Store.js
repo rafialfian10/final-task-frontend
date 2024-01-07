@@ -7,9 +7,13 @@ import { API } from "../config/api";
 
 // components reducers
 import { BookReducer } from "./reducer/BookReducer";
+import { TransactionReducer } from "./reducer/TransactionReducer";
 // ----------------------------------------------------------
 
-const rootreducer = combineReducers({ book: BookReducer });
+const rootreducer = combineReducers({
+  book: BookReducer,
+  transaction: TransactionReducer,
+});
 
 const Store = configureStore({
   reducer: rootreducer,

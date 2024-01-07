@@ -44,7 +44,7 @@ function Paginations({
       (number === maxPageNumberLimit + 1 && number !== pages.length)
     ) {
       return (
-        <li key={number} className="inactive page-link">
+        <li key={number} className="page-link">
           ...
         </li>
       );
