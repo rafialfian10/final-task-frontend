@@ -80,17 +80,10 @@ export const deleteThumbnail = () => {
 };
 
 export const FunctionGetBooks = () => {
-  const config = {
-    headers: {
-      "Content-type": "multipart/form-data",
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  };
-
   return async (dispatch) => {
     dispatch(makeRequest());
     try {
-      const response = await API.get(`/books`, config);
+      const response = await API.get(`/books`);
       if (response.data.code === 200) {
         const books = response.data.data;
         dispatch(getBooks(books));
@@ -101,18 +94,11 @@ export const FunctionGetBooks = () => {
   };
 };
 
-export const FuntionGetBook = (id) => {
-  const config = {
-    headers: {
-      "Content-type": "multipart/form-data",
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  };
-
+export const FunctionGetBook = (id) => {
   return async (dispatch) => {
     dispatch(makeRequest());
     try {
-      const response = await API.get(`/book/${id}`, config);
+      const response = await API.get(`/book/${id}`);
       if (response.data.code === 200) {
         const book = response.data.data;
         dispatch(getBook(book));

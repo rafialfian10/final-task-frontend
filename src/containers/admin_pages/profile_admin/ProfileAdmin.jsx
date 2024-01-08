@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 // components redux
 import { connect, useDispatch } from "react-redux";
+import { FunctionGetTransactionsUser } from "../../../redux/features/TransactionSlice";
 import {
   FunctionGetUser,
   FunctionUpdateUser,
@@ -19,7 +20,7 @@ import { Button, Form, Image, Row, Col, Spinner } from "react-bootstrap";
 import ListDownload from "../../../components/listDownload/ListDownload";
 
 // css
-import "./Profile.scss";
+import "./ProfileAdmin.scss";
 import Swal from "sweetalert2";
 
 // images
@@ -30,18 +31,12 @@ import address from "../../../assets/img/address.png";
 import phone from "../../../assets/img/phone.png";
 import gender from "../../../assets/img/gender.png";
 import defaultPhoto from "../../../assets/img/default-photo.png";
-import { FunctionGetTransactionsUser } from "../../../redux/features/TransactionSlice";
 // ----------------------------------------------------------------------
 
-const Profile = (props) => {
-  const { user, loadUser, transactions, loadTransactionsUser } = props;
+const ProfileAdmin = (props) => {
+  console.log(props);
+  const { user, loadUser } = props;
   const { userData, usersData, loadingUser, errorMessageUser } = user;
-  const {
-    transactionData,
-    transactionsData,
-    loadingTransaction,
-    errorMessageTransaction,
-  } = transactions;
 
   // dispatch
   const dispatch = useDispatch();
@@ -63,7 +58,6 @@ const Profile = (props) => {
           confirmButtonText: "Ok",
         });
         loadUser(id);
-        loadTransactionsUser();
       }
     } catch (err) {
       console.log(err);
@@ -72,7 +66,6 @@ const Profile = (props) => {
 
   useEffect(() => {
     loadUser(id);
-    loadTransactionsUser();
   }, [id]);
 
   return (
@@ -95,7 +88,7 @@ const Profile = (props) => {
             <div className="email">
               <Image src={message} alt="message" />
               <div className="sub-email">
-                <p className="info1">{userData?.email}</p>
+                <p className="info1">{userData.email}</p>
                 <p className="info2">Email</p>
               </div>
             </div>
@@ -103,7 +96,7 @@ const Profile = (props) => {
             <div className="profile">
               <Image src={gender} alt="gender" />
               <div className="sub-profile">
-                <p className="info1">{userData?.gender}</p>
+                <p className="info1">{userData.gender}</p>
                 <p className="info2">Gender</p>
               </div>
             </div>
@@ -111,22 +104,22 @@ const Profile = (props) => {
             <div className="phone">
               <Image src={phone} alt="phone" />
               <div className="sub-phone">
-                <p className="info1">{userData?.phone}</p>
+                <p className="info1">{userData.phone}</p>
                 <p className="info2">Mobile Phone</p>
               </div>
             </div>
             <div className="address">
               <Image src={address} alt="address" />
               <div className="sub-address">
-                <p className="info1">{userData?.address}</p>
+                <p className="info1">{userData.address}</p>
                 <p className="info2">Address</p>
               </div>
             </div>
           </Col>
 
           <Col xs={12} md={12} lg={6} xl={4} className="content-profile2">
-            {userData?.thumbnail !== "" ? (
-              <Image src={userData?.thumbnail} alt="thumbnail" />
+            {userData.thumbnail !== "" ? (
+              <Image src={userData.thumbnail} alt="thumbnail" />
             ) : (
               <Image src={defaultPhoto} alt="defaultPhoto" />
             )}
@@ -148,7 +141,6 @@ const Profile = (props) => {
           </Col>
         </Row>
       )}
-      <ListDownload />
     </>
   );
 };
@@ -156,15 +148,13 @@ const Profile = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    transactions: state.transaction,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadUser: (id) => dispatch(FunctionGetUser(id)),
-    loadTransactionsUser: () => dispatch(FunctionGetTransactionsUser()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileAdmin);

@@ -1,9 +1,17 @@
 export const MAKE_REQUEST='MAKE_REQUEST'
 export const FAIL_REQUEST='FAIL_REQUEST'
 
+// users type
+export const REGISTER_USER='REGISTER_USER'
+export const LOGIN_USER='LOGIN_USER'
+export const GET_USERS='GET_USERS'
+export const GET_USER='GET_USER'
+export const UPDATE_USER='UPDATE_USER'
+export const DELETE_USER='DELETE_USER'
 
 // books type
 export const GET_BOOKS='GET_BOOKS'
+export const GET_BOOKS_PROMO='GET_BOOKS_PROMO'
 export const GET_BOOK='GET_BOOK'
 export const CREATE_BOOK='CREATE_BOOK'
 export const UPDATE_BOOK='UPDATE_BOOK'
@@ -12,7 +20,14 @@ export const DELETE_BOOK='DELETE_BOOK'
 export const DELETE_PDF='DELETE_PDF'
 export const DELETE_THUMBNAIL='DELETE_THUMBNAIL'
 
-// transaction type
+// carts type
+export const GET_CARTS='GET_CARTS'
+export const GET_CART='GET_CART'
+export const CREATE_CART='CREATE_CART'
+export const UPDATE_CART='UPDATE_CART'
+export const DELETE_CART='DELETE_CART'
+
+// transactions type
 export const GET_TRANSACTIONS_ADMIN='GET_TRANSACTIONS_ADMIN'
 export const GET_TRANSACTIONS_USER='GET_TRANSACTIONS_USER'
 export const GET_TRANSACTION='GET_TRANSACTION'

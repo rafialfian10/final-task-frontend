@@ -6,12 +6,18 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { API } from "../config/api";
 
 // components reducers
+import { UserReducer } from "./reducer/UserReducer";
 import { BookReducer } from "./reducer/BookReducer";
+import { BookPromoReducer } from "./reducer/BookPromoReducer";
 import { TransactionReducer } from "./reducer/TransactionReducer";
+import { CartReducer } from "./reducer/CartReducer";
 // ----------------------------------------------------------
 
 const rootreducer = combineReducers({
+  user: UserReducer,
   book: BookReducer,
+  bookPromo: BookPromoReducer,
+  cart: CartReducer,
   transaction: TransactionReducer,
 });
 

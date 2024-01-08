@@ -25,8 +25,8 @@ import action from "../../../assets/img/search.png";
 // ----------------------------------------------------------------
 
 function ListTransaction(props) {
-  const { transactionsAdmin, loadTransactionAdmin, search } = props;
-  const { TransactionData, TransactionsData, loading, errorMessage } = transactionsAdmin;
+  const { transactionsAdmin, loadTransactionsAdmin, search } = props;
+  const { transactionData, transactionsData, loadingTransaction, errorMessageTransaction } = transactionsAdmin;
 
   let no = 1;
 
@@ -42,7 +42,7 @@ function ListTransaction(props) {
 
   const indexLastData = currentPage * dataPerPage;
   const indexFirstData = indexLastData - dataPerPage;
-  const currentItems = TransactionsData?.slice(indexFirstData, indexLastData);
+  const currentItems = transactionsData?.slice(indexFirstData, indexLastData);
 
   const handlePageClick = (pageNumber) => {
     setcurrentPage(pageNumber);
@@ -57,7 +57,7 @@ function ListTransaction(props) {
   };
 
   useEffect(() => {
-    loadTransactionAdmin();
+    loadTransactionsAdmin();
   }, []);
 
   return (
@@ -66,11 +66,11 @@ function ListTransaction(props) {
         modalApproved={modalApproved}
         setModalApproved={setModalApproved}
         order={order}
-        loadTransactionAdmin={loadTransactionAdmin}
+        loadTransactionsAdmin={loadTransactionsAdmin}
       />
       <Image src={flower1} alt="flower1" className="flower1" />
       <Image src={flower2} alt="flower2" className="flower2" />
-      {loading ? (
+      {loadingTransaction ? (
         <div
           className="position-fixed top-50 start-50 translate-middle"
           style={{ zIndex: 9999 }}
@@ -193,7 +193,7 @@ function ListTransaction(props) {
               </tbody>
             </Table>
             <Paginations
-              dataTransaction={TransactionsData}
+              dataTransaction={transactionsData}
               currentPage={currentPage}
               dataPerPage={dataPerPage}
               handlePageClick={handlePageClick}
@@ -215,7 +215,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadTransactionAdmin: () => dispatch(FunctionGetTransactionsAdmin()),
+    loadTransactionsAdmin: () => dispatch(FunctionGetTransactionsAdmin()),
   };
 };
 

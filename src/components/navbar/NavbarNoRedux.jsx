@@ -1,13 +1,7 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 // components react
 import { useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
-
-// components redux
-import { connect } from "react-redux";
-import { FunctionGetUser } from "../../redux/features/UserSlice";
-import { FunctionGetCarts } from "../../redux/features/CartSlice";
+import { useContext, useState } from "react";
+import { useQuery } from "react-query";
 
 // components react bootstrap
 import {
@@ -26,6 +20,9 @@ import {
 // components
 import { UserContext } from "../../context/userContext";
 
+// api
+import { API } from "../../config/api";
+
 // css
 import "./Navbar.scss";
 import Swal from "sweetalert2";
@@ -43,11 +40,7 @@ import Login from "../login/Login";
 import Register from "../register/Register";
 // -------------------------------------------------------------
 
-const Navbars = (props) => {
-  const { user, loadUser, cart, loadCart, search, handleSearch } = props;
-  const { userData, usersData, loadingUser, errorMessageUser } = user;
-  const { cartData, cartsData, loadingCart, errorMessageCart } = cart;
-
+const Navbars = ({ search, handleSearch }) => {
   const navigate = useNavigate();
 
   // user context
@@ -87,13 +80,28 @@ const Navbars = (props) => {
     });
   };
 
-  useEffect(() => {
-    loadUser(state?.user?.id);
-  }, [state?.user?.id]);
+  // get data user
+  let { data: user, refetch: refetchUser } = useQuery("userCache", async () => {
+    const response = await API.get(`/user/${state.user.id}`);
+    return response.data.data;
+  });
 
-  useEffect(() => {
-    loadCart();
-  }, []);
+  // get order cart user
+  let { data: orderCart, refetch: refetchCart } = useQuery(
+    "cartCache",
+    async () => {
+      const response = await API.get(`/carts`);
+      return response.data.data;
+    }
+  );
+
+  refetchCart();
+  refetchUser();
+
+  // useEffect(() => {
+  //   refetchCart();
+  //   refetchUser();
+  // }, [user, orderCart]);
 
   return (
     <>
@@ -151,10 +159,9 @@ const Navbars = (props) => {
                       {state.user.role === "admin" ? (
                         // profile navbar admin
                         <Navbar.Brand>
-                          {userData !== undefined &&
-                          userData.thumbnail !== "" ? (
+                          {user !== undefined && user.thumbnail !== "" ? (
                             <Image
-                              src={userData.thumbnail}
+                              src={user.thumbnail}
                               className="photo-profile"
                               alt="photo-profile"
                             />
@@ -170,9 +177,7 @@ const Navbars = (props) => {
                             className="dropdown"
                           >
                             <NavDropdown.Item
-                              onClick={() =>
-                                navigate(`/profile_admin/${userData?.id}`)
-                              }
+                              onClick={() => navigate(`/profile_admin/${user?.id}`)}
                             >
                               <Navbar.Text className="text-dropdown">
                                 <Image
@@ -237,9 +242,9 @@ const Navbars = (props) => {
                         <Navbar.Brand>
                           <>
                             {/* bracket */}
-                            {cartsData === null ? null : (
+                            {orderCart === null ? null : (
                               <div className="container-bracket">
-                                <span className="qty">{cartsData?.length}</span>
+                                <span className="qty">{orderCart?.length}</span>
                                 <Image
                                   src={bracket}
                                   alt="bracket"
@@ -252,10 +257,9 @@ const Navbars = (props) => {
                             )}
 
                             {/* profile */}
-                            {userData !== undefined &&
-                            userData.thumbnail !== "" ? (
+                            {user !== undefined && user.thumbnail !== "" ? (
                               <Image
-                                src={userData.thumbnail}
+                                src={user.thumbnail}
                                 className="photo-profile"
                                 alt="photo-profile"
                               />
@@ -272,9 +276,7 @@ const Navbars = (props) => {
                               className="dropdown"
                             >
                               <NavDropdown.Item
-                                onClick={() =>
-                                  navigate(`/profile/${userData?.id}`)
-                                }
+                                onClick={() => navigate(`/profile/${user?.id}`)}
                               >
                                 <Navbar.Text className="text-dropdown">
                                   <Image
@@ -339,18 +341,4 @@ const Navbars = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    cart: state.cart,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadUser: (id) => dispatch(FunctionGetUser(id)),
-    loadCart: () => dispatch(FunctionGetCarts()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navbars);
+export default Navbars;

@@ -38,8 +38,8 @@ import flower2 from "../../../assets/img/flower2.png";
 // -----------------------------------------------------------------
 
 const IncomBook = (props) => {
-  const { books, deleteBook, loadBook, search } = props;
-  const { bookData, booksData, loading, errorMessage } = books;
+  const { books, deleteBook, loadBooks, search } = props;
+  const { bookData, booksData, loadingBook, errorMessageBook } = books;
 
   const navigate = useNavigate();
 
@@ -74,7 +74,7 @@ const IncomBook = (props) => {
               icon: "success",
               confirmButtonText: "Ok",
             });
-            loadBook();
+            loadBooks();
             navigate("/incom_book");
           }
         }
@@ -85,7 +85,7 @@ const IncomBook = (props) => {
   });
 
   useEffect(() => {
-    loadBook();
+    loadBooks();
   }, []);
 
   return (
@@ -97,23 +97,23 @@ const IncomBook = (props) => {
         setModalUpdate={setModalUpdate}
         value={value}
         bookId={bookId}
-        loadBook={loadBook}
+        loadBooks={loadBooks}
       />
       <ModalPromo
         modalPromo={modalPromo}
         setModalPromo={setModalPromo}
         value={value}
         bookId={bookId}
-        loadBook={loadBook}
+        loadBooks={loadBooks}
       />
       <div className="container-incom-book">
         <h4 className="incom-book-title">Incom Book</h4>
-        {!loading ? (
+        {loadingBook ? (
           <div
-            className="position-fixed top-50 start-50 translate-middle border border-dark"
+            className="position-fixed top-50 start-50 translate-middle"
             style={{ zIndex: 9999 }}
           >
-            <Spinner animation="border" role="status" className="border border-danger">
+            <Spinner animation="border" role="status">
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           </div>
@@ -205,7 +205,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadBook: () => dispatch(FunctionGetBooks()),
+    loadBooks: () => dispatch(FunctionGetBooks()),
     deleteBook: (id) => dispatch(FunctionDeleteBook(id)),
   };
 };

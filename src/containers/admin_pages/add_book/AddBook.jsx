@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 // components react
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 
 // components react bootstrap
@@ -34,6 +35,9 @@ import flower2 from "../../../assets/img/flower2.png";
 // --------------------------------------------------------------------------------
 
 const AddBook = (props) => {
+  const { books, loadBooks } = props;
+  const { bookData, booksData, loadingBook, errorMessageBook } = books;
+
   // dispatch
   const dispatch = useDispatch();
 
@@ -220,13 +224,17 @@ const AddBook = (props) => {
     }
   });
 
+  useEffect(() => {
+    loadBooks();
+  }, []);
+
   return (
     <Row className="add-book-container">
       <Image src={flower1} alt="flower1" className="flower1" />
       <Image src={flower2} alt="flower2" className="flower2" />
       <Col xs={12} md={12} lg={12} xl={12}>
         <h4 className="title-add-book">Add Book</h4>
-        {props.books.loading && (
+        {loadingBook && (
           <div
             className="position-fixed top-50 start-50 translate-middle"
             style={{ zIndex: 999999999 }}
@@ -415,7 +423,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadBook: () => dispatch(FunctionGetBooks()),
+    loadBooks: () => dispatch(FunctionGetBooks()),
   };
 };
 

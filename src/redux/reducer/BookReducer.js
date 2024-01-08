@@ -16,8 +16,8 @@ import {
 const initialstateBook = {
   booksData: [],
   bookData: {},
-  loading: true,
-  errorMessage: "",
+  loadingBook: true,
+  errorMessageBook: "",
 };
 
 export const BookReducer = (state = initialstateBook, action) => {
@@ -25,56 +25,56 @@ export const BookReducer = (state = initialstateBook, action) => {
     case MAKE_REQUEST:
       return {
         ...state,
-        loading: true,
+        loadingBook: true,
       };
     case FAIL_REQUEST:
       return {
         ...state,
-        loading: false,
-        errorMessage: action.payload,
+        loadingBook: false,
+        errorMessageBook: action.payload,
       };
     case GET_BOOKS:
       return {
-        loading: false,
-        errorMessage: "",
+        loadingBook: false,
+        errorMessageBook: "",
         booksData: action.payload,
         bookData: {},
       };
-      case GET_BOOK:
+    case GET_BOOK:
       return {
         ...state,
-        loading: false,
+        loadingBook: false,
         bookData: action.payload,
       };
     case CREATE_BOOK:
       return {
         ...state,
-        loading: false,
+        loadingBook: false,
       };
     case UPDATE_BOOK:
       return {
         ...state,
-        loading: false,
+        loadingBook: false,
       };
-      case UPDATE_PROMO:
-        return {
-          ...state,
-          loading: false,
-        };
+    case UPDATE_PROMO:
+      return {
+        ...state,
+        loadingBook: false,
+      };
     case DELETE_BOOK:
       return {
         ...state,
-        loading: false,
+        loadingBook: false,
       };
-      case DELETE_PDF:
+    case DELETE_PDF:
       return {
         ...state,
-        loading: false,
+        loadingBook: false,
       };
-      case DELETE_THUMBNAIL:
+    case DELETE_THUMBNAIL:
       return {
         ...state,
-        loading: false,
+        loadingBook: false,
       };
     default:
       return state;

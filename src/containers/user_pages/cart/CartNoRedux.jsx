@@ -1,20 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 // components react
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 
-// components redux
-import { connect, useDispatch } from "react-redux";
-import {
-  FunctionCreateTransaction,
-  FunctionGetTransactionsUser,
-} from "../../../redux/features/TransactionSlice";
-
 // components react bootstrap
-import { Form, Card, Button, Image, Row, Col, Spinner } from "react-bootstrap";
+import { Form, Card, Button, Image, Row, Col } from "react-bootstrap";
 
 // api
 import { API } from "../../../config/api";
@@ -29,40 +20,64 @@ import flower1 from "../../../assets/img/flower1.png";
 import flower2 from "../../../assets/img/flower2.png";
 import plus from "../../../assets/img/plus.png";
 import minus from "../../../assets/img/minus.png";
-import {
-  FunctionDeleteCart,
-  FunctionGetCarts,
-  FunctionUpdateCart,
-} from "../../../redux/features/CartSlice";
 // import proof from "../../../assets/img/transaction.png"
 // ----------------------------------------------------------------
 
-const Cart = (props) => {
-  const { carts, deleteCart, loadCarts, loadTransactionsUser, transactionsUser } =
-    props;
-  const { transactionData, transactionsData, loadingTransaction, errorMessageTransaction } =
-    transactionsUser;
-  const { cartData, cartsData, loadingCart, errorMessageCart } = carts;
-
-  // dispatch
-  const dispatch = useDispatch();
-
+const Cart = () => {
   const navigate = useNavigate();
 
   let { id } = useParams();
   id = parseInt(id);
 
-  // state total, update cart, transaction user
-  const [total, setTotal] = useState(0);
-  const [updateCarts, setUpdateCarts] = useState([]);
-  const [transaction, setTransaction] = useState([]);
+   // state total, carts, trans
+   const [total, setTotal] = useState(0);
+   const [carts, setCarts] = useState([]);
+   const [trans, setTrans] = useState([]);
+
+  // state image transfer & preview
+  // const [preview, setPreview] = useState(null)
+  // const [form, setForm] = useState({
+  //   image: ""
+  // })
+ 
+  // handle change image
+  // const handleChange = (e) => {
+  //   setForm({
+  //   ...form,
+  //   [e.target.name]:
+  //       e.target.type === "file" ? e.target.files : e.target.value,
+  //   })
+
+  //   // buat url image
+  //   if (e.target.type === "file") {
+  //       let url = URL.createObjectURL(e.target.files[0]);
+  //       setPreview(url);
+  //   }
+  // };
+
+  // get order cart user
+  let { data: orderCart, refetch: refetchOrder } = useQuery(
+    "orderCartsCache",
+    async () => {
+      const response = await API.get(`/carts`);
+      return response.data.data;
+    }
+  );
+
+  // get transaction
+  let { data: transaction } = useQuery("transactionCache", async () => {
+    const response = await API.get(`/transactions`);
+    return response.data.data;
+  });
 
   // add counter
   const handleAddQty = useMutation(async (id) => {
     try {
-      const response = await dispatch(FunctionUpdateCart("add", id));
-      if (response && response.data.code === 200) {
-        loadCarts();
+      const response = await API.patch(`/cart/${id}`, {
+        event: "add",
+      });
+      if (response.data.code === 200) {
+        refetchOrder();
       }
     } catch (error) {
       console.log(error);
@@ -72,9 +87,11 @@ const Cart = (props) => {
   // less counter
   const handleLessQty = useMutation(async (id) => {
     try {
-      const response = await dispatch(FunctionUpdateCart("less", id));
-      if (response && response.data.code === 200) {
-        loadCarts();
+      const response = await API.patch(`/cart/${id}`, {
+        event: "less",
+      });
+      if (response.data.code === 200) {
+        refetchOrder();
       }
     } catch (error) {
       console.log(error);
@@ -83,19 +100,17 @@ const Cart = (props) => {
 
   // function delete cart
   const handleDeleteCart = async (id) => {
-    const response = await deleteCart(id);
-    if (response && response.data.code === 200) {
-      Swal.fire({
-        text: "Cart successfully deleted",
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
-      loadCarts();
+    await API.delete(`/cart/${id}`);
+    Swal.fire({
+      text: "Cart successfully deleted",
+      icon: "success",
+      confirmButtonText: "Ok",
+    });
+    refetchOrder();
 
-      // Update carts after deleting cart
-      const filterCarts = updateCarts.filter((cart) => cart.id !== id);
-      setUpdateCarts(filterCarts);
-    }
+    // Update carts after deleting cart
+    const updatedCarts = carts.filter((cart) => cart.id !== id);
+    setCarts(updatedCarts);
   };
 
   // function handle pay
@@ -103,7 +118,7 @@ const Cart = (props) => {
     try {
       let books = [];
 
-      cartsData.forEach((item) => {
+      orderCart.forEach((item) => {
         books.push({
           id: item?.id,
           book_id: item?.book.id,
@@ -111,15 +126,25 @@ const Cart = (props) => {
         });
       });
 
-      const formData = {
+      // image validation
+      // const formDataTrans = new FormData()
+      // if (form.image === "") {
+      //   Swal.fire({
+      //       text: "Please upload proof of transfer",
+      //       icon: "warning",
+      //       confirmButtonText: "Ok"
+      //     })
+      // } else {
+      //   formDataTrans.append("image", form.image[0]);
+      // }
+
+      const body = {
         total: total,
         books: books,
       };
 
       // filter data barang yang sudah pernah transaksi
-      let duplicateData = updateCarts.filter((cart) =>
-        transaction.includes(cart)
-      );
+      let duplicateData = carts.filter((cart) => trans.includes(cart));
       if (duplicateData.length > 0) {
         Swal.fire({
           text: "you already have this book",
@@ -127,8 +152,8 @@ const Cart = (props) => {
           confirmButtonText: "Ok",
         });
       } else {
-        const response = await dispatch(FunctionCreateTransaction(formData));
-        if (response && response.data.code === 200) {
+        const response = await API.post("/transaction", body);
+        if (response.data.code === 200) {
           window.snap.pay(response.data.data.midtrans_id, {
             // success
             onSuccess: function (result) {
@@ -139,13 +164,13 @@ const Cart = (props) => {
               });
               navigate(`/profile/${id}`);
               window.location.reload();
-              loadCarts();
+              refetchOrder();
             },
             // pending
             onPending: function (result) {
               navigate(`/cart/${id}`);
               window.location.reload();
-              loadCarts();
+              refetchOrder();
             },
             // error
             onError: function (result) {
@@ -164,7 +189,7 @@ const Cart = (props) => {
                   });
                 }
               });
-              loadCarts();
+              refetchOrder();
             },
             // close
             onClose: function () {
@@ -199,52 +224,46 @@ const Cart = (props) => {
 
   useEffect(() => {
     // total order
-    let total = cartsData?.reduce((sum, order) => {
+    let total = orderCart?.reduce((sum, order) => {
       // reduce : par 1 accumulator, par2 current value
       return sum + order.order_qty * order.book.price;
     }, 0);
     setTotal(total);
-  }, [cartsData]);
+  }, [orderCart]);
 
   useEffect(() => {
-    if (cartsData) {
-      const filterCarts = cartsData.map((cartData) => cartData?.book?.title);
-      setUpdateCarts(filterCarts);
+    // orderCart?.map((item) => {
+    //   setCarts(prevState => [...prevState, item?.book.title]);
+    // });
+
+    if (orderCart) {
+      const updatedCarts = orderCart.map((item) => item?.book?.title);
+      setCarts(updatedCarts);
     }
 
-    transactionsData
-      ?.filter(
-        (transactionData) =>
-          transactionData?.status === "success" ||
-          transactionData?.status === "approve"
-      )
-      .forEach((transactionData) => {
-        if (transactionData?.book && transactionData.book.length > 0) {
-          setTransaction((prevState) => [
-            ...prevState,
-            transactionData.book[0].title,
-          ]);
-        }
-      });
-  }, [cartsData, transactionsData]);
-
-  useEffect(() => {
-    loadTransactionsUser();
-    loadCarts();
-  }, []);
+    transaction?.filter(
+      (item) =>
+        item?.status === "success" ||
+        item?.status === "approve"
+    ).forEach((item) => {
+      if (item?.book && item.book.length > 0) {
+        setTrans((prevState) => [...prevState, item.book[0].title]);
+      }
+    });
+  }, [orderCart, transaction]);
 
   return (
     <>
       <Image src={flower1} alt="flower1" className="flower1" />
       <Image src={flower2} alt="flower2" className="flower2" />
       <h4 className="cart-title">My Cart</h4>
-      {!cartsData ? (
+      {!orderCart ? (
         <h1 className="order-empty">Order is Empty</h1>
       ) : (
         <Row className="payment-container">
           <Col xs={12} md={12} lg={8} xl={8} className="content-satu">
             <h3 className="review">Review your order</h3>
-            {cartsData?.map((order, i) => {
+            {orderCart?.map((order, i) => {
               return (
                 <Card className="container-cart" key={i}>
                   <Card.Img src={order.book.thumbnail} className="img-card" />
@@ -298,7 +317,7 @@ const Cart = (props) => {
           </Col>
 
           <Col xs={12} md={12} lg={4} xl={4} className="content-dua">
-            {cartsData?.map((order, j) => {
+            {orderCart?.map((order, j) => {
               return (
                 <>
                   <div className="content-subtotal" key={j}>
@@ -349,19 +368,4 @@ const Cart = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    transactionsUser: state.transaction,
-    carts: state.cart,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadTransactionsUser: () => dispatch(FunctionGetTransactionsUser()),
-    loadCarts: () => dispatch(FunctionGetCarts()),
-    deleteCart: (id) => dispatch(FunctionDeleteCart(id)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default Cart;

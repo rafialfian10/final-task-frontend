@@ -6,21 +6,21 @@ import { useEffect, useContext, useState } from "react";
 import { useQuery } from "react-query";
 
 // components
-import { UserContext } from "./context/userContext";
-import Navbars from "./components/navbar/Navbar";
-import Home from "./Home/Home";
-import IncrementDetailBook from "./containers/user_pages/increment_detail_book/IncrementDetailBook";
-import AddBook from "./containers/admin_pages/add_book/AddBook";
-import ListTransaction from "./containers/admin_pages/list_transaction/ListTransaction";
-import DetailBook from "./containers/user_pages/detail_book/DetailBook";
-import Cart from "./containers/user_pages/cart/Cart";
 import {
   PageNotFound,
   PrivateRouteAdmin,
   PrivateRouteUser,
 } from "./components/private_route/PrivateRoute";
-import IncomBook from "./containers/admin_pages/incom_book/IncomBook";
+import { UserContext } from "./context/userContext";
+import Navbars from "./components/navbar/Navbar";
+import Home from "./Home/Home";
+import DetailBook from "./containers/user_pages/detail_book/DetailBook";
 import Profile from "./containers/user_pages/profile/Profile";
+import Cart from "./containers/user_pages/cart/Cart";
+import ProfileAdmin from "./containers/admin_pages/profile_admin/ProfileAdmin";
+import AddBook from "./containers/admin_pages/add_book/AddBook";
+import IncomBook from "./containers/admin_pages/incom_book/IncomBook";
+import ListTransaction from "./containers/admin_pages/list_transaction/ListTransaction";
 import ComplainAdmin from "./containers/admin_pages/complain_admin/ComplainAdmin";
 import ComplainUser from "./containers/user_pages/complain_user/ComplainUser";
 
@@ -74,24 +74,6 @@ function App() {
   // state search
   const [search, setSearch] = useState("");
 
-  // state data books
-  const [books, setBooks] = useState();
-
-  // get books
-  let { data, refetch: refetchAllBooks, isLoading } = useQuery( "allBooksCache",
-    async () => {
-      const config = {
-        headers: {
-          "Content-type": "multipart/form-data",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      };
-
-      const response = await API.get(`/books`, config);
-      setBooks(response.data.data);
-    }
-  );
-
   // handle search
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -102,15 +84,11 @@ function App() {
       <Navbars search={search} handleSearch={handleSearch} />
       <Routes>
         {/* public */}
-        <Route
-          exact
-          path="/"
-          element={<Home books={books} search={search} />}
-        />
+        <Route exact path="/" element={<Home search={search} />} />
         <Route
           exact
           path="/increment_detail_book/:id"
-          element={<IncrementDetailBook />}
+          element={<DetailBook />}
         />
 
         {/* admin */}
@@ -120,15 +98,12 @@ function App() {
             path="/list_transaction"
             element={<ListTransaction search={search} />}
           />
+          <Route exact path="/profile_admin/:id" element={<ProfileAdmin />} />
           <Route exact path="/add_book" element={<AddBook />} />
           <Route
             exact
             path="/incom_book"
-            element={
-              <IncomBook
-                search={search}
-              />
-            }
+            element={<IncomBook search={search} />}
           />
           <Route exact path="/complain_admin" element={<ComplainAdmin />} />
         </Route>

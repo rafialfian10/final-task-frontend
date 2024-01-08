@@ -133,17 +133,10 @@ export const FuntionGetTransaction = (id) => {
 };
 
 export const FunctionCreateTransaction = (formData) => {
-  const config = {
-    headers: {
-      "Content-type": "multipart/form-data",
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  };
-
   return async (dispatch) => {
     dispatch(makeRequest());
     try {
-      const response = await API.post("/transaction", formData, config);
+      const response = await API.post("/transaction", formData);
       dispatch(createTransaction());
 
       return response;

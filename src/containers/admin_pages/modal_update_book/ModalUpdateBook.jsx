@@ -37,7 +37,7 @@ const ModalUpdateBook = ({
   setModalUpdate,
   value,
   bookId,
-  loadBook,
+  loadBooks,
 }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -260,7 +260,7 @@ const ModalUpdateBook = ({
             icon: "success",
             confirmButtonText: "Ok",
           });
-          loadBook();
+          loadBooks();
           setModalUpdate(false);
           setForm({
             title: "",
@@ -303,7 +303,7 @@ const ModalUpdateBook = ({
               icon: "success",
               confirmButtonText: "Ok",
             });
-            loadBook();
+            loadBooks();
             setModalUpdate(false);
             navigate("/incom_book");
           }
@@ -333,7 +333,7 @@ const ModalUpdateBook = ({
               icon: "success",
               confirmButtonText: "Ok",
             });
-            loadBook();
+            loadBooks();
             setModalUpdate(false);
             navigate("/incom_book");
           }

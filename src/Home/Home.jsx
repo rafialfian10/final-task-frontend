@@ -6,18 +6,17 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // components
+import { UserContext } from "../context/userContext";
 import Jumbotron from "../components/jumbotron/Jumbotron";
 import Cards from "../components/cards/Cards";
 import ListBook from "../components/listBook/ListBook";
-import { UserContext } from "../context/userContext";
 
 // css
 import "./Home.scss";
 // ----------------------------------------------------
 
-const Home = ({ books, search }) => {
+const Home = ({ search }) => {
   const [myContext] = useContext(UserContext);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const Home = ({ books, search }) => {
     <>
       <Jumbotron />
       <Cards />
-      <ListBook books={books} search={search} />
+      <ListBook search={search} />
     </>
   );
 };

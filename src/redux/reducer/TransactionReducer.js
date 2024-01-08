@@ -12,10 +12,10 @@ import {
 // -----------------------------------------------
 
 const initialstateTransaction = {
-  TransactionsData: [],
-  TransactionData: {},
-  loading: true,
-  errorMessage: "",
+  transactionsData: [],
+  transactionData: {},
+  loadingTransaction: true,
+  errorMessageTransaction: "",
 };
 
 export const TransactionReducer = (state = initialstateTransaction, action) => {
@@ -23,48 +23,48 @@ export const TransactionReducer = (state = initialstateTransaction, action) => {
     case MAKE_REQUEST:
       return {
         ...state,
-        loading: true,
+        loadingTransaction: true,
       };
     case FAIL_REQUEST:
       return {
         ...state,
-        loading: false,
-        errorMessage: action.payload,
+        loadingTransaction: false,
+        errorMessageTransaction: action.payload,
       };
     case GET_TRANSACTIONS_ADMIN:
       return {
-        loading: false,
-        errorMessage: "",
-        TransactionsData: action.payload,
-        TransactionData: {},
+        loadingTransaction: false,
+        errorMessageTransaction: "",
+        transactionsData: action.payload,
+        transactionData: {},
       };
       case GET_TRANSACTIONS_USER:
       return {
-        loading: false,
-        errorMessage: "",
-        TransactionsData: action.payload,
-        TransactionData: {},
+        loadingTransaction: false,
+        errorMessageTransaction: "",
+        transactionsData: action.payload,
+        transactionData: {},
       };
       case GET_TRANSACTION:
       return {
         ...state,
-        loading: false,
-        TransactionData: action.payload,
+        loadingTransaction: false,
+        transactionData: action.payload,
       };
     case CREATE_TRANSACTION:
       return {
         ...state,
-        loading: false,
+        loadingTransaction: false,
       };
     case UPDATE_TRANSACTION_ADMIN:
       return {
         ...state,
-        loading: false,
+        loadingTransaction: false,
       };
       case UPDATE_TRANSACTION_USER:
       return {
         ...state,
-        loading: false,
+        loadingTransaction: false,
       };
     default:
       return state;

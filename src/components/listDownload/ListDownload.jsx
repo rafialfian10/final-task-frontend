@@ -18,7 +18,7 @@ import "./ListDownload.scss";
 
 const ListDownload = (props) => {
   const { transactionsUser, loadTransactionUser } = props;
-  const { TransactionData, TransactionsData, loading, errorMessage } = transactionsUser;
+  const { transactionData, transactionsData, loadingTransaction, errorMessageTransaction } = transactionsUser;
 
   // handle download file pdf
   const handleDownloadFile = (value) => {
@@ -53,7 +53,7 @@ const ListDownload = (props) => {
   return (
     <div className="container-list-download">
       <h4 className="listdownload-title">My Books</h4>
-      {loading ? (
+      {loadingTransaction ? (
         <div
           className="position-fixed top-50 start-50 translate-middle"
           style={{ zIndex: 9999 }}
@@ -64,7 +64,7 @@ const ListDownload = (props) => {
         </div>
       ) : (
         <Row xs={1} md={2} xl={5} className="w-100 m-0 g-3">
-          {TransactionsData?.map((transaction) => {
+          {transactionsData?.map((transaction) => {
             if (transaction?.status === "approve") {
               return transaction.book?.map((item, i) => {
                 return (

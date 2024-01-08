@@ -1,20 +1,15 @@
 // component
-import DescriptionDownload from "../../../components/description_download/DescriptionDownload";
 import DetailImage from "../../../components/detailImage/DetailImage";
+import DescriptionIncrement from "../../../components/description_increment/DescriptionIncrement";
+// ----------------------------------------------------
 
-// css
-import "./DetailBook.scss";
-// --------------------------------------------
-
-const DetailBook = () => {
+const IncrementDetailBook = () => {
   return (
     <>
-      <div className="container-detail-book">
-        <DetailImage />
-        <DescriptionDownload />
-      </div>
+      <DetailImage />
+      <DescriptionIncrement />
     </>
   );
 };
 
-export default DetailBook;
+export default IncrementDetailBook;

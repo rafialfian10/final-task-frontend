@@ -22,7 +22,7 @@ import Swal from "sweetalert2";
 import addlistbook from "../../../assets/img/addlistbook.png";
 // ------------------------------------------------------------------------
 
-const ModalPromo = ({ modalPromo, setModalPromo, value, bookId, loadBook }) => {
+const ModalPromo = ({ modalPromo, setModalPromo, value, bookId, loadBooks }) => {
   // dispatch
   const dispatch = useDispatch();
 
@@ -80,7 +80,7 @@ const ModalPromo = ({ modalPromo, setModalPromo, value, bookId, loadBook }) => {
             icon: "success",
             confirmButtonText: "Ok",
           });
-          loadBook();
+          loadBooks();
           setModalPromo(false);
           navigate("/incom_book");
         }

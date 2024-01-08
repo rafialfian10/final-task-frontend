@@ -24,7 +24,7 @@ const ModalApproved = ({
   modalApproved,
   setModalApproved,
   order,
-  loadTransactionAdmin,
+  loadTransactionsAdmin,
 }) => {
   // dispatch
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const ModalApproved = ({
           title: "Transaction approved",
           icon: "success",
         });
-        loadTransactionAdmin();
+        loadTransactionsAdmin();
         setModalApproved(false);
       }
     } catch (e) {
@@ -86,7 +86,7 @@ const ModalApproved = ({
           icon: "success",
         });
         setModalApproved(false);
-        loadTransactionAdmin();
+        loadTransactionsAdmin();
       }
     } catch (e) {
       console.log(e);
