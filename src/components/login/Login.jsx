@@ -6,6 +6,7 @@ import { useMutation } from "react-query";
 
 // components react bootstrap
 import { Nav, Button, Form, Modal } from "react-bootstrap";
+import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 
 // components
 import { UserContext } from "../../context/userContext";
@@ -21,18 +22,28 @@ import Swal from "sweetalert2";
 const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog }) => {
   const navigate = useNavigate();
 
+  //context
   const [state, dispatch] = useContext(UserContext);
 
-  const handleCloseLog = () => setShowLog(false);
+  // state show password
+  const [showPassword, setShowPassword] = useState(false);
 
-  // process login
-  const [formlogin, setFormLogin] = useState({
+  // state form login
+  const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
+  // state error
+  const [error, setError] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleCloseLog = () => setShowLog(false);
+
   const HandleChangeLogin = (event) => {
-    setFormLogin({ ...formlogin, [event.target.name]: event.target.value });
+    setForm({ ...form, [event.target.name]: event.target.value });
   };
 
   // function login submit
@@ -46,26 +57,47 @@ const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog }) => {
         },
       };
 
-      // Data body
-      const body = JSON.stringify(formlogin);
+      const messageError = {
+        email: "",
+        password: "",
+      };
 
-      const response = await API.post("/login", body, config);
+      // validasi form email
+      if (form.email === "") {
+        messageError.email = "Email must is required";
+      } else {
+        messageError.email = "";
+      }
 
-      if (response.data.code === 200) {
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: response.data.data,
-        });
+      // validasi form password
+      if (form.password === "") {
+        messageError.password = "Password must is required";
+      } else {
+        messageError.password = "";
+      }
 
-        setShowLog(false);
+      if (messageError.email === "" && messageError.password === "") {
+        const body = JSON.stringify(form);
+        const response = await API.post("/login", body, config);
 
-        Swal.fire({
-          text: "Login successfully",
-          icon: "success",
-          confirmButtonText: "Ok",
-        });
+        if (response.data.code === 200) {
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: response.data.data,
+          });
 
-        navigate("/");
+          setShowLog(false);
+
+          Swal.fire({
+            text: "Login successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+
+          navigate("/");
+        }
+      } else {
+        setError(messageError);
       }
     } catch (err) {
       Swal.fire({
@@ -103,14 +135,38 @@ const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog }) => {
                 name="email"
                 onChange={HandleChangeLogin}
               />
+              {error.email && !form.email.trim() && (
+                <Form.Text className="text-danger">{error.email}</Form.Text>
+              )}
             </Form.Group>
             <Form.Group className="form-group" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                onChange={HandleChangeLogin}
-              />
+              <div className="position-relative">
+                <Form.Control
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  onChange={HandleChangeLogin}
+                />
+                <div
+                  className="position-absolute"
+                  style={{
+                    right: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeSlashFill color="black" size={25} />
+                  ) : (
+                    <EyeFill color="black" size={25} />
+                  )}
+                </div>
+              </div>
+              {error.password && !form.password.trim() && (
+                <Form.Text className="text-danger">{error.password}</Form.Text>
+              )}
             </Form.Group>
             <Button
               variant="primary"

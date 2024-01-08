@@ -3,7 +3,6 @@
 // components react
 import { Route, Routes } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
-import { useQuery } from "react-query";
 
 // components
 import {

@@ -44,9 +44,10 @@ import Register from "../register/Register";
 // -------------------------------------------------------------
 
 const Navbars = (props) => {
-  const { user, loadUser, cart, loadCart, search, handleSearch } = props;
+  console.log(props);
+  const { user, loadUser, carts, loadCarts, search, handleSearch } = props;
   const { userData, usersData, loadingUser, errorMessageUser } = user;
-  const { cartData, cartsData, loadingCart, errorMessageCart } = cart;
+  const { cartData, cartsData, loadingCart, errorMessageCart } = carts;
 
   const navigate = useNavigate();
 
@@ -88,12 +89,9 @@ const Navbars = (props) => {
   };
 
   useEffect(() => {
-    loadUser(state?.user?.id);
+      loadUser(state?.user?.id);
+      loadCarts();
   }, [state?.user?.id]);
-
-  useEffect(() => {
-    loadCart();
-  }, []);
 
   return (
     <>
@@ -342,14 +340,14 @@ const Navbars = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    cart: state.cart,
+    carts: state.cart,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadUser: (id) => dispatch(FunctionGetUser(id)),
-    loadCart: () => dispatch(FunctionGetCarts()),
+    loadCarts: () => dispatch(FunctionGetCarts()),
   };
 };
 

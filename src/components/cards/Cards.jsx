@@ -71,9 +71,13 @@ const Cards = (props) => {
   };
 
   useEffect(() => {
-    loadBookPromo();
-    loadCart();
-  }, []);
+    const fetchData = async () => {
+      await loadBookPromo();
+      await loadCart();
+    };
+
+    fetchData();
+  }, [loadBookPromo, loadCart]);
 
   return (
     <>
