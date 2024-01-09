@@ -38,10 +38,19 @@ import {
 // ----------------------------------------------------------------
 
 const Cart = (props) => {
-  const { carts, deleteCart, loadCarts, loadTransactionsUser, transactionsUser } =
-    props;
-  const { transactionData, transactionsData, loadingTransaction, errorMessageTransaction } =
-    transactionsUser;
+  const {
+    carts,
+    deleteCart,
+    loadCarts,
+    loadTransactionsUser,
+    transactionsUser,
+  } = props;
+  const {
+    transactionData,
+    transactionsData,
+    loadingTransaction,
+    errorMessageTransaction,
+  } = transactionsUser;
   const { cartData, cartsData, loadingCart, errorMessageCart } = carts;
 
   // dispatch
@@ -247,51 +256,61 @@ const Cart = (props) => {
             {cartsData?.map((order, i) => {
               return (
                 <Card className="container-cart" key={i}>
-                  <Card.Img src={order.book.thumbnail} className="img-card" />
-                  <Card.Body className="review-book-desc">
-                    <Card.Title className="review-book-title">
-                      {order.book.title}
-                    </Card.Title>
-                    <Form.Text className="review-artist">
-                      By. {order.book.author}
-                    </Form.Text>
-                    <Form.Text className="review-price">
-                      IDR. {order.book.price.toLocaleString()}
-                    </Form.Text>
-                    <div className="content-cart">
-                      <Button
-                        onClick={() => {
-                          order.order_qty > 1 && handleLessQty.mutate(order.id);
-                        }}
-                        className="minus"
-                      >
-                        <Image src={minus} alt="minus" />
-                      </Button>
-                      <h5 className="value">{order.order_qty}</h5>
-                      <Button
-                        onClick={() => {
-                          order.order_qty < order.book.quota
-                            ? handleAddQty.mutate(order.id)
-                            : Swal.fire({
-                                icon: "error",
-                                title: "Out of stock",
-                              });
-                        }}
-                        className="plus"
-                      >
-                        {" "}
-                        <Image src={plus} alt="plus" />
-                      </Button>
-                    </div>
-                  </Card.Body>
-                  <Button
-                    className="btn-trash"
-                    onClick={() => {
-                      handleDeleteCart(order?.id);
-                    }}
-                  >
-                    <Image src={trash} className="img-trash" />
-                  </Button>
+                  <Row>
+                    <Col xs={12} md={5} lg={5} xl={5}>
+                      <Card.Img
+                        src={order.book.thumbnail}
+                        className="img-card"
+                      />
+                    </Col>
+                    <Col xs={12} md={7} lg={7} xl={7}>
+                      <Card.Body className="review-book-desc">
+                        <Card.Title className="review-book-title">
+                          {order.book.title}
+                          <Button
+                            className="btn-trash"
+                            onClick={() => {
+                              handleDeleteCart(order?.id);
+                            }}
+                          >
+                            <Image src={trash} className="img-trash" />
+                          </Button>
+                        </Card.Title>
+                        <Form.Text className="review-artist">
+                          By. {order.book.author}
+                        </Form.Text>
+                        <Form.Text className="review-price">
+                          IDR. {order.book.price.toLocaleString()}
+                        </Form.Text>
+                        <div className="content-cart">
+                          <Button
+                            onClick={() => {
+                              order.order_qty > 1 &&
+                                handleLessQty.mutate(order.id);
+                            }}
+                            className="minus"
+                          >
+                            <Image src={minus} alt="minus" />
+                          </Button>
+                          <h5 className="value">{order.order_qty}</h5>
+                          <Button
+                            onClick={() => {
+                              order.order_qty < order.book.quota
+                                ? handleAddQty.mutate(order.id)
+                                : Swal.fire({
+                                    icon: "error",
+                                    title: "Out of stock",
+                                  });
+                            }}
+                            className="plus"
+                          >
+                            {" "}
+                            <Image src={plus} alt="plus" />
+                          </Button>
+                        </div>
+                      </Card.Body>
+                    </Col>
+                  </Row>
                 </Card>
               );
             })}

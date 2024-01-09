@@ -19,7 +19,7 @@
 .payment-container {
     width: 80vw;
     margin: auto;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
     display: flex;
     flex-direction: row;
 }
@@ -31,8 +31,7 @@
 }
 
 .img-card {
-    width: 50%;
-    // height: 400px;
+    width: 100%;
     border-radius: 5px;
     overflow: hidden;
     margin-right: 10px;
@@ -40,7 +39,8 @@
 }
 
 .review-book-desc {
-    width: 40%;
+    width: 100%;
+    padding: 0 !important;
 }
 
 .review {
@@ -52,25 +52,27 @@
 }
 
 .container-cart {
-    border: 1px solid red;
     width: 100%;
+    margin-bottom: 25px;
     display: 100%;
     flex-direction: row;
     border: none;
-    margin-bottom: 25px;
 }
 
 .review-book-title {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     font-size: 22px;
     font-weight: bold;
     color: black;
-    margin-bottom: 10px;
 }
 
 .review-artist {
+    margin-bottom: 20px;
     font-style: italic;
     font-size: 14px;
-    margin-bottom: 20px;
     display: block;
 }
 
@@ -81,39 +83,39 @@
 }
 
 .btn-trash {
-    position: relative;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
     background-color: transparent;
     border: none;
-    height: 30px;
-}
 
-.btn-trash:hover {
-    background-color: transparent !important;
+    &:hover {
+        background-color: transparent !important;
+    }
 }
 
 .img-trash {
-    top: -10px;
-    right: 0;
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    margin-top: 20px;
+    width: 18px;
+    height: 18px;
     border: none !important;
 }
 
 .content-dua {
     display: flex;
     flex-direction: column;
-    // padding: 0 !important;
-    padding-top: 20px;
+    padding: 0;
+    padding-top: 20px !important;
 }
 
 .content-subtotal {
     margin-top: 11px;
-    border-top: 1px solid black;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    border-top: 1px solid black;
 }
 
 .subtotal1,
@@ -248,5 +250,11 @@
 @media screen and (max-width: 768px) {
     .payment-container {
         width: 90vw;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .img-card {
+        margin-bottom: 20px;
     }
 }

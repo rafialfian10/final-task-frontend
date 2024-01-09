@@ -3,7 +3,7 @@ import DetailImage from "../../../components/detailImage/DetailImage";
 import DescriptionIncrement from "../../../components/description_increment/DescriptionIncrement";
 // ----------------------------------------------------
 
-const IncrementDetailBook = () => {
+const DetailBook = () => {
   return (
     <>
       <DetailImage />
@@ -12,4 +12,4 @@ const IncrementDetailBook = () => {
   );
 };
 
-export default IncrementDetailBook;
+export default DetailBook;

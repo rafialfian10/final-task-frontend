@@ -22,6 +22,7 @@ import IncomBook from "./containers/admin_pages/incom_book/IncomBook";
 import ListTransaction from "./containers/admin_pages/list_transaction/ListTransaction";
 import ComplainAdmin from "./containers/admin_pages/complain_admin/ComplainAdmin";
 import ComplainUser from "./containers/user_pages/complain_user/ComplainUser";
+import Footer from "./components/footer/Footer";
 
 // api
 import { API, setAuthToken } from "./config/api";
@@ -86,7 +87,7 @@ function App() {
         <Route exact path="/" element={<Home search={search} />} />
         <Route
           exact
-          path="/increment_detail_book/:id"
+          path="/detail_book/:id"
           element={<DetailBook />}
         />
 
@@ -117,6 +118,7 @@ function App() {
 
         <Route exact path="/:pageName" element={<PageNotFound />} />
       </Routes>
+      <Footer/>
     </>
   );
 }

@@ -17,7 +17,6 @@ import "./ListBook.scss";
 // ------------------------------------------------------
 
 const ListBook = (props) => {
-  console.log("lisk book", props);
   const { books, loadBooks, search } = props;
   const { bookData, booksData, loadingBook, errorMessageBook } = books;
 
@@ -69,7 +68,7 @@ const ListBook = (props) => {
                       <Card.Title
                         className="list-title"
                         onClick={() => {
-                          navigate(`/increment_detail_book/${book?.id}`);
+                          navigate(`/detail_book/${book?.id}`);
                         }}
                       >
                         {book?.title}

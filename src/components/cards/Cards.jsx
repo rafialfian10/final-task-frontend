@@ -29,7 +29,6 @@ import Swal from "sweetalert2";
 // -----------------------------------------------------------
 
 const Cards = (props) => {
-  console.log("cards", props);
   const { loadBooks,booksPromo, loadBooksPromo, loadCarts } = props;
   const { bookPromoData, booksPromoData, loadingBookPromo, errorMessageBookPromo } = booksPromo;
   
@@ -131,7 +130,7 @@ const Cards = (props) => {
                       <Card.Title
                         className="book-title"
                         onClick={() => {
-                          navigate(`/increment_detail_book/${book?.id}`);
+                          navigate(`/detail_book/${book?.id}`);
                         }}
                       >
                         {book?.title}
