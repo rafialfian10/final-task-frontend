@@ -258,7 +258,6 @@ const Register = ({ showReg, setShowReg, setShowLog, handleShowReg }) => {
                 <Form.Text className="text-danger">{error.email}</Form.Text>
               )}
             </Form.Group>
-
             <Form.Group className="form-group" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <div className="position-relative">
@@ -295,7 +294,6 @@ const Register = ({ showReg, setShowReg, setShowLog, handleShowReg }) => {
                 </Form.Text>
               )}
             </Form.Group>
-
             <Form.Group className="form-group" controlId="formBasicPassword">
               <Form.Label>Confirm Password</Form.Label>
               <div className="position-relative">
@@ -327,7 +325,6 @@ const Register = ({ showReg, setShowReg, setShowLog, handleShowReg }) => {
                 </Form.Text>
               )}
             </Form.Group>
-
             <Form.Group className="form-group form-dropdown">
               <Form.Label>Gender</Form.Label>
               <Form.Select

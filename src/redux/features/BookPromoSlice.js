@@ -30,7 +30,7 @@ export const getBooksPromo = (data) => {
 };
 
 export const FunctionGetBooksPromo = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(makeRequest());
     try {
       const response = await API.get(`/books-promo`);

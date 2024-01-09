@@ -17,13 +17,14 @@ import "./ListBook.scss";
 // ------------------------------------------------------
 
 const ListBook = (props) => {
-  const { book, loadBook, search } = props;
-  const { bookData, booksData, loadingBook, errorMessageBook } = book;
+  console.log("lisk book", props);
+  const { books, loadBooks, search } = props;
+  const { bookData, booksData, loadingBook, errorMessageBook } = books;
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    loadBook();
+    loadBooks();
   }, []);
 
   return (
@@ -94,13 +95,13 @@ const ListBook = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    book: state.book,
+    books: state.book,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadBook: () => dispatch(FunctionGetBooks()),
+    loadBooks: () => dispatch(FunctionGetBooks()),
   };
 };
 

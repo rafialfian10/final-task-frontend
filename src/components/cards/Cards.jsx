@@ -12,6 +12,7 @@ import { Pagination } from "swiper";
 // components redux
 import { connect, useDispatch } from "react-redux";
 import { FunctionGetBooksPromo } from "../../redux/features/BookPromoSlice";
+import { FunctionGetBooks } from "../../redux/features/BookSlice";
 import {
   FunctionCreateCart,
   FunctionGetCarts,
@@ -28,8 +29,9 @@ import Swal from "sweetalert2";
 // -----------------------------------------------------------
 
 const Cards = (props) => {
-  const { bookPromo, loadBookPromo, loadCart } = props;
-  const { booksPromoData, loadingBookPromo, errorMessageBookPromo } = bookPromo;
+  console.log("cards", props);
+  const { loadBooks,booksPromo, loadBooksPromo, loadCarts } = props;
+  const { bookPromoData, booksPromoData, loadingBookPromo, errorMessageBookPromo } = booksPromo;
   
   // dispatch
   const dispatch = useDispatch();
@@ -44,7 +46,6 @@ const Cards = (props) => {
     try {
       let token = localStorage.getItem("token");
       if (!token) {
-        //alert
         Swal.fire({
           text: "Please login account",
           icon: "warning",
@@ -61,8 +62,9 @@ const Cards = (props) => {
         const response = await dispatch(FunctionCreateCart(body));
         if (response && response.data.code === 200) {
           setPopup(true);
-          loadBookPromo();
-          loadCart();
+          loadBooks();
+          loadBooksPromo();
+          loadCarts();
         }
       }
     } catch (error) {
@@ -71,13 +73,10 @@ const Cards = (props) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await loadBookPromo();
-      await loadCart();
-    };
-
-    fetchData();
-  }, [loadBookPromo, loadCart]);
+    loadBooks();
+    loadBooksPromo();
+    loadCarts();
+  }, []);
 
   return (
     <>
@@ -169,14 +168,15 @@ const Cards = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    bookPromo: state.bookPromo,
+    booksPromo: state.bookPromo,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadBookPromo: () => dispatch(FunctionGetBooksPromo()),
-    loadCart: () => dispatch(FunctionGetCarts()),
+    loadBooks: () => dispatch(FunctionGetBooks()),
+    loadBooksPromo: () => dispatch(FunctionGetBooksPromo()),
+    loadCarts: () => dispatch(FunctionGetCarts()),
   };
 };
 

@@ -17,8 +17,9 @@ import "./ListDownload.scss";
 // ---------------------------------------------------------------
 
 const ListDownload = (props) => {
-  const { transactionsUser, loadTransactionUser } = props;
+  const { transactionsUser, loadTransactionsUser } = props;
   const { transactionData, transactionsData, loadingTransaction, errorMessageTransaction } = transactionsUser;
+  // console.log("list download", props);
 
   // handle download file pdf
   const handleDownloadFile = (value) => {
@@ -47,7 +48,7 @@ const ListDownload = (props) => {
   };
 
   useEffect(() => {
-    loadTransactionUser();
+    loadTransactionsUser();
   }, []);
 
   return (
@@ -138,7 +139,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadTransactionUser: () => dispatch(FunctionGetTransactionsUser()),
+    loadTransactionsUser: () => dispatch(FunctionGetTransactionsUser()),
   };
 };
 

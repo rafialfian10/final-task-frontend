@@ -64,14 +64,14 @@ const Login = ({ showLog, setShowLog, handleShowReg, handleShowLog }) => {
 
       // validasi form email
       if (form.email === "") {
-        messageError.email = "Email must is required";
+        messageError.email = "Email is required";
       } else {
         messageError.email = "";
       }
 
       // validasi form password
       if (form.password === "") {
-        messageError.password = "Password must is required";
+        messageError.password = "Password is required";
       } else {
         messageError.password = "";
       }
