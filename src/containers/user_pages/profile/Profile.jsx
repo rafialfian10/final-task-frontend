@@ -223,7 +223,7 @@ const Profile = (props) => {
                 {editMode ? (
                   <div>
                     <Button type="submit" className="btn-edit-profile me-2">
-                      Save Edit
+                      Save
                     </Button>
                     <Button type="submit" className="btn-edit-profile" onClick={(e) => handleCancelEditMode(e)}>
                       Cancel
