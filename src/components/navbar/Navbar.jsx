@@ -3,6 +3,7 @@
 // components react
 import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
+import { useMediaQuery } from 'react-responsive';
 
 // components redux
 import { connect } from "react-redux";
@@ -64,6 +65,9 @@ const Navbars = (props) => {
   // user context
   const [state, dispatch] = useContext(UserContext);
 
+  // media query
+  const isResponsive = useMediaQuery({ query: '(max-width: 900px)' });
+
   // Handle Login
   const [showLog, setShowLog] = useState(false);
   const handleShowLog = () => setShowLog(true);
@@ -108,11 +112,7 @@ const Navbars = (props) => {
   return (
     <>
       <Navbar expand="lg" className="background-navbar">
-        <Container
-          className={`container ${
-            window.innerWidth <= 900 ? " flex-row-reverse" : ""
-          }`}
-        >
+        <Container className={`container${isResponsive ? ' flex-row-reverse' : ''}`}>
           <Row className="m-0">
             <Col xs={12}>
               <Navbar.Brand href="/" className="logo">
@@ -179,9 +179,7 @@ const Navbars = (props) => {
                             className="dropdown"
                           >
                             <NavDropdown.Item
-                              onClick={() =>
-                                navigate(`/profile_admin/${userData?.id}`)
-                              }
+                              onClick={() => navigate(`/profile_admin/${userData?.id}`)}
                             >
                               <Navbar.Text className="text-dropdown">
                                 <Image
@@ -280,9 +278,7 @@ const Navbars = (props) => {
                               className="dropdown"
                             >
                               <NavDropdown.Item
-                                onClick={() =>
-                                  navigate(`/profile/${userData?.id}`)
-                                }
+                                onClick={() => navigate(`/profile/${userData?.id}`)}
                               >
                                 <Navbar.Text className="text-dropdown">
                                   <Image

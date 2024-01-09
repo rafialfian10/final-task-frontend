@@ -9,9 +9,9 @@ const Footer = () => {
     return (
         <div className="footer">
             <p>
-                <CCircle color="white" size={20} />opyright 2022 Waysbook -
+                <CCircle color="white" size={20} />opyright 2022 Waysbook - &nbsp;
                 <span className="copyright-text">
-                    <HeartFill color="red" size={13} /> Rafi Alfian - NIS.All Right reserved
+                    <HeartFill color="red" size={13} />Rafi Alfian - NIS.All Right reserved
                 </span>
             </p>
         </div>
