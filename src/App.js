@@ -3,6 +3,7 @@
 // components react
 import { Route, Routes } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
+import { Helmet } from "react-helmet";
 
 // components
 import {
@@ -81,15 +82,14 @@ function App() {
 
   return (
     <>
+      {/* <Helmet>
+        <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.png" />
+      </Helmet> */}
       <Navbars search={search} handleSearch={handleSearch} />
       <Routes>
         {/* public */}
         <Route exact path="/" element={<Home search={search} />} />
-        <Route
-          exact
-          path="/detail_book/:id"
-          element={<DetailBook />}
-        />
+        <Route exact path="/detail_book/:id" element={<DetailBook />} />
 
         {/* admin */}
         <Route element={<PrivateRouteAdmin />}>
@@ -118,7 +118,7 @@ function App() {
 
         <Route exact path="/:pageName" element={<PageNotFound />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </>
   );
 }
